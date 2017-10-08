@@ -82,7 +82,7 @@ func getStats(channel chan *AnimeStats, username string) {
 	})
 
 	c.OnRequest(func(r *colly.Request) {
-		fmt.Printf("visiting %s\n", r.URL.String())
+		// fmt.Printf("visiting %s\n", r.URL.String())
 	})
 
 	url := fmt.Sprintf("https://myanimelist.net/profile/%s", username)
@@ -100,27 +100,24 @@ func getFriends(channel chan []string, username string, offset int) {
 			names = append(names, elem.Text())
 		}
 		channel <- names
-	})
-
-	c.OnHTML("body", func(e *colly.HTMLElement) {
 		if e.DOM.Find("div.friendBlock").Length() >= 100 {
-			go getFriends(channel, username, offset+100)
+			getFriends(channel, username, offset+100)
 		} else {
 			close(channel)
 		}
 	})
 
 	c.OnRequest(func(r *colly.Request) {
-		fmt.Printf("visiting %s\n", r.URL.String())
+		// fmt.Printf("visiting %s\n", r.URL.String())
 	})
 
 	url := fmt.Sprintf("https://myanimelist.net/profile/%s/friends?offset=%d", username, offset)
 	c.Visit(url)
 }
 
-func getUser(db *gorm.DB, username string) {
+func getUser(db *gorm.DB, username string, finished chan bool) {
 	user := new(User)
-	db.Where(User{Username: username}).FirstOrCreate(&user)
+	db.Where(&User{Username: username}).Attrs(&User{Fetching: true}).FirstOrCreate(&user)
 	if user.Fetched {
 		return
 	}
@@ -139,7 +136,7 @@ func getUser(db *gorm.DB, username string) {
 		for i := range friendsPage {
 			friendName := friendsPage[i]
 			friend := new(User)
-			db.Where(User{Username: friendName}).FirstOrCreate(&friend)
+			db.Where(&User{Username: friendName}).FirstOrCreate(&friend)
 			relation := NewRelation(user, friend)
 			db.Where(relation).FirstOrCreate(relation)
 		}
@@ -147,6 +144,33 @@ func getUser(db *gorm.DB, username string) {
 	user.Fetched = true
 	user.Fetching = false
 	db.Save(&user)
+	<-finished
+}
+
+func overseer(db *gorm.DB) {
+	finished := make(chan bool, 8)
+	for {
+		var users []User
+		db.Limit(5).Find(&users, "Fetching = ? AND Fetched = ?", false, false)
+		for i := range users {
+			finished <- true
+			user := users[i]
+			fmt.Println(user.Username)
+			go getUser(db, user.Username, finished)
+		}
+		time.Sleep(time.Millisecond)
+	}
+}
+
+func monitor(db *gorm.DB, finished chan bool) {
+	for {
+		var notFetched *int
+		var fetching *int
+		db.Model(&User{}).Where(&User{Fetched: false}).Count(&notFetched)
+		db.Model(&User{}).Where(&User{Fetching: true}).Count(&fetching)
+		fmt.Printf("To fetch: %d, fetching: %d\n", *notFetched, *fetching)
+		time.Sleep(time.Second)
+	}
 }
 
 func main() {
@@ -157,20 +181,13 @@ func main() {
 	defer db.Close()
 	db.AutoMigrate(&AnimeStats{}, &MangaStats{}, &Relation{}, &User{})
 
-	go getUser(db, "sweetmonia")
-	go getUser(db, "mikeone")
-
-	time.Sleep(time.Millisecond * 10)
-
-	for {
-		var notFetched *int
-		var fetching *int
-		db.Model(&User{}).Where(&User{Fetched: false}).Count(&notFetched)
-		db.Model(&User{}).Where(&User{Fetching: true}).Count(&fetching)
-		if *fetching == 0 {
-			break
-		}
-		fmt.Printf("To fetch: %d, fetching: %d\n", *notFetched, *fetching)
-		time.Sleep(time.Second)
+	finished := make(chan bool)
+	go monitor(db, finished)
+	go overseer(db)
+	// Maybe trigger first user?
+	var inDb *int
+	if db.Model(&User{}).Count(&inDb); *inDb == 0 {
+		go getUser(db, "sweetmonia", make(chan bool))
 	}
+	<-finished
 }
