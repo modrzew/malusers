@@ -81,12 +81,39 @@ func getStats(channel chan *AnimeStats, username string) {
 		fmt.Printf("visiting %s\n", r.URL.String())
 	})
 
-	c.Visit("https://myanimelist.net/profile/aaa")
+	url := fmt.Sprintf("https://myanimelist.net/profile/%s", username)
+	c.Visit(url)
+}
+
+func getFriends(channel chan []string, username string) {
+	c := colly.NewCollector()
+
+	c.OnHTML("div.majorPad", func(e *colly.HTMLElement) {
+		names := []string{}
+		sel := e.DOM.Find("div.friendBlock strong")
+		for i := range sel.Nodes {
+			elem := sel.Eq(i)
+			names = append(names, elem.Text())
+		}
+		channel <- names
+	})
+
+	c.OnRequest(func(r *colly.Request) {
+		fmt.Printf("visiting %s\n", r.URL.String())
+	})
+
+	url := fmt.Sprintf("https://myanimelist.net/profile/%s/friends", username)
+	c.Visit(url)
 }
 
 func main() {
-	channel := make(chan *AnimeStats)
-	go getStats(channel, "aaa")
-	stats := <-channel
+	statsChannel := make(chan *AnimeStats)
+	go getStats(statsChannel, "mikeone")
+	stats := <-statsChannel
 	fmt.Printf("%+v\n", stats)
+
+	friendsChannel := make(chan []string)
+	go getFriends(friendsChannel, "mikeone")
+	friends := <-friendsChannel
+	fmt.Printf("%+v\n", friends)
 }
