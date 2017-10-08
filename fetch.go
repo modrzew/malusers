@@ -6,12 +6,17 @@ import (
 	"github.com/asciimoo/colly"
 )
 
-func getStats(channel chan *AnimeStats, username string) {
+func getStats(animeChannel chan *AnimeStats, mangaChannel chan *MangaStats, username string) {
 	c := colly.NewCollector()
 
 	c.OnHTML("div.stats.anime", func(e *colly.HTMLElement) {
 		stats := ExtractAnimeStats(e)
-		channel <- stats
+		animeChannel <- stats
+	})
+
+	c.OnHTML("div.stats.manga", func(e *colly.HTMLElement) {
+		stats := ExtractMangaStats(e)
+		mangaChannel <- stats
 	})
 
 	c.OnRequest(func(r *colly.Request) {
@@ -26,12 +31,7 @@ func getFriends(channel chan []string, username string, offset int) {
 	c := colly.NewCollector()
 
 	c.OnHTML("div.majorPad", func(e *colly.HTMLElement) {
-		names := []string{}
-		sel := e.DOM.Find("div.friendBlock strong")
-		for i := range sel.Nodes {
-			elem := sel.Eq(i)
-			names = append(names, elem.Text())
-		}
+		names := ExtractFriendNames(e)
 		channel <- names
 		if e.DOM.Find("div.friendBlock").Length() >= 100 {
 			getFriends(channel, username, offset+100)
@@ -48,7 +48,7 @@ func getFriends(channel chan []string, username string, offset int) {
 	c.Visit(url)
 }
 
-// GetUser dd
+// GetUser obtains stats for single user and their friends
 func GetUser(username string, finished chan bool) {
 	db := openDb()
 	defer db.Close()
@@ -61,11 +61,15 @@ func GetUser(username string, finished chan bool) {
 	user.Fetched = false
 	user.Fetching = true
 	db.Save(&user)
-	statsChannel := make(chan *AnimeStats)
-	go getStats(statsChannel, username)
-	stats := <-statsChannel
-	stats.Username = username
-	db.Create(stats)
+	animeStatsChannel := make(chan *AnimeStats)
+	mangaStatsChannel := make(chan *MangaStats)
+	go getStats(animeStatsChannel, mangaStatsChannel, username)
+	animeStats := <-animeStatsChannel
+	animeStats.Username = username
+	db.Create(animeStats)
+	mangaStats := <-mangaStatsChannel
+	mangaStats.Username = username
+	db.Create(mangaStats)
 
 	friendsChannel := make(chan []string, 1)
 	go getFriends(friendsChannel, username, 0)
