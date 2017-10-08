@@ -4,8 +4,12 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
 	"github.com/asciimoo/colly"
 )
@@ -25,9 +29,9 @@ func extractAnimeStats(elem *colly.HTMLElement) *AnimeStats {
 		}
 		switch labelText {
 		case "days:":
-			result.days = value
+			result.Days = value
 		case "mean score:":
-			result.meanScore = value
+			result.MeanScore = value
 		}
 	})
 	// First column
@@ -40,15 +44,15 @@ func extractAnimeStats(elem *colly.HTMLElement) *AnimeStats {
 		}
 		switch label {
 		case "watching":
-			result.inProgress = value
+			result.InProgress = value
 		case "completed":
-			result.completed = value
+			result.Completed = value
 		case "on-hold":
-			result.onhold = value
+			result.OnHold = value
 		case "dropped":
-			result.dropped = value
+			result.Dropped = value
 		case "plan to watch":
-			result.planned = value
+			result.Planned = value
 		}
 	})
 	// Second column
@@ -61,9 +65,9 @@ func extractAnimeStats(elem *colly.HTMLElement) *AnimeStats {
 		}
 		switch label {
 		case "rewatched":
-			result.rewatched = value
+			result.Rewatched = value
 		case "episodes":
-			result.episodes = value
+			result.Episodes = value
 		}
 	})
 	return result
@@ -114,15 +118,59 @@ func getFriends(channel chan []string, username string, offset int) {
 	c.Visit(url)
 }
 
-func main() {
+func getUser(db *gorm.DB, username string) {
+	user := new(User)
+	db.Where(User{Username: username}).FirstOrCreate(&user)
+	if user.Fetched {
+		return
+	}
+	user.Fetched = false
+	user.Fetching = true
+	db.Save(&user)
 	statsChannel := make(chan *AnimeStats)
-	go getStats(statsChannel, "sweetmonia")
+	go getStats(statsChannel, username)
 	stats := <-statsChannel
-	fmt.Printf("%+v\n", stats)
+	stats.Username = username
+	db.Create(stats)
 
 	friendsChannel := make(chan []string)
-	go getFriends(friendsChannel, "sweetmonia", 0)
+	go getFriends(friendsChannel, username, 0)
 	for friendsPage := range friendsChannel {
-		fmt.Printf("%+v\n", friendsPage)
+		for i := range friendsPage {
+			friendName := friendsPage[i]
+			friend := new(User)
+			db.Where(User{Username: friendName}).FirstOrCreate(&friend)
+			relation := NewRelation(user, friend)
+			db.Where(relation).FirstOrCreate(relation)
+		}
+	}
+	user.Fetched = true
+	user.Fetching = false
+	db.Save(&user)
+}
+
+func main() {
+	db, err := gorm.Open("sqlite3", "test.db")
+	if err != nil {
+		panic("failed to connect database")
+	}
+	defer db.Close()
+	db.AutoMigrate(&AnimeStats{}, &MangaStats{}, &Relation{}, &User{})
+
+	go getUser(db, "sweetmonia")
+	go getUser(db, "mikeone")
+
+	time.Sleep(time.Millisecond * 10)
+
+	for {
+		var notFetched *int
+		var fetching *int
+		db.Model(&User{}).Where(&User{Fetched: false}).Count(&notFetched)
+		db.Model(&User{}).Where(&User{Fetching: true}).Count(&fetching)
+		if *fetching == 0 {
+			break
+		}
+		fmt.Printf("To fetch: %d, fetching: %d\n", *notFetched, *fetching)
+		time.Sleep(time.Second)
 	}
 }

@@ -1,33 +1,71 @@
 package main
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 // Stats is base structure for either anime/manga stats; see AnimeStats or MangaStats
 type stats struct {
-	// TODO: move common fields for AnimeStats/MangaStats to here
 }
 
 // AnimeStats is structure for holding anime statistics
 type AnimeStats struct {
-	inProgress int
-	completed  int
-	onhold     int
-	dropped    int
-	planned    int
-	rewatched  int
-	days       float64
-	meanScore  float64
-	episodes   int
+	gorm.Model
+	Username   string
+	InProgress int
+	Completed  int
+	OnHold     int
+	Dropped    int
+	Planned    int
+	Rewatched  int
+	Days       float64
+	MeanScore  float64
+	Episodes   int
 }
 
 // MangaStats is structure for holding manga statistics
 type MangaStats struct {
-	inProgress int
-	completed  int
-	onhold     int
-	dropped    int
-	planned    int
-	rewatched  int
-	days       float64
-	meanScore  float64
-	chapters   int
-	volumes    int
+	gorm.Model
+	Username   string
+	InProgress int
+	Completed  int
+	OnHold     int
+	Dropped    int
+	Planned    int
+	Rewatched  int
+	Days       float64
+	MeanScore  float64
+	Chapters   int
+	Volumes    int
+}
+
+// Relation - `from` user having `to` as friend
+type Relation struct {
+	gorm.Model
+	User1   User
+	User1ID uint
+	User2   User
+	User2ID uint
+}
+
+// NewRelation returns Relation where users are alphabetized
+func NewRelation(user1 *User, user2 *User) *Relation {
+	if user1.Username <= user2.Username {
+		return &Relation{
+			User1ID: user1.ID,
+			User2ID: user2.ID,
+		}
+	}
+	return &Relation{
+		User1ID: user2.ID,
+		User2ID: user1.ID,
+	}
+}
+
+// User holds info about user and whether they were fetched
+type User struct {
+	gorm.Model
+	Username string
+	Fetched  bool
+	Fetching bool
 }
