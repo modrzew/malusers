@@ -130,7 +130,7 @@ func getUser(db *gorm.DB, username string, finished chan bool) {
 	stats.Username = username
 	db.Create(stats)
 
-	friendsChannel := make(chan []string)
+	friendsChannel := make(chan []string, 1)
 	go getFriends(friendsChannel, username, 0)
 	for friendsPage := range friendsChannel {
 		for i := range friendsPage {
@@ -138,6 +138,7 @@ func getUser(db *gorm.DB, username string, finished chan bool) {
 			friend := new(User)
 			db.Where(&User{Username: friendName}).FirstOrCreate(&friend)
 			relation := NewRelation(user, friend)
+			db.Exec(`REPLACE INTO relations (user1_id, user2_id) VALUES (?, ?)`, user.ID, friend.ID)
 			db.Where(relation).FirstOrCreate(relation)
 		}
 	}
@@ -155,10 +156,9 @@ func overseer(db *gorm.DB) {
 		for i := range users {
 			finished <- true
 			user := users[i]
-			fmt.Println(user.Username)
 			go getUser(db, user.Username, finished)
 		}
-		time.Sleep(time.Millisecond)
+		time.Sleep(time.Millisecond * 200)
 	}
 }
 
@@ -169,7 +169,7 @@ func monitor(db *gorm.DB, finished chan bool) {
 		db.Model(&User{}).Where(&User{Fetched: false}).Count(&notFetched)
 		db.Model(&User{}).Where(&User{Fetching: true}).Count(&fetching)
 		fmt.Printf("To fetch: %d, fetching: %d\n", *notFetched, *fetching)
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond * 200)
 	}
 }
 

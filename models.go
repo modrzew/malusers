@@ -41,7 +41,6 @@ type MangaStats struct {
 
 // Relation - `from` user having `to` as friend
 type Relation struct {
-	gorm.Model
 	User1   User
 	User1ID uint
 	User2   User
