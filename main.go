@@ -7,12 +7,27 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
-
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
-
 	"github.com/asciimoo/colly"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
+
+func openDb() *gorm.DB {
+	config := ReadConfig()
+	connection := fmt.Sprintf(
+		"host=%s port=%d user=%s dbname=%s sslmode=%s",
+		config.Host,
+		config.Port,
+		config.Username,
+		config.Password,
+		config.SSLMode,
+	)
+	db, err := gorm.Open("postgres", connection)
+	if err != nil {
+		panic(err)
+	}
+	return db
+}
 
 func extractAnimeStats(elem *colly.HTMLElement) *AnimeStats {
 	result := new(AnimeStats)
@@ -115,7 +130,10 @@ func getFriends(channel chan []string, username string, offset int) {
 	c.Visit(url)
 }
 
-func getUser(db *gorm.DB, username string, finished chan bool) {
+func getUser(username string, finished chan bool) {
+	db := openDb()
+	defer db.Close()
+
 	user := new(User)
 	db.Where(&User{Username: username}).Attrs(&User{Fetching: true}).FirstOrCreate(&user)
 	if user.Fetched {
@@ -138,7 +156,6 @@ func getUser(db *gorm.DB, username string, finished chan bool) {
 			friend := new(User)
 			db.Where(&User{Username: friendName}).FirstOrCreate(&friend)
 			relation := NewRelation(user, friend)
-			db.Exec(`REPLACE INTO relations (user1_id, user2_id) VALUES (?, ?)`, user.ID, friend.ID)
 			db.Where(relation).FirstOrCreate(relation)
 		}
 	}
@@ -148,15 +165,15 @@ func getUser(db *gorm.DB, username string, finished chan bool) {
 	<-finished
 }
 
-func overseer(db *gorm.DB) {
-	finished := make(chan bool, 8)
+func overseer(db *gorm.DB, maxConcurrent int) {
+	finished := make(chan bool, maxConcurrent)
 	for {
 		var users []User
 		db.Limit(5).Find(&users, "Fetching = ? AND Fetched = ?", false, false)
 		for i := range users {
 			finished <- true
 			user := users[i]
-			go getUser(db, user.Username, finished)
+			go getUser(user.Username, finished)
 		}
 		time.Sleep(time.Millisecond * 200)
 	}
@@ -169,25 +186,26 @@ func monitor(db *gorm.DB, finished chan bool) {
 		db.Model(&User{}).Where(&User{Fetched: false}).Count(&notFetched)
 		db.Model(&User{}).Where(&User{Fetching: true}).Count(&fetching)
 		fmt.Printf("To fetch: %d, fetching: %d\n", *notFetched, *fetching)
-		time.Sleep(time.Millisecond * 200)
+		time.Sleep(time.Second)
 	}
 }
 
 func main() {
-	db, err := gorm.Open("sqlite3", "test.db")
-	if err != nil {
-		panic("failed to connect database")
-	}
+	config := ReadConfig()
+	db := openDb()
 	defer db.Close()
 	db.AutoMigrate(&AnimeStats{}, &MangaStats{}, &Relation{}, &User{})
 
+	// Reset all fetching statuses
+	db.Model(&User{}).UpdateColumn("fetching", false)
+
 	finished := make(chan bool)
 	go monitor(db, finished)
-	go overseer(db)
+	go overseer(db, config.MaxConcurrent)
 	// Maybe trigger first user?
 	var inDb *int
 	if db.Model(&User{}).Count(&inDb); *inDb == 0 {
-		go getUser(db, "sweetmonia", make(chan bool))
+		go getUser("sweetmonia", make(chan bool))
 	}
 	<-finished
 }
