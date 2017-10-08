@@ -11,9 +11,10 @@ import (
 func openDb() *gorm.DB {
 	config := ReadConfig()
 	connection := fmt.Sprintf(
-		"host=%s port=%d user=%s dbname=%s sslmode=%s",
+		"host=%s port=%d dbname=%s user=%s password=%s sslmode=%s",
 		config.Host,
 		config.Port,
+		config.Database,
 		config.Username,
 		config.Password,
 		config.SSLMode,
