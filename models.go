@@ -5,10 +5,6 @@ import (
 	"github.com/lib/pq"
 )
 
-// Stats is base structure for either anime/manga stats; see AnimeStats or MangaStats
-type stats struct {
-}
-
 // AnimeStats is structure for holding anime statistics
 type AnimeStats struct {
 	gorm.Model
@@ -74,6 +70,6 @@ type User struct {
 	Username string
 	Birthday pq.NullTime `gorm:"type:date"`
 	Gender   string
-	Fetched  bool
-	Fetching bool
+	Fetched  bool `gorm:"index"`
+	Fetching bool `gorm:"index"`
 }

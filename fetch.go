@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/jinzhu/gorm"
 )
 
 // Client is a wrapper over http.Client
@@ -65,15 +66,12 @@ func getFriends(channel chan []string, username string, offset int) {
 }
 
 // GetUser obtains stats for single user and their friends
-func GetUser(username string, finished chan bool) {
-	db := openDb()
-	defer db.Close()
-
-	user := new(User)
-	db.Where(&User{Username: username}).Attrs(&User{Fetching: true}).FirstOrCreate(&user)
+func GetUser(username string, db *gorm.DB, dbs chan *gorm.DB) {
+	user := getOrCreateUser(username, db)
 	if user.Fetched {
 		return
 	}
+	removeFromToFetch(user.Username)
 	user.Fetched = false
 	user.Fetching = true
 	db.Save(&user)
@@ -90,8 +88,7 @@ func GetUser(username string, finished chan bool) {
 	for friendsPage := range friendsChannel {
 		for i := range friendsPage {
 			friendName := friendsPage[i]
-			friend := new(User)
-			db.Where(&User{Username: friendName}).FirstOrCreate(&friend)
+			friend := getOrCreateUser(friendName, db)
 			relation := NewRelation(user, friend)
 			db.Where(relation).FirstOrCreate(relation)
 		}
@@ -99,5 +96,5 @@ func GetUser(username string, finished chan bool) {
 	user.Fetched = true
 	user.Fetching = false
 	db.Save(&user)
-	<-finished
+	dbs <- db
 }

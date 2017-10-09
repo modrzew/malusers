@@ -26,30 +26,29 @@ func openDb() *gorm.DB {
 	return db
 }
 
-func overseer(db *gorm.DB, maxConcurrent int) {
-	finished := make(chan bool, maxConcurrent)
+func overseer(mainDb *gorm.DB, dbsChannel chan *gorm.DB, maxConcurrent int) {
+	for i := 0; i < maxConcurrent; i++ {
+		dbsChannel <- openDb()
+	}
 	for {
-		var users []User
-		db.Limit(5).Find(&users, "Fetching = ? AND Fetched = ?", false, false)
-		for i := range users {
-			finished <- true
-			user := users[i]
-			go GetUser(user.Username, finished)
+		if len(dbsChannel) > 0 {
+			users := getUsersToFetch(len(dbsChannel))
+			for i := range users {
+				db := <-dbsChannel
+				user := users[i]
+				go GetUser(user.Username, db, dbsChannel)
+			}
 		}
 		time.Sleep(time.Millisecond * 200)
 	}
 }
 
-func monitor(db *gorm.DB, finished chan bool) {
+func monitor(db *gorm.DB, dbsChannel chan *gorm.DB, maxConcurrent int) {
 	for {
-		var notFetched *int
-		var fetching *int
-		var fetched *int
-		db.Model(&User{}).Where(&User{Fetched: false}).Count(&notFetched)
-		db.Model(&User{}).Where(&User{Fetching: true}).Count(&fetching)
-		db.Model(&User{}).Where(&User{Fetched: true}).Count(&fetched)
-		fmt.Printf("To fetch: %d, fetching: %d, fetched: %d\r", *notFetched, *fetching, *fetched)
-		time.Sleep(time.Second)
+		stats := getStatsFromCache()
+		fetching := maxConcurrent - len(dbsChannel)
+		fmt.Printf("\rTo fetch: %d, fetching: %d, fetched: %d", stats.toFetch, fetching, stats.fetched)
+		time.Sleep(time.Millisecond * 200)
 	}
 }
 
@@ -62,16 +61,19 @@ func main() {
 	// Reset all fetching statuses
 	db.Model(&User{}).UpdateColumn("fetching", false)
 
-	finished := make(chan bool)
-	go monitor(db, finished)
-	go overseer(db, config.MaxConcurrent)
+	populateCache(db)
+
+	dbsChannel := make(chan *gorm.DB, config.MaxConcurrent)
+	go monitor(db, dbsChannel, config.MaxConcurrent)
+	go overseer(db, dbsChannel, config.MaxConcurrent)
 
 	// Maybe trigger first user?
 	var inDb *int
 	if db.Model(&User{}).Count(&inDb); *inDb == 0 {
-		go GetUser("sweetmonia", make(chan bool))
+		db.Create(&User{Username: "sweetmonia"})
 	}
 
 	// Don't quit
+	finished := make(chan bool)
 	<-finished
 }
