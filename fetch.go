@@ -2,50 +2,64 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
+	"os"
 
-	"github.com/asciimoo/colly"
+	"github.com/PuerkitoBio/goquery"
 )
 
-func getStats(animeChannel chan *AnimeStats, mangaChannel chan *MangaStats, username string) {
-	c := colly.NewCollector()
+// Client is a wrapper over http.Client
+type Client struct {
+	client *http.Client
+}
 
-	c.OnHTML("div.stats.anime", func(e *colly.HTMLElement) {
-		stats := ExtractAnimeStats(e)
-		animeChannel <- stats
-	})
+var logger = log.New(os.Stdout, "[fetch] ", 0)
 
-	c.OnHTML("div.stats.manga", func(e *colly.HTMLElement) {
-		stats := ExtractMangaStats(e)
-		mangaChannel <- stats
-	})
+// Get sends GET request and converts response into goquery.Document
+func (c *Client) Get(url string) *goquery.Document {
+	request, err := http.NewRequest("GET", url, nil)
+	// logger.Printf("GET %s\n", url)
+	if err != nil {
+		panic(err)
+	}
+	response, err := c.client.Do(request)
+	if err != nil {
+		panic(err)
+	}
+	// logger.Printf("Got response for %s\n", url)
+	document, err := goquery.NewDocumentFromResponse(response)
+	if err != nil {
+		panic(err)
+	}
+	return document
+}
 
-	c.OnRequest(func(r *colly.Request) {
-		// fmt.Printf("visiting %s\n", r.URL.String())
-	})
+func getClient() *Client {
+	return &Client{
+		client: &http.Client{},
+	}
+}
 
+func getStats(username string) (*AnimeStats, *MangaStats) {
+	client := getClient()
 	url := fmt.Sprintf("https://myanimelist.net/profile/%s", username)
-	c.Visit(url)
+	document := client.Get(url)
+	return ExtractAnimeStats(document.Find("div.stats.anime")), ExtractMangaStats(document.Find("div.stats.anime"))
 }
 
 func getFriends(channel chan []string, username string, offset int) {
-	c := colly.NewCollector()
-
-	c.OnHTML("div.majorPad", func(e *colly.HTMLElement) {
-		names := ExtractFriendNames(e)
-		channel <- names
-		if e.DOM.Find("div.friendBlock").Length() >= 100 {
-			getFriends(channel, username, offset+100)
-		} else {
-			close(channel)
-		}
-	})
-
-	c.OnRequest(func(r *colly.Request) {
-		// fmt.Printf("visiting %s\n", r.URL.String())
-	})
-
+	client := getClient()
 	url := fmt.Sprintf("https://myanimelist.net/profile/%s/friends?offset=%d", username, offset)
-	c.Visit(url)
+	document := client.Get(url)
+	block := document.Find("div.majorPad")
+	names := ExtractFriendNames(block)
+	channel <- names
+	if block.Find("div.friendBlock").Length() >= 100 {
+		getFriends(channel, username, offset+100)
+	} else {
+		close(channel)
+	}
 }
 
 // GetUser obtains stats for single user and their friends
@@ -61,13 +75,9 @@ func GetUser(username string, finished chan bool) {
 	user.Fetched = false
 	user.Fetching = true
 	db.Save(&user)
-	animeStatsChannel := make(chan *AnimeStats)
-	mangaStatsChannel := make(chan *MangaStats)
-	go getStats(animeStatsChannel, mangaStatsChannel, username)
-	animeStats := <-animeStatsChannel
+	animeStats, mangaStats := getStats(username)
 	animeStats.Username = username
 	db.Create(animeStats)
-	mangaStats := <-mangaStatsChannel
 	mangaStats.Username = username
 	db.Create(mangaStats)
 

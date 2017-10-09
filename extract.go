@@ -5,14 +5,13 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/asciimoo/colly"
 )
 
 // ExtractAnimeStats gets anime stats from single user's profile page
-func ExtractAnimeStats(elem *colly.HTMLElement) *AnimeStats {
+func ExtractAnimeStats(elem *goquery.Selection) *AnimeStats {
 	result := new(AnimeStats)
 	// Days and mean time
-	baseStats := elem.DOM.Find("div.stat-score div.di-tc")
+	baseStats := elem.Find("div.stat-score div.di-tc")
 	baseStats.Each(func(_ int, stat *goquery.Selection) {
 		// Remove label
 		label := stat.Find("span.fw-n")
@@ -30,7 +29,7 @@ func ExtractAnimeStats(elem *colly.HTMLElement) *AnimeStats {
 		}
 	})
 	// First column
-	stats := elem.DOM.Find("ul.stats-status li")
+	stats := elem.Find("ul.stats-status li")
 	stats.Each(func(_ int, stat *goquery.Selection) {
 		label := strings.ToLower(strings.TrimSpace(stat.Find("a").Text()))
 		value, err := strconv.Atoi(strings.Replace(strings.TrimSpace(stat.Find("span").Text()), ",", "", -1))
@@ -51,7 +50,7 @@ func ExtractAnimeStats(elem *colly.HTMLElement) *AnimeStats {
 		}
 	})
 	// Second column
-	stats = elem.DOM.Find("ul.stats-data li")
+	stats = elem.Find("ul.stats-data li")
 	stats.Each(func(_ int, stat *goquery.Selection) {
 		label := strings.ToLower(strings.TrimSpace(stat.Find("span").First().Text()))
 		value, err := strconv.Atoi(strings.Replace(strings.TrimSpace(stat.Find("span").Last().Text()), ",", "", -1))
@@ -69,10 +68,10 @@ func ExtractAnimeStats(elem *colly.HTMLElement) *AnimeStats {
 }
 
 // ExtractMangaStats gets manga stats from single user's profile page
-func ExtractMangaStats(elem *colly.HTMLElement) *MangaStats {
+func ExtractMangaStats(elem *goquery.Selection) *MangaStats {
 	result := new(MangaStats)
 	// Days and mean time
-	baseStats := elem.DOM.Find("div.stat-score div.di-tc")
+	baseStats := elem.Find("div.stat-score div.di-tc")
 	baseStats.Each(func(_ int, stat *goquery.Selection) {
 		// Remove label
 		label := stat.Find("span.fw-n")
@@ -90,7 +89,7 @@ func ExtractMangaStats(elem *colly.HTMLElement) *MangaStats {
 		}
 	})
 	// First column
-	stats := elem.DOM.Find("ul.stats-status li")
+	stats := elem.Find("ul.stats-status li")
 	stats.Each(func(_ int, stat *goquery.Selection) {
 		label := strings.ToLower(strings.TrimSpace(stat.Find("a").Text()))
 		value, err := strconv.Atoi(strings.Replace(strings.TrimSpace(stat.Find("span").Text()), ",", "", -1))
@@ -111,7 +110,7 @@ func ExtractMangaStats(elem *colly.HTMLElement) *MangaStats {
 		}
 	})
 	// Second column
-	stats = elem.DOM.Find("ul.stats-data li")
+	stats = elem.Find("ul.stats-data li")
 	stats.Each(func(_ int, stat *goquery.Selection) {
 		label := strings.ToLower(strings.TrimSpace(stat.Find("span").First().Text()))
 		value, err := strconv.Atoi(strings.Replace(strings.TrimSpace(stat.Find("span").Last().Text()), ",", "", -1))
@@ -131,9 +130,9 @@ func ExtractMangaStats(elem *colly.HTMLElement) *MangaStats {
 }
 
 // ExtractFriendNames gets friends names from single page
-func ExtractFriendNames(e *colly.HTMLElement) []string {
+func ExtractFriendNames(elem *goquery.Selection) []string {
 	names := []string{}
-	sel := e.DOM.Find("div.friendBlock strong")
+	sel := elem.Find("div.friendBlock strong")
 	for i := range sel.Nodes {
 		elem := sel.Eq(i)
 		names = append(names, elem.Text())

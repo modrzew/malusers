@@ -2,7 +2,7 @@
 
 Simple Go scraper created to answer the ancient question: *who has the biggest power level?*
 
-Uses [asciimoo/colly](https://github.com/asciimoo/colly) for scraping and [jinzhu/gorm](https://github.com/jinzhu/gorm) for database manipulation.
+Uses [PuerkitoBio/goquery](https://github.com/PuerkitoBio/goquery) for parsing DOM and [jinzhu/gorm](https://github.com/jinzhu/gorm) for database manipulation.
 
 ## Usage
 
