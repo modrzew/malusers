@@ -156,9 +156,9 @@ func ExtractBasicInfo(elem *goquery.Selection) *BasicInfo {
 			}
 			parsed, err := time.Parse("Jan 2, 2006", value)
 			if err == nil {
-				info.Birthday = &pq.NullTime{Time: parsed, Valid: true}
+				info.Birthday = pq.NullTime{Time: parsed, Valid: true}
 			} else {
-				info.Birthday = &pq.NullTime{Valid: false}
+				info.Birthday = pq.NullTime{Valid: false}
 			}
 		case "gender":
 			info.Gender = getGender(value)

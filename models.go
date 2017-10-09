@@ -64,7 +64,7 @@ func NewRelation(user1 *User, user2 *User) *Relation {
 
 // BasicInfo holds info about user without any database info
 type BasicInfo struct {
-	Birthday *pq.NullTime
+	Birthday pq.NullTime
 	Gender   string
 }
 
@@ -72,7 +72,7 @@ type BasicInfo struct {
 type User struct {
 	gorm.Model
 	Username string
-	Birthday *pq.NullTime `gorm:"type:date"`
+	Birthday pq.NullTime `gorm:"type:date"`
 	Gender   string
 	Fetched  bool
 	Fetching bool
