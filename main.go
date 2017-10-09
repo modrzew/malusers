@@ -26,29 +26,29 @@ func openDb() *gorm.DB {
 	return db
 }
 
-func overseer(mainDb *gorm.DB, dbsChannel chan *gorm.DB, maxConcurrent int) {
+func overseer(mainDb *gorm.DB, active chan bool, maxConcurrent int) {
 	for i := 0; i < maxConcurrent; i++ {
-		dbsChannel <- openDb()
+		active <- true
 	}
 	for {
-		if len(dbsChannel) > 0 {
-			users := getUsersToFetch(len(dbsChannel))
+		if len(active) > 0 {
+			users := getUsersToFetch(len(active))
 			for i := range users {
-				db := <-dbsChannel
+				<-active
 				user := users[i]
-				go GetUser(user.Username, db, dbsChannel)
+				go GetUser(user.Username, mainDb, active)
 			}
 		}
 		time.Sleep(time.Millisecond * 200)
 	}
 }
 
-func monitor(db *gorm.DB, dbsChannel chan *gorm.DB, maxConcurrent int) {
+func monitor(db *gorm.DB, active chan bool, maxConcurrent int) {
 	for {
 		stats := getStatsFromCache()
-		fetching := maxConcurrent - len(dbsChannel)
+		fetching := maxConcurrent - len(active)
 		fmt.Printf("\rTo fetch: %d, fetching: %d, fetched: %d", stats.toFetch, fetching, stats.fetched)
-		time.Sleep(time.Millisecond * 200)
+		time.Sleep(time.Millisecond * 500)
 	}
 }
 
@@ -63,9 +63,9 @@ func main() {
 
 	populateCache(db)
 
-	dbsChannel := make(chan *gorm.DB, config.MaxConcurrent)
-	go monitor(db, dbsChannel, config.MaxConcurrent)
-	go overseer(db, dbsChannel, config.MaxConcurrent)
+	active := make(chan bool, config.MaxConcurrent)
+	go monitor(db, active, config.MaxConcurrent)
+	go overseer(db, active, config.MaxConcurrent)
 
 	// Maybe trigger first user?
 	var inDb *int

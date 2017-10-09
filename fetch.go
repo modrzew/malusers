@@ -66,7 +66,7 @@ func getFriends(channel chan []string, username string, offset int) {
 }
 
 // GetUser obtains stats for single user and their friends
-func GetUser(username string, db *gorm.DB, dbs chan *gorm.DB) {
+func GetUser(username string, db *gorm.DB, finished chan bool) {
 	user := getOrCreateUser(username, db)
 	if user.Fetched {
 		return
@@ -96,5 +96,5 @@ func GetUser(username string, db *gorm.DB, dbs chan *gorm.DB) {
 	user.Fetched = true
 	user.Fetching = false
 	db.Save(&user)
-	dbs <- db
+	finished <- true
 }
