@@ -44,9 +44,11 @@ func monitor(db *gorm.DB, finished chan bool) {
 	for {
 		var notFetched *int
 		var fetching *int
+		var fetched *int
 		db.Model(&User{}).Where(&User{Fetched: false}).Count(&notFetched)
 		db.Model(&User{}).Where(&User{Fetching: true}).Count(&fetching)
-		fmt.Printf("\rTo fetch: %d, fetching: %d\n", *notFetched, *fetching)
+		db.Model(&User{}).Where(&User{Fetched: true}).Count(&fetched)
+		fmt.Printf("To fetch: %d, fetching: %d, fetched: %d\r", *notFetched, *fetching, *fetched)
 		time.Sleep(time.Second)
 	}
 }
