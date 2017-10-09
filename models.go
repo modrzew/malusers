@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/jinzhu/gorm"
+	"github.com/lib/pq"
 )
 
 // Stats is base structure for either anime/manga stats; see AnimeStats or MangaStats
@@ -61,10 +62,18 @@ func NewRelation(user1 *User, user2 *User) *Relation {
 	}
 }
 
+// BasicInfo holds info about user without any database info
+type BasicInfo struct {
+	Birthday *pq.NullTime
+	Gender   string
+}
+
 // User holds info about user and whether they were fetched
 type User struct {
 	gorm.Model
 	Username string
+	Birthday *pq.NullTime `gorm:"type:date"`
+	Gender   string
 	Fetched  bool
 	Fetching bool
 }

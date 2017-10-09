@@ -41,11 +41,13 @@ func getClient() *Client {
 	}
 }
 
-func getStats(username string) (*AnimeStats, *MangaStats) {
+func getStats(username string) (*BasicInfo, *AnimeStats, *MangaStats) {
 	client := getClient()
 	url := fmt.Sprintf("https://myanimelist.net/profile/%s", username)
 	document := client.Get(url)
-	return ExtractAnimeStats(document.Find("div.stats.anime")), ExtractMangaStats(document.Find("div.stats.manga"))
+	return ExtractBasicInfo(document.Find("ul.user-status")),
+		ExtractAnimeStats(document.Find("div.stats.anime")),
+		ExtractMangaStats(document.Find("div.stats.manga"))
 }
 
 func getFriends(channel chan []string, username string, offset int) {
@@ -75,7 +77,9 @@ func GetUser(username string, finished chan bool) {
 	user.Fetched = false
 	user.Fetching = true
 	db.Save(&user)
-	animeStats, mangaStats := getStats(username)
+	basicInfo, animeStats, mangaStats := getStats(username)
+	user.Birthday = basicInfo.Birthday
+	user.Gender = basicInfo.Gender
 	animeStats.Username = username
 	db.Create(animeStats)
 	mangaStats.Username = username

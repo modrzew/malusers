@@ -3,6 +3,9 @@ package main
 import (
 	"strconv"
 	"strings"
+	"time"
+
+	"github.com/lib/pq"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -138,4 +141,41 @@ func ExtractFriendNames(elem *goquery.Selection) []string {
 		names = append(names, elem.Text())
 	}
 	return names
+}
+
+// ExtractBasicInfo gets basic info about the user
+func ExtractBasicInfo(elem *goquery.Selection) *BasicInfo {
+	info := &BasicInfo{}
+	elem.Find("li").Each(func(_ int, stat *goquery.Selection) {
+		label := strings.ToLower(strings.TrimSpace(stat.Find("span.user-status-title").Text()))
+		value := strings.TrimSpace(stat.Find("span.user-status-data").Text())
+		switch label {
+		case "birthday":
+			if strings.Index(value, ",") == -1 {
+				value = value + ", 1900"
+			}
+			parsed, err := time.Parse("Jan 2, 2006", value)
+			if err == nil {
+				info.Birthday = &pq.NullTime{Time: parsed, Valid: true}
+			} else {
+				info.Birthday = &pq.NullTime{Valid: false}
+			}
+		case "gender":
+			info.Gender = getGender(value)
+		}
+	})
+	return info
+}
+
+func getGender(value string) string {
+	switch strings.ToLower(value) {
+	case "male":
+		return "M"
+	case "female":
+		return "F"
+	case "non-binary":
+		return "X"
+	default:
+		return ""
+	}
 }
