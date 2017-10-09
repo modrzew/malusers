@@ -17,7 +17,7 @@ func ExtractAnimeStats(elem *goquery.Selection) *AnimeStats {
 		label := stat.Find("span.fw-n")
 		labelText := strings.ToLower(strings.TrimSpace(label.Text()))
 		label.Remove()
-		value, err := strconv.ParseFloat(stat.Text(), 64)
+		value, err := strconv.ParseFloat(strings.Replace(strings.TrimSpace(stat.Text()), ",", "", -1), 64)
 		if err != nil {
 			panic(err)
 		}
@@ -77,7 +77,7 @@ func ExtractMangaStats(elem *goquery.Selection) *MangaStats {
 		label := stat.Find("span.fw-n")
 		labelText := strings.ToLower(strings.TrimSpace(label.Text()))
 		label.Remove()
-		value, err := strconv.ParseFloat(stat.Text(), 64)
+		value, err := strconv.ParseFloat(strings.Replace(strings.TrimSpace(stat.Text()), ",", "", -1), 64)
 		if err != nil {
 			panic(err)
 		}

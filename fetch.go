@@ -45,7 +45,7 @@ func getStats(username string) (*AnimeStats, *MangaStats) {
 	client := getClient()
 	url := fmt.Sprintf("https://myanimelist.net/profile/%s", username)
 	document := client.Get(url)
-	return ExtractAnimeStats(document.Find("div.stats.anime")), ExtractMangaStats(document.Find("div.stats.anime"))
+	return ExtractAnimeStats(document.Find("div.stats.anime")), ExtractMangaStats(document.Find("div.stats.manga"))
 }
 
 func getFriends(channel chan []string, username string, offset int) {
