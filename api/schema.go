@@ -1,7 +1,16 @@
 package api
 
-// UserStats contains response structure
+import (
+	"time"
+
+	"github.com/modrzew/malusers"
+)
+
+// UserStats contains response structure for single user
 type UserStats struct {
-	Username string `json:"username"`
-	Birthday string `json:"birthday"`
+	Username   string              `json:"username"`
+	Age        int                 `json:"age"`
+	LastUpdate time.Time           `json:"lastUpdate"`
+	AnimeStats malusers.AnimeStats `json:"animeStats"`
+	MangaStats malusers.MangaStats `json:"mangaStats"`
 }
