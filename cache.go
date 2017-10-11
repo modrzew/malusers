@@ -1,4 +1,4 @@
-package main
+package malusers
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ var usersCache = make(map[string]*User)
 var usersToFetch = make(map[string]*User)
 var mux sync.Mutex
 
-func populateCache(db *gorm.DB) {
+func PopulateCache(db *gorm.DB) {
 	fmt.Println("Populating cache...")
 	mux.Lock()
 	defer mux.Unlock()
@@ -46,22 +46,22 @@ func removeFromToFetch(username string) {
 	mux.Unlock()
 }
 
-type stats struct {
-	fetched int
-	toFetch int
+type Stats struct {
+	Fetched int
+	ToFetch int
 }
 
-func getStatsFromCache() *stats {
+func GetStatsFromCache() *Stats {
 	mux.Lock()
 	defer mux.Unlock()
 	toFetch := len(usersToFetch)
-	return &stats{
-		fetched: len(usersCache) - toFetch,
-		toFetch: toFetch,
+	return &Stats{
+		Fetched: len(usersCache) - toFetch,
+		ToFetch: toFetch,
 	}
 }
 
-func getUsersToFetch(limit int) []*User {
+func GetUsersToFetch(limit int) []*User {
 	mux.Lock()
 	defer mux.Unlock()
 	var users []*User
