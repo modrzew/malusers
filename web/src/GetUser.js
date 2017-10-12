@@ -5,7 +5,7 @@ export class GetUser extends Component  {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
+      name: null,
       isLoading: false,
     }
   }
@@ -13,20 +13,20 @@ export class GetUser extends Component  {
 componentDidMount() {
   this.setState({isLoading: true});
 
-  fetch(`https://jsonplaceholder.typicode.com/users/${this.props.match.params.user}`)
+  fetch(`https://jsonplaceholder.typicode.com/users/${this.props.userName}`)
   .then((resp) => resp.json())
   .then((data) => {
-    this.setState({user: data.user, isLoading: false})
+    this.setState({name: data.name, isLoading: false})
   })
 }
 
   render () {
-    const {user, isLoading} = this.state;
+    const {name, isLoading} = this.state;
     if(isLoading) {
       return <p>Loading...</p>
     }
-    else if (user != null){
-      return <Users user={this.state.user}/>
+    else if (name != null){
+      return <Users name={this.state.name}/>
     }
     else {
       return <p>Loading...</p>

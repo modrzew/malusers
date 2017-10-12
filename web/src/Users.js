@@ -3,7 +3,6 @@ import './App.css';
 
 export class Users extends Component {
   render() {
-      return 
-        <p>UserPage</p>
+      return <p>UserPage</p>;
   }
 }
