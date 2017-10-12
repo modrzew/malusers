@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Users} from './Users';
 
 export class GetUser extends Component  {
   constructor(props) {
@@ -25,7 +26,7 @@ componentDidMount() {
       return <p>Loading...</p>
     }
     else if (user != null){
-      return <UserPage user={this.state.user}/>
+      return <Users user={this.state.user}/>
     }
     else {
       return <p>Loading...</p>
