@@ -30,13 +30,18 @@ func (h *Handlers) GetUserStats(w http.ResponseWriter, r *http.Request) {
 	}
 	h.DB.Where("username = ?", username).Find(&user.AnimeStats)
 	h.DB.Where("username = ?", username).Find(&user.MangaStats)
+	h.DB.Where("username = ?", username).Find(&user.Ranking)
 	age := time.Since(user.Birthday.Time).Hours() / 24 / 365
+	var count int
+	h.DB.Model(&malusers.User{}).Count(&count)
 	stats := UserStats{
-		Username:   user.DisplayName,
-		Age:        int(age),
-		LastUpdate: user.UpdatedAt.UTC(),
-		AnimeStats: user.AnimeStats,
-		MangaStats: user.MangaStats,
+		Username:        user.DisplayName,
+		Age:             int(age),
+		LastUpdate:      user.UpdatedAt.UTC(),
+		AnimeStats:      user.AnimeStats,
+		MangaStats:      user.MangaStats,
+		Ranking:         DBRankingToSchema(user.Ranking),
+		TotalUsersCount: count,
 	}
 	json.NewEncoder(w).Encode(stats)
 }
