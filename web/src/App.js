@@ -4,14 +4,14 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
-    
+    this.state = { value: '' };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
   }
 
   handleSubmit(event) {
@@ -19,19 +19,23 @@ class App extends Component {
     event.preventDefault();
   }
 
-
   render() {
     return (
       <div className="App">
         <header className="App-header">
-            <h1 className="App-title">welcome to malusers</h1>
+          <h1 className="App-title">welcome to malusers</h1>
         </header>
 
         <div className="App-intro">
-            <form onSubmit={this.handleSubmit} >
-            <input type="text" placeholder="User name" value={this.state.value} onChange={this.handleChange}/>
-            <input type="submit" value="Submit"/>
-            </form>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              placeholder="User name"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+            <input type="submit" value="Submit" />
+          </form>
         </div>
       </div>
     );
