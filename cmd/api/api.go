@@ -10,7 +10,8 @@ import (
 )
 
 func addHandlers(router *mux.Router, db *gorm.DB) {
-	router.HandleFunc("/user/{username}", (&api.DBHandler{Handler: api.GetUserStats, DB: db}).Serve).Methods("GET")
+	handlers := &api.Handlers{DB: db}
+	router.HandleFunc("/user/{username}", handlers.GetUserStats).Methods("GET")
 }
 
 func main() {
