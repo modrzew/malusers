@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/jinzhu/gorm"
@@ -68,7 +67,6 @@ func getFriends(channel chan []string, username string, offset int) {
 
 // GetUser obtains stats for single user and their friends
 func GetUser(username string, db *gorm.DB, finished chan bool) {
-	username = strings.ToLower(username)
 	user := getOrCreateUser(username, db)
 	if user.Fetched {
 		return

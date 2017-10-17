@@ -67,11 +67,12 @@ type BasicInfo struct {
 // User holds info about user and whether they were fetched
 type User struct {
 	gorm.Model
-	Username   string
-	Birthday   pq.NullTime `gorm:"type:date"`
-	Gender     string
-	Fetched    bool `gorm:"index"`
-	Fetching   bool `gorm:"index"`
-	AnimeStats AnimeStats
-	MangaStats MangaStats
+	Username    string
+	DisplayName string
+	Birthday    pq.NullTime `gorm:"type:date"`
+	Gender      string
+	Fetched     bool `gorm:"index"`
+	Fetching    bool `gorm:"index"`
+	AnimeStats  AnimeStats
+	MangaStats  MangaStats
 }
