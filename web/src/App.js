@@ -28,7 +28,7 @@ class App extends Component {
       return <GetUser userName={this.state.userName} />;
     } else {
       return <Search onSubmit={this.handleSubmit} />;
-    };
+    }
   }
 }
 
