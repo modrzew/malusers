@@ -12,20 +12,20 @@ export class Search extends Component {
   }
 
   handleOnClick = (event) => {
-    this.props.onSubmit(this.state.value);
-  }
+    this.props.onSubmit(this.state.value)
+    }
   
   render() {
     return (
+      
+      <body className="body">
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">welcome to malusers</h1>
-        </header>
-        <div className="App-intro">
+          <h1 className="App-title">Hi there, welcome to malusers the ultimate mal scrapper.</h1>
+          <h2 className="App-instructions">Please enter user name</h2>
           <input type="text" placeholder="User name" value={this.state.value} onChange={this.handleChange}/>
           <input type="submit" value="Submit" onClick={this.handleOnClick}/>
-        </div>
       </div>
+      </body>
     );
   }
 }

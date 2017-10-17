@@ -16,7 +16,9 @@ componentDidMount() {
   fetch(`https://jsonplaceholder.typicode.com/users/${this.props.userName}`)
   .then((resp) => resp.json())
   .then((data) => {
-    this.setState({name: data.name, isLoading: false})
+    this.setState({name: data, isLoading: false})
+    const object = JSON.stringify(data);
+    alert(object);
   })
 }
 

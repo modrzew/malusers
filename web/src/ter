@@ -1,0 +1,89 @@
+<div className="userContent">
+        <div className="userColumn">
+              <div className="userName">sweetmonia</div>
+              <div className="lastUpdate">last update: 2017-10-09</div>
+            <div className="userRow">
+            <div className="anime"><img src="https://i.imgur.com/lQZCd2Q.png" /></div>
+            <div className="rankingAnime">
+            sweetmonia is <span className="placeCompleted">#305</span> ranked by number of <span className="completed">completed</span> anime and spent <span className="days">168,6 days</span> of life to watch <span className="days">431</span> titles and <span className="days">10.174</span> episodes in total, making it <span className="placeCompleted">#203</span> place ranked by total lost days. sweetmonia decided that <span className="titles">43</span> titles are not worth of watching and give them <span className="dropped">dropped</span> status, with <span className="placeDropped">#2137</span> place in this ranking. 
+            </div>
+            </div>
+            <div className="userRanking">
+            <div className="userCategory">
+            <div className="categoryName">in progress</div>
+              <div className="animeInProgress">012</div>
+            </div>
+            <div className="userCategory">
+            <div className="categoryName">completed</div>
+              <div className="animeCompleted">431</div>
+            </div>
+            <div className="userCategory">
+            <div className="categoryName">on hold</div>
+              <div className="animeOnHold">030</div>
+            </div>
+            <div className="userCategory">
+            <div className="categoryName">dropped</div>
+              <div className="animeDropped">043</div>
+            </div>
+            <div className="userCategory">
+            <div className="categoryName">planned</div>
+              <div className="animePlanned">017</div>
+            </div>
+            <div className="userCategory">
+            <div className="categoryName">rewatched</div>
+              <div className="animeRewatch">43</div>
+            </div>
+            <div className="userColumn">
+            <div className="categoryName">mean score</div>
+              <div className="animeMeanscore">6,39</div>
+            </div>
+            </div>
+            <div className="rankingManga"><span className="completed">Completed</span> mangas gave sweetmonia <span className="placeCompleted">#857</span>place in ranking, which is <span className="days">795</span> chapters and <span className="days">631</span> volumes read. sweetmonia didn't finished enough mangas that is <span className="placeDropped">#556</span> in <span className="dropped">dropped</span> category.</div>
+            <div className="userRow">
+            <div className="userColumn">
+            <div className="mangaInProgress">012</div>
+            <div className="categoryName">in progress</div>
+          </div>
+          <div className="userColumn">
+            <div className="mangaCompleted">007</div>
+            <div className="categoryName">completed</div>
+          </div>
+          <div className="userColumn">
+            <div className="mangaOnHold">002</div>
+            <div className="categoryName">on hold</div>
+          </div>
+          <div className="userColumn">
+            <div className="mangaDropped">000</div>
+            <div className="categoryName">dropped</div>
+          </div>
+          <div className="userColumn">
+              <div className="animeDropped">017</div>
+              <div className="categoryName">planned</div>
+            </div>
+            <div className="userColumn">
+              <div className="animeDropped">43</div>
+              <div className="categoryName">reread</div>
+            </div>
+            <div className="userColumn">
+              <div className="animeDropped">6,39</div>
+              <div className="categoryName">mean score</div>
+            </div>
+
+
+
+
+
+
+         </div>
+         </div>
+
+
+
+
+
+
+
+
+
+
+      </div>;
