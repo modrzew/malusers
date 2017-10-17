@@ -7,33 +7,33 @@ import (
 
 // AnimeStats is structure for holding anime statistics
 type AnimeStats struct {
-	gorm.Model
-	Username   string
-	InProgress int
-	Completed  int
-	OnHold     int
-	Dropped    int
-	Planned    int
-	Rewatched  int
-	Days       float64
-	MeanScore  float64
-	Episodes   int
+	gorm.Model `json:"-"`
+	Username   string  `json:"-"`
+	InProgress int     `json:"inProgress"`
+	Completed  int     `json:"completed"`
+	OnHold     int     `json:"onHold"`
+	Dropped    int     `json:"dropped"`
+	Planned    int     `json:"planned"`
+	Rewatched  int     `json:"rewatched"`
+	Days       float64 `json:"totalDays"`
+	MeanScore  float64 `json:"meanScore"`
+	Episodes   int     `json:"totalEpisodes"`
 }
 
 // MangaStats is structure for holding manga statistics
 type MangaStats struct {
-	gorm.Model
-	Username   string
-	InProgress int
-	Completed  int
-	OnHold     int
-	Dropped    int
-	Planned    int
-	Rewatched  int
-	Days       float64
-	MeanScore  float64
-	Chapters   int
-	Volumes    int
+	gorm.Model `json:"-"`
+	Username   string  `json:"-"`
+	InProgress int     `json:"inProgress"`
+	Completed  int     `json:"completed"`
+	OnHold     int     `json:"onHold"`
+	Dropped    int     `json:"dropped"`
+	Planned    int     `json:"planned"`
+	Rewatched  int     `json:"rewatched"`
+	Days       float64 `json:"totalDays"`
+	MeanScore  float64 `json:"meanScore"`
+	Chapters   int     `json:"totalChapters"`
+	Volumes    int     `json:"totalVolumes"`
 }
 
 // Relation - `from` user having `to` as friend
@@ -67,9 +67,11 @@ type BasicInfo struct {
 // User holds info about user and whether they were fetched
 type User struct {
 	gorm.Model
-	Username string
-	Birthday pq.NullTime `gorm:"type:date"`
-	Gender   string
-	Fetched  bool `gorm:"index"`
-	Fetching bool `gorm:"index"`
+	Username   string
+	Birthday   pq.NullTime `gorm:"type:date"`
+	Gender     string
+	Fetched    bool `gorm:"index"`
+	Fetching   bool `gorm:"index"`
+	AnimeStats AnimeStats
+	MangaStats MangaStats
 }

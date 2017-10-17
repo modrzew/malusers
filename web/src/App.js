@@ -10,6 +10,13 @@ class App extends Component {
     this.state = {
       userName: null
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
   }
 
   handleSubmit = (userName) => {

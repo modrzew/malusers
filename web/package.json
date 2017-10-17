@@ -14,5 +14,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^2.3.1",
+    "prettier": "1.7.4"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
