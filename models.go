@@ -75,4 +75,25 @@ type User struct {
 	Fetching    bool `gorm:"index"`
 	AnimeStats  AnimeStats
 	MangaStats  MangaStats
+	Ranking     Ranking
+}
+
+// TemporaryRanking holds info about user's ranking temporarily when table is recreated
+type TemporaryRanking struct {
+	gorm.Model
+	Username       string
+	CompletedAnime int
+	CompletedManga int
+	DroppedAnime   int
+	DroppedManga   int
+	TotalDaysAnime float64
+	TotalDaysManga float64
+	EpisodesAnime  int
+	ChaptersManga  int
+	VolumesManga   int
+}
+
+// Ranking holds info about user's ranking
+type Ranking struct {
+	TemporaryRanking
 }
