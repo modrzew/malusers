@@ -6,15 +6,29 @@ import (
 	"path"
 )
 
+type dbConfig struct {
+	Host     string
+	Port     int
+	Database string
+	Username string
+	Password string
+	SslMode  string
+}
+
+type apiConfig struct {
+	Host string
+	Port int
+}
+
+type scraperConfig struct {
+	MaxConcurrent int
+}
+
 // Configuration holds database settings
 type Configuration struct {
-	Host          string
-	Port          int
-	Database      string
-	Username      string
-	Password      string
-	SslMode       string
-	MaxConcurrent int
+	Database dbConfig
+	Scraper  scraperConfig
+	API      apiConfig
 }
 
 var configuration = Configuration{}

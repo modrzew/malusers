@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -15,9 +16,11 @@ func addHandlers(router *mux.Router, db *gorm.DB) {
 }
 
 func main() {
+	config := malusers.ReadConfig()
 	db := malusers.OpenDb()
 
 	router := mux.NewRouter()
 	addHandlers(router, db)
-	http.ListenAndServe("localhost:8000", router)
+	url := fmt.Sprintf("%s:%d", config.API.Host, config.API.Port)
+	http.ListenAndServe(url, router)
 }

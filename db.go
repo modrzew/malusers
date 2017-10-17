@@ -12,12 +12,12 @@ func OpenDb() *gorm.DB {
 	config := ReadConfig()
 	connection := fmt.Sprintf(
 		"host=%s port=%d dbname=%s user=%s password=%s sslmode=%s",
-		config.Host,
-		config.Port,
-		config.Database,
-		config.Username,
-		config.Password,
-		config.SslMode,
+		config.Database.Host,
+		config.Database.Port,
+		config.Database.Database,
+		config.Database.Username,
+		config.Database.Password,
+		config.Database.SslMode,
 	)
 	db, err := gorm.Open("postgres", connection)
 	if err != nil {

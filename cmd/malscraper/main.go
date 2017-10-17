@@ -45,9 +45,9 @@ func main() {
 
 	malusers.PopulateCache(db)
 
-	active := make(chan bool, config.MaxConcurrent)
-	go monitor(db, active, config.MaxConcurrent)
-	go overseer(db, active, config.MaxConcurrent)
+	active := make(chan bool, config.Scraper.MaxConcurrent)
+	go monitor(db, active, config.Scraper.MaxConcurrent)
+	go overseer(db, active, config.Scraper.MaxConcurrent)
 
 	// Maybe trigger first user?
 	var inDb *int
