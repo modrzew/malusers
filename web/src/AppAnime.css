@@ -1,0 +1,98 @@
+.anime {
+    order: 0;
+    flex: 0 1 auto;
+    width: 100px;
+    text-align: center;
+    color: #fff;
+    margin: 10px 15px 0px 20px;
+    font-size: 30px;
+    padding: 15px 15px 15px 15px;
+    border-radius: 20px;
+    background-color: #EFC743;
+  }
+
+  .User-anime {
+    margin: 20px 60px 20px 60px;
+    padding: 10px 10px 10px 10px;
+    color: #fff;
+    text-align: justify;
+    line-height: 30px;
+  }
+
+  .animeInProgress {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    text-align: right;
+    padding: 0px 0px 0px 30px;
+    color: #4FB5FF;
+    font-size: 37px;
+    margin-right: 10px;
+  }
+  
+  .animeCompleted {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    text-align: right;
+    padding: 0px 0px 0px 30px;
+    color: #99C432;
+    font-size: 37px;
+    margin-right: 10px;
+  }
+  
+  .animeOnHold {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    text-align: right;
+    padding: 0px 0px 0px 30px;
+    color: #C0C0C0;
+    font-size: 37px;
+    margin-right: 10px;
+  }
+  
+  .animeDropped {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    text-align: right;
+    padding: 0px 0px 0px 30px;
+    color: #FFA732;
+    font-size: 37px;
+    margin-right: 10px;
+  }
+  
+  .animePlanned {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    text-align: right;
+    padding: 0px 0px 0px 30px;
+    color: #BF4CBB;
+    font-size: 37px;
+    margin-right: 10px;
+  }
+  
+  .animeRewatch {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    text-align: right;
+    padding: 0px 0px 0px 30px;
+    color: #99C432;
+    font-size: 37px;
+    margin-right: 10px;
+  }
+  
+  .animeMeanscore {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    text-align: right;
+    padding: 0px 0px 0px 30px;
+    color: #EF8764;
+    font-size: 37px;
+    font-weight: bold;
+    margin-right: 10px;
+  }

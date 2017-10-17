@@ -17,8 +17,6 @@ export class GetUser extends Component {
       .then(resp => resp.json())
       .then(data => {
         this.setState({ name: data, isLoading: false });
-        const object = JSON.stringify(data);
-        alert(object);
       });
   }
 

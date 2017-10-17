@@ -24,11 +24,6 @@ body {
   width: 500px;
 }
 
-.App-intro {
-  font-size: large;
-  padding: 20px 0 0 0;
-}
-
 input[type=text] {
   padding:3px 3px 3px 5px;
   border:1px solid #ccc; 
@@ -65,22 +60,6 @@ input[type=submit] {
   font-size: 15px;
 }
 
-.User-anime {
-  margin: 20px 60px 20px 60px;
-  padding: 10px 10px 10px 10px;
-  color: #fff;
-  text-align: justify;
-  line-height: 30px;
-}
-
-.User-manga {
-  margin: 0px 60px 20px 60px;
-  padding: 10px 10px 10px 10px;
-  color: #fff;
-  text-align: justify;
-  line-height: 30px;
-}
-
 .User-row {
   display:flex;
   flex-direction:row;
@@ -93,56 +72,8 @@ input[type=submit] {
   padding: 20px 0px 0px 0px;
   width: 140px;
 }
-
 .User-col:first-child {
   margin: 0px 0px 0px 20px;
-}
-
-.User-ranking {
-  background-image: url("https://i.imgur.com/MPcDf2v.jpg");
-  background-repeat: repeat;
-  box-shadow: 0px 1px 5px 1px gray;
-  display:flex;
-  flex-direction:column;
-}
-
-.User-rancompleted {
-  color: #99C432;
-  font-size: 25px;
-}
-
-.User-completed {
-  color: #fff;
-  background-color: #99C432;
-  padding: 2px 3px 3px 2px;
-  border-radius: 5px;
-}
-
-.User-randropped {
-  color: #FFA732;
-  font-size: 25px;
-}
-
-.User-dropped {
-  color: #fff;
-  background-color: #FFA732;
-  padding: 2px 3px 3px 2px;
-  border-radius: 5px;
-}
-
-.User-randays {
-  color: #4FB5FF;
-  font-size: 25px;
-}
-
-.User-days {
-  color: #4FB5FF;
-  font-size: 20px;
-}
-
-.User-titlesdropped {
-  color: #FFA732;
-  font-size: 20px; 
 }
 
 .User-category {
@@ -155,189 +86,10 @@ input[type=submit] {
   padding: 10px 0px 0px 0px;
 }
 
-.animeInProgress {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #4FB5FF;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.animeCompleted {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #99C432;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.animeOnHold {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #C0C0C0;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.animeDropped {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #FFA732;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.animePlanned {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #BF4CBB;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.animeRewatch {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #99C432;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.animeMeanscore {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #EF8764;
-  font-size: 37px;
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.mangaInProgress {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #4FB5FF;
-  font-size: 37px;
-  margin: 0px 10px 0px 10px;
-}
-
-.mangaCompleted {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #99C432;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.mangaOnHold {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #C0C0C0;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.mangaDropped {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #FFA732;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.mangaPlanned {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #BF4CBB;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.mangaRewatch {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #99C432;
-  font-size: 37px;
-  margin-right: 10px;
-}
-
-.mangaMeanscore {
-  order: 0;
-  flex: 1 1 auto;
-  align-self: auto;
-  text-align: right;
-  padding: 0px 0px 0px 30px;
-  color: #EF8764;
-  font-size: 37px;
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.anime {
-  order: 0;
-  flex: 0 1 auto;
-  width: 100px;
-  text-align: center;
-  color: #fff;
-  margin: 10px 15px 0px 20px;
-  font-size: 30px;
-  padding: 15px 15px 15px 15px;
-  border-radius: 20px;
-  background-color: #EFC743;
-}
-
-.manga {
-  order: 0;
-  flex: 0 1 auto;
-  width: 100px;
-  text-align: center;
-  color: #fff;
-  margin: 10px 15px 0px 20px;
-  font-size: 30px;
-  padding: 15px 15px 15px 15px;
-  border-radius: 20px;
-  background-color: #22CCC6;
-}
-
-@keyframes App-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.User-info {
+  background-image: url("https://i.imgur.com/MPcDf2v.jpg");
+  background-repeat: repeat;
+  box-shadow: 0px 1px 5px 1px gray;
+  display:flex;
+  flex-direction:column;
 }

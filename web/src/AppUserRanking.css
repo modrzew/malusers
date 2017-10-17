@@ -1,0 +1,38 @@
+.User-rancompleted {
+    color: #99C432;
+    font-size: 25px;
+  }
+  
+  .User-completed {
+    color: #fff;
+    background-color: #99C432;
+    padding: 2px 3px 3px 2px;
+    border-radius: 5px;
+  }
+  
+  .User-randropped {
+    color: #FFA732;
+    font-size: 25px;
+  }
+  
+  .User-dropped {
+    color: #fff;
+    background-color: #FFA732;
+    padding: 2px 3px 3px 2px;
+    border-radius: 5px;
+  }
+  
+  .User-randays {
+    color: #4FB5FF;
+    font-size: 25px;
+  }
+  
+  .User-days {
+    color: #4FB5FF;
+    font-size: 20px;
+  }
+  
+  .User-titlesdropped {
+    color: #FFA732;
+    font-size: 20px; 
+  }
