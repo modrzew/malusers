@@ -32,7 +32,7 @@ func (h *Handlers) GetUserStats(w http.ResponseWriter, r *http.Request) {
 	h.DB.Where("username = ?", username).Find(&user.MangaStats)
 	age := time.Since(user.Birthday.Time).Hours() / 24 / 365
 	stats := UserStats{
-		Username:   user.Username,
+		Username:   user.DisplayName,
 		Age:        int(age),
 		LastUpdate: user.UpdatedAt.UTC(),
 		AnimeStats: user.AnimeStats,
