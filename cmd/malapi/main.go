@@ -12,7 +12,7 @@ import (
 	"github.com/modrzew/malusers/api"
 )
 
-func logger(inner http.HandlerFunc) http.Handler {
+func logger(inner http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		inner(w, r)
@@ -25,9 +25,16 @@ func logger(inner http.HandlerFunc) http.Handler {
 	})
 }
 
+func cors(inner http.HandlerFunc) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		inner(w, r)
+	})
+}
+
 func addHandlers(router *mux.Router, db *gorm.DB, cache *api.Cache) {
 	handlers := &api.Handlers{DB: db, Cache: cache}
-	router.Handle("/user/{username}", logger(handlers.GetUserStats)).Methods("GET")
+	router.Handle("/user/{username}", logger(cors(handlers.GetUserStats))).Methods("GET")
 }
 
 func main() {
