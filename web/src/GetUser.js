@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Users } from './Users';
+import { User } from './User';
 
 export class GetUser extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export class GetUser extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
 
-    fetch(`https://jsonplaceholder.typicode.com/users/${this.props.userName}`)
+    fetch(`https://api.mal.modriv.net/user/${this.props.userName}`)
       .then(resp => resp.json())
       .then(data => {
         this.setState({ name: data, isLoading: false });
@@ -25,7 +25,7 @@ export class GetUser extends Component {
     if (isLoading) {
       return <p>Loading...</p>;
     } else if (name != null) {
-      return <Users name={this.state.name} />;
+      return <User name={this.state.name} />;
     } else {
       return <p>Loading...</p>;
     }

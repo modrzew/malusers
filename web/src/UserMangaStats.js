@@ -1,40 +1,47 @@
 import React, { Component } from 'react';
-import './App.css';
+import './Category.css';
+import './CategoryManga.css';
 
 export class UserMangaStats extends Component {
   render() {
     return (
-      <div className="User-row">
-        <div className="User-col">
-          <div className="manga">manga</div>
+      <div className="Category-row">
+        <div className="Category-col">
+          <div className="category mangaBox">manga</div>
         </div>
-        <div className="User-col">
-          <div className="User-category">in progress</div>
-          <div className="mangaInProgress">012</div>
+        <div className="Category-col">
+          <div className="subcategory">in progress</div>
+          <div className="manga inProgress">
+            {this.props.mangaStats.inProgress}
+          </div>
         </div>
-        <div className="User-col">
-          <div className="User-category">completed</div>
-          <div className="mangaCompleted">007</div>
+        <div className="Category-col">
+          <div className="subcategory">completed</div>
+          <div className="manga completed">
+          {this.props.mangaStats.completed}
+          </div>
         </div>
-        <div className="User-col">
-          <div className="User-category">on hold</div>
-          <div className="mangaOnHold">03202</div>
+        <div className="Category-col">
+          <div className="subcategory">on hold</div>
+          <div className="manga onHold">{this.props.mangaStats.onHold}</div>
         </div>
-        <div className="User-col">
-          <div className="User-category">dropped</div>
-          <div className="mangaDropped">0020</div>
+        <div className="Category-col">
+          <div className="subcategory">dropped</div>
+          <div className="manga dropped">{this.props.mangaStats.dropped}</div>
         </div>
-        <div className="User-col">
-          <div className="User-category">planned</div>
-          <div className="mangaPlanned">017</div>
+        <div className="Category-col">
+          <div className="subcategory">planned</div>
+          <div className="manga planned">{this.props.mangaStats.planned}</div>
         </div>
-        <div className="User-col">
-          <div className="User-category">reread</div>
-          <div className="mangaRewatch">0200</div>
+        <div className="Category-col">
+          <div className="subcategory">reread</div>
+          <div className="manga rewatch">{this.props.mangaStats.rewatched}</div>
         </div>
-        <div className="User-col">
-          <div className="User-category">mean score</div>
-          <div className="mangaMeanscore">7,41</div>
+        <div className="Category-col">
+          <div className="subcategory">mean score</div>
+          <div className="manga meanScore">
+            {this.props.mangaStats.meanScore}
+          </div>
         </div>
       </div>
     );

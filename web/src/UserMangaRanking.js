@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
-import './App.css';
+import './CategoryRanking.css';
 
 export class UserMangaRanking extends Component {
   render() {
     return (
-      <div className="User-manga">
-        <span className="User-completed">Completed</span> mangas gave&nbsp;
-        sweetmonia <span className="User-rancompleted">#857</span> place in
-        ranking, which is <span className="User-days">795</span>&nbsp;chapters
-        and <span className="User-days">631</span> volumes read. sweetmonia
-        didn't finished enough mangas that is&nbsp;
-        <span className="User-randropped">#556</span> in&nbsp;
-        <span className="User-dropped">dropped</span> category.
+      <div className="categoryRanking">
+        <span className="label labelCompleted">Completed</span> manga gave&nbsp;
+        {this.props.userName}&nbsp;
+        <span className="ranking rankingCompleted">
+          #{this.props.mangaRanking.completed}
+        </span>
+        &nbsp;ranking, which is&nbsp;
+        <span className="tag tagChapters">
+          {this.props.mangaStats.totalChapters}
+        </span>
+        &nbsp;chapters and&nbsp;
+        <span className="tag tagVolumes">
+          {this.props.mangaStats.totalVolumes}
+        </span>
+        &nbsp;volumes read. {this.props.userName} didn't finish enough
+        &nbsp;manga that is&nbsp;
+        <span className="ranking rankingDropped">
+          #{this.props.mangaRanking.dropped}
+        </span>
+        &nbsp;in <span className="label labelDropped">dropped</span> category.
       </div>
     );
   }

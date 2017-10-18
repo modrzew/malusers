@@ -1,0 +1,35 @@
+.anime {
+  flex: 0 1 auto;
+  align-self: auto;
+  text-align: right;
+  font-size: 3rem;
+}
+
+.inProgress {
+  color: #4FB5FF;
+}
+  
+.completed {
+  color: #99C432;
+}
+  
+.onHold {
+  color: #C0C0C0;
+}
+  
+.dropped {
+  color: #FFA732;
+}
+  
+.planned {
+  color: #BF4CBB;
+}
+  
+.rewatch {
+  color: #99C432;
+}
+  
+.meanScore {
+  color: #EF8764;
+  font-weight: bold;
+}

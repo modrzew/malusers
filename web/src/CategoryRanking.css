@@ -1,0 +1,53 @@
+.categoryRanking {
+  padding: 30px 50px 20px 50px;
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: justify;
+  line-height: 35px;
+}
+
+.ranking {
+  font-size: 2.5rem;
+}
+
+.rankingCompleted {
+    color: #99C432;
+  }
+
+.rankingDropped {
+  color: #FFA732;
+}
+
+.rankingDays {
+  color: #4FB5FF;
+}
+  
+.label {
+  color: #fff;
+  padding: 4px 4px 4px 4px;
+  border-radius: 5px;
+  }
+
+.labelCompleted {
+  background-color: #99C432;
+}
+   
+.labelDropped {
+  background-color: #FFA732;
+}
+  
+.tag {
+  font-size: 2rem;
+} 
+
+.tagDays,
+.tagTitles,
+.tagEpisodes,
+.tagVolumes,
+.tagChapters {
+  color: #4FB5FF;
+}
+
+.tagTitlesDropped {
+  color: #FFA732;
+}
