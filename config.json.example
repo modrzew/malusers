@@ -1,9 +1,17 @@
 {
-    "host": "localhost",
-    "port": 5432,
-    "database": "example",
-    "username": "user",
-    "password": "",
-    "sslMode": "disable",
-    "maxConcurrent": 8
+    "database": {
+        "host": "localhost",
+        "port": 5432,
+        "database": "example",
+        "username": "user",
+        "password": "",
+        "sslMode": "disable"
+    },
+    "scraper": {
+        "maxConcurrent": 8
+    },
+    "api": {
+        "host": "localhost",
+        "port": 8000
+    }
 }

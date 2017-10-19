@@ -138,7 +138,7 @@ func ExtractFriendNames(elem *goquery.Selection) []string {
 	sel := elem.Find("div.friendBlock strong")
 	for i := range sel.Nodes {
 		elem := sel.Eq(i)
-		names = append(names, elem.Text())
+		names = append(names, strings.ToLower(elem.Text()))
 	}
 	return names
 }

@@ -2,6 +2,7 @@ package malusers
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/jinzhu/gorm"
@@ -30,13 +31,15 @@ func PopulateCache(db *gorm.DB) {
 func getOrCreateUser(username string, db *gorm.DB) *User {
 	mux.Lock()
 	defer mux.Unlock()
+	displayName := username
+	username = strings.ToLower(username)
 	if user, ok := usersCache[username]; ok {
 		return user
 	}
-	user := &User{Username: username}
+	user := &User{Username: username, DisplayName: displayName}
 	db.Create(&user)
-	usersCache[user.Username] = user
-	usersToFetch[user.Username] = user
+	usersCache[username] = user
+	usersToFetch[username] = user
 	return user
 }
 

@@ -1,8 +1,12 @@
-# web
-language: node_js
-node_js:
-  - "node"
-install:
-  - cd web && npm install
+language: go
+go:
+  - 1.9.x
+node:
+  - 8.4.x
+before_install:
+  - npm install -g yarn
+  - cd web && yarn install && cd ..
 script:
-  - ./node_modules/.bin/eslint .
+  - go vet -v ./...
+  - go build -v ./...
+  - cd web && yarn eslint .
