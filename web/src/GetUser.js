@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { User } from './User';
-import './Loader.css';
+import { Loader } from './Loader';
 
 const API_URL = 'https://api.mal.modriv.net';
 
@@ -26,19 +26,11 @@ export class GetUser extends Component {
   render() {
     const { name, isLoading } = this.state;
     if (isLoading) {
-      return (
-        <div className="loader-wrapper">
-          <div className="loader" />
-        </div>
-      );
+      return <Loader />;
     } else if (name !== null) {
       return <User name={this.state.name} />;
     } else {
-      return (
-        <div className="loader-wrapper">
-          <div className="loader" />
-        </div>
-      );
+      return <Loader />;
     }
   }
 }
