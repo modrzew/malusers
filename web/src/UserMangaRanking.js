@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './CategoryRanking.css';
 import numeral from 'numeral';
-import 'numeral/locales';
-
-numeral.locale('pl');
 
 export class UserMangaRanking extends Component {
   render() {
@@ -25,16 +22,16 @@ export class UserMangaRanking extends Component {
       <div className="categoryRanking">
         <span className="label labelCompleted">Completed</span> manga gave&nbsp;
         {this.props.userName}&nbsp;
-        <span className="ranking rankingCompleted">{mangaCompleted}</span>
+        <span className="ranking rankingCompleted">#{mangaCompleted}</span>
         &nbsp;place in this ranking. It means that {this.props.userName}
         &nbsp;read&nbsp;
         <span className="tag tagChapters">{mangaChapters}</span>
         &nbsp;chapters and&nbsp;
         <span className="tag tagVolumes">{mangaVolumes}</span>
         &nbsp;manga volumes already, spending&nbsp;
-        <span className="tag tagDays">{mangaTagDays}</span>
-        &nbsp;days to do it.&nbsp;
-        <span className="ranking rankingDropped">{mangaDropped}</span>
+        <span className="tag tagDays">{mangaTagDays}</span>&nbsp;
+        <span className="label labelDays">days</span> to do it.&nbsp;
+        <span className="ranking rankingDropped">#{mangaDropped}</span>
         &nbsp;place in <span className="label labelDropped">dropped</span>
         &nbsp;category means that&nbsp;
         <span className="tag tagTitlesDropped">{mangaTitlesDropped}</span>

@@ -35,16 +35,23 @@
 .labelDropped {
   background-color: #FFA732;
 }
+
+.labelDays {
+  background-color: #4FB5FF;
+}
   
 .tag {
   font-size: 2rem;
 } 
 
-.tagDays,
 .tagTitles,
 .tagEpisodes,
 .tagVolumes,
 .tagChapters {
+  color: #99C432;
+}
+
+.tagDays {
   color: #4FB5FF;
 }
 

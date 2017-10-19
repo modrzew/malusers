@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './CategoryRanking.css';
 import numeral from 'numeral';
-import 'numeral/locales';
-
-numeral.locale('pl');
 
 export class UserAnimeRanking extends Component {
   render() {
@@ -25,24 +22,25 @@ export class UserAnimeRanking extends Component {
     return (
       <div className="categoryRanking">
         {this.props.userName} is&nbsp;
-        <span className="ranking rankingCompleted">{animeCompleted}</span>
-        &nbsp;number of&nbsp;
+        <span className="ranking rankingCompleted">#{animeCompleted}</span>
+        &nbsp;in&nbsp;
         <span className="label labelCompleted">completed</span>
-        &nbsp;anime and spent&nbsp;
+        &nbsp;anime ranking and spent&nbsp;
         <span className="tag tagDays">{animeTagDays}</span>
         &nbsp;days of life to watch&nbsp;
         <span className="tag tagTitles">{animeTagTitles}</span> titles&nbsp;
         and&nbsp;
         <span className="tag tagEpisodes">{animeTagEpisodes}</span>
         &nbsp;episodes in total, making it&nbsp;
-        <span className="ranking rankingDays">{animeDays}</span>
-        &nbsp;place ranked by total lost days. {this.props.userName} decided
-        &nbsp;that&nbsp;
+        <span className="ranking rankingDays">#{animeDays}</span>
+        &nbsp;place ranked by total&nbsp;
+        <span className="label labelDays">lost days</span>.&nbsp;
+        {this.props.userName} decided that&nbsp;
         <span className="tag tagTitlesDropped">{animeTitlesDropped}</span>
         &nbsp;titles are not worth of watching and gave them&nbsp;
         <span className="label labelDropped">dropped</span>
-        &nbsp;status, with&nbsp;
-        <span className="ranking rankingDropped">{animeDropped}</span>
+        &nbsp;status, being&nbsp;
+        <span className="ranking rankingDropped">#{animeDropped}</span>
         &nbsp;in this ranking.
       </div>
     );
