@@ -5,16 +5,18 @@ import { UserAnimeRanking } from './UserAnimeRanking';
 import { UserMangaRanking } from './UserMangaRanking';
 import { UserAnimeStats } from './UserAnimeStats';
 import { UserMangaStats } from './UserMangaStats';
+import moment from 'moment';
 
 export class User extends Component {
   render() {
+    const date = moment(this.props.name.lastUpdate).format(
+      'dddd, MMMM Do YYYY, h:mm a'
+    );
     return (
       <div className="userBody">
         <div className="userInfo">
           <div className="userName userStand">{this.props.name.username}</div>
-          <div className="userUpdate userStand">
-            last update: {this.props.name.lastUpdate}
-          </div>
+          <div className="userUpdate userStand">last update: {date}</div>
           <UserAnimeRanking
             userName={this.props.name.username}
             animeRanking={this.props.name.ranking.anime}
