@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Error } from './Error';
 import './App.css';
 
 export class Search extends Component {
@@ -29,6 +30,7 @@ export class Search extends Component {
           onChange={this.handleChange}
         />
         <button onClick={this.handleOnClick}>Submit</button>
+        {this.props.showError && <Error />}
       </div>
     );
   }

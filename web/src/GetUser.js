@@ -20,6 +20,9 @@ export class GetUser extends Component {
       .then(resp => resp.json())
       .then(data => {
         this.setState({ name: data, isLoading: false });
+      })
+      .catch(error => {
+        this.props.onError(error);
       });
   }
 
