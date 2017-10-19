@@ -19,7 +19,6 @@
   border-top: 3px solid #4FB5FF;
   border-radius: 50%;
   z-index: 1500;
-  animation: spin 1.5s linear infinite;
   animation: spin 2s linear infinite;
   }
 
@@ -33,7 +32,6 @@
   border: 3px solid transparent;
   border-top: 3px solid #FFA732;
   border-radius: 50%;
-  animation: spin 1.5s linear infinite;
   animation: spin 3s linear infinite;
 }
 
