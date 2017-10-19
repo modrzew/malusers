@@ -1,44 +1,37 @@
 import React, { Component } from 'react';
 import './App.css';
+import { Search } from './Search';
+import { GetUser } from './GetUser';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      userName: null,
+      error: null
+    };
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({ value: event.target.value });
-  }
+  };
 
-  handleSubmit(event) {
-    alert('Please wait');
-    event.preventDefault();
-  }
+  handleSubmit = userName => {
+    this.setState({ userName: userName, error: null });
+  };
+
+  handleError = error => {
+    this.setState({ error: error });
+  };
 
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">welcome to malusers</h1>
-        </header>
-
-        <div className="App-intro">
-          <form onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              placeholder="User name"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-            <input type="submit" value="Submit" />
-          </form>
-        </div>
-      </div>
-    );
+    const userName = this.state.userName;
+    const error = this.state.error;
+    if (userName && !error) {
+      return <GetUser userName={userName} onError={this.handleError} />;
+    } else {
+      return <Search onSubmit={this.handleSubmit} showError={error} />;
+    }
   }
 }
 

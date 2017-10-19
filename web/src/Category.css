@@ -1,0 +1,41 @@
+.Category-row {
+    display:flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    padding: 25px 0px 0px 20px;
+  }
+  
+.Category-col {
+  display:flex;
+  flex-direction:column;
+  text-align: right;
+  margin-right: 20px;
+  width: 120px;
+}
+
+.Category-col:first-child {
+  margin-left: 20px;
+}
+
+.subcategory {
+  flex: 0 1 auto;
+  text-align: right;
+  color: #636363;
+  font-size: 1.5rem;
+}
+
+.category {
+  flex: 0 1 auto;
+  width: 100px;
+  text-align: center;
+  color: #636363;
+  font-size: 2rem;
+}
+  
+.animeBox {
+  border-bottom: 10px solid #FFA732;
+}
+  
+.mangaBox {
+  border-bottom: 10px solid #4FB5FF;
+}

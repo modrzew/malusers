@@ -1,40 +1,41 @@
+html {
+  font-size: 12px;
+}
+
+body {
+  background-color: #F2F2F2;
+ }
+
 .App {
-  text-align: center;
+  padding: 100px 0px 50px 100px;
+  background-image: url("https://i.imgur.com/MPcDf2v.jpg");
+  background-repeat: repeat;
+  box-shadow: 0px 1px 5px 1px gray;
 }
 
-.App-header {
-  background-color: #222;
-  height: 80px;
-  padding: 20px;
-  color: white;
+.AppTitle {
+  font-size: 2.5rem;
+  color: #fff;
+  width: 480px;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-  padding: 20px 0 0 0;
+.AppInstructions {
+  color: #fff;
+  padding: 10px 0px 5px 0px;
+  width: 500px;
 }
 
 input[type=text] {
   padding:3px 3px 3px 5px;
   border:1px solid #ccc; 
   border-radius: 4px;
-  box-shadow: 1px 1px 10px #D3D3D3;
 }
 
-input[type=submit] {
-  background: #1990FF;
+button {
+  background: #99C432;
   color: #fff;
   margin-left: 5px;
   padding: 3px 5px 3px 5px;
-  border:1px solid #1990FF; 
+  border: 1px solid #99C432; 
   border-radius: 4px;
-}
-
-@keyframes App-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
