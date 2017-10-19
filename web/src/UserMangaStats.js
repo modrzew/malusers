@@ -18,7 +18,7 @@ export class UserMangaStats extends Component {
         <div className="Category-col">
           <div className="subcategory">completed</div>
           <div className="manga completed">
-          {this.props.mangaStats.completed}
+            {this.props.mangaStats.completed}
           </div>
         </div>
         <div className="Category-col">
