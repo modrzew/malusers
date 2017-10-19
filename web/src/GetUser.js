@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { User } from './User';
+import './Loader.css';
+
+const API_URL = 'https://api.mal.modriv.net';
 
 export class GetUser extends Component {
   constructor(props) {
@@ -13,7 +16,7 @@ export class GetUser extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
 
-    fetch(`https://api.mal.modriv.net/user/${this.props.userName}`)
+    fetch(`${API_URL}/user/${this.props.userName}`)
       .then(resp => resp.json())
       .then(data => {
         this.setState({ name: data, isLoading: false });
@@ -23,11 +26,19 @@ export class GetUser extends Component {
   render() {
     const { name, isLoading } = this.state;
     if (isLoading) {
-      return <p>Loading...</p>;
-    } else if (name != null) {
+      return (
+        <div className="loader-wrapper">
+          <div className="loader" />
+        </div>
+      );
+    } else if (name !== null) {
       return <User name={this.state.name} />;
     } else {
-      return <p>Loading...</p>;
+      return (
+        <div className="loader-wrapper">
+          <div className="loader" />
+        </div>
+      );
     }
   }
 }

@@ -7,7 +7,7 @@ export class UserAnimeStats extends Component {
     return (
       <div className="Category-row">
         <div className="Category-col">
-          <div className="category animeBox">anime</div>
+          <div className="category animeBox">anime stats</div>
         </div>
         <div className="Category-col">
           <div className="subcategory">in progress</div>

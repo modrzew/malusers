@@ -1,9 +1,9 @@
 .categoryRanking {
-  padding: 30px 50px 20px 50px;
+  padding: 20px 50px 20px 50px;
   font-size: 1.5rem;
   color: #fff;
   text-align: justify;
-  line-height: 35px;
+  line-height: 3rem;
 }
 
 .ranking {
@@ -11,8 +11,8 @@
 }
 
 .rankingCompleted {
-    color: #99C432;
-  }
+  color: #99C432;
+}
 
 .rankingDropped {
   color: #FFA732;

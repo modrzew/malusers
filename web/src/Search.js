@@ -18,10 +18,10 @@ export class Search extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="AppTitle">
-          Hi there, welcome to malusers the ultimate mal scrapper.
-        </h1>
-        <h2 className="AppInstructions">Please enter user name</h2>
+        <div className="AppTitle">
+          Hi there, welcome to malusers, the ultimate MAL scrapper.
+        </div>
+        <div className="AppInstructions">Please enter user name</div>
         <input
           type="text"
           placeholder="User name"

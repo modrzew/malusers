@@ -7,7 +7,7 @@ export class UserMangaStats extends Component {
     return (
       <div className="Category-row">
         <div className="Category-col">
-          <div className="category mangaBox">manga</div>
+          <div className="category mangaBox">manga stats</div>
         </div>
         <div className="Category-col">
           <div className="subcategory">in progress</div>
