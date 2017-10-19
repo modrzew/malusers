@@ -3,6 +3,6 @@ import './Error.css';
 
 export class Error extends Component {
   render() {
-    return <div className="AppError">Invalid user name</div>;
+    return <div className="Error">Invalid user name</div>;
   }
 }
