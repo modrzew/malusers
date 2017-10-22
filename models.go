@@ -97,3 +97,23 @@ type TemporaryRanking struct {
 type Ranking struct {
 	TemporaryRanking
 }
+
+// GlobalStats holds info about ranking for all users grouped by birth year and gender
+type GlobalStats struct {
+	gorm.Model
+	Users             int
+	BirthYear         int
+	Gender            string
+	AnimeCompletedSum int
+	AnimeCompletedAvg int
+	AnimeDroppedSum   int
+	AnimeDroppedAvg   int
+	AnimeDaysSum      int
+	AnimeDaysAvg      int
+	MangaCompletedSum int
+	MangaCompletedAvg int
+	MangaDroppedSum   int
+	MangaDroppedAvg   int
+	MangaDaysSum      int
+	MangaDaysAvg      int
+}

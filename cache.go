@@ -49,16 +49,16 @@ func removeFromToFetch(username string) {
 	mux.Unlock()
 }
 
-type Stats struct {
+type CacheStats struct {
 	Fetched int
 	ToFetch int
 }
 
-func GetStatsFromCache() *Stats {
+func GetStatsFromCache() *CacheStats {
 	mux.Lock()
 	defer mux.Unlock()
 	toFetch := len(usersToFetch)
-	return &Stats{
+	return &CacheStats{
 		Fetched: len(usersCache) - toFetch,
 		ToFetch: toFetch,
 	}

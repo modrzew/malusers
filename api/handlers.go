@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
+	"github.com/modrzew/malusers"
 )
 
 // Handlers contains reference to the database and all handlers
@@ -27,4 +28,15 @@ func (h *Handlers) GetUserStats(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	json.NewEncoder(w).Encode(stats)
+}
+
+// GetGlobalStats returns JSON info about global stats
+func (h *Handlers) GetGlobalStats(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	kind := strings.ToLower(params["kind"])
+	group := strings.ToLower(params["group"])
+	if kind == "anime" {
+		stats := malusers.GetAnimeStats(h.DB, group)
+		json.NewEncoder(w).Encode(stats)
+	}
 }
