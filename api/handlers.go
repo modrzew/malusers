@@ -8,7 +8,6 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
-	"github.com/modrzew/malusers"
 )
 
 // Handlers contains reference to the database and all handlers
@@ -35,6 +34,6 @@ func (h *Handlers) GetGlobalStats(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	kind := strings.ToLower(params["kind"])
 	group := strings.ToLower(params["group"])
-	stats := malusers.GetGlobalStats(h.DB, kind, group)
+	stats := h.Cache.GetStats(kind, group)
 	json.NewEncoder(w).Encode(stats)
 }
