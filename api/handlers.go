@@ -28,3 +28,12 @@ func (h *Handlers) GetUserStats(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode(stats)
 }
+
+// GetGlobalStats returns JSON info about global stats
+func (h *Handlers) GetGlobalStats(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	kind := strings.ToLower(params["kind"])
+	group := strings.ToLower(params["group"])
+	stats := h.Cache.GetStats(kind, group)
+	json.NewEncoder(w).Encode(stats)
+}

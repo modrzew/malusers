@@ -35,6 +35,7 @@ func cors(inner http.HandlerFunc) http.HandlerFunc {
 func addHandlers(router *mux.Router, db *gorm.DB, cache *api.Cache) {
 	handlers := &api.Handlers{DB: db, Cache: cache}
 	router.Handle("/user/{username}", logger(cors(handlers.GetUserStats))).Methods("GET")
+	router.Handle("/stats/{kind:(?:anime|manga)}/{group:(?:gender|year)}", logger(cors(handlers.GetGlobalStats))).Methods("GET")
 }
 
 func main() {

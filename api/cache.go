@@ -8,10 +8,16 @@ import (
 	"github.com/modrzew/malusers"
 )
 
+type statsKey struct {
+	kind   string
+	filter string
+}
+
 type Cache struct {
 	db         *gorm.DB
 	totalCount int
 	users      map[string]*UserStats
+	stats      map[statsKey]*malusers.Stats
 }
 
 func GetCache(db *gorm.DB) *Cache {
@@ -19,6 +25,7 @@ func GetCache(db *gorm.DB) *Cache {
 		db:         db,
 		totalCount: -1,
 		users:      make(map[string]*UserStats),
+		stats:      make(map[statsKey]*malusers.Stats),
 	}
 }
 
@@ -53,4 +60,14 @@ func (c *Cache) GetUser(username string) (*UserStats, error) {
 	}
 	c.users[username] = stats
 	return stats, nil
+}
+
+func (c *Cache) GetStats(kind string, filter string) malusers.Stats {
+	key := statsKey{kind: kind, filter: filter}
+	if stats, ok := c.stats[key]; ok {
+		return *stats
+	}
+	stats := malusers.GetGlobalStats(c.db, kind, filter)
+	c.stats[key] = &stats
+	return stats
 }
