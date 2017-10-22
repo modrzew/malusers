@@ -35,8 +35,6 @@ func (h *Handlers) GetGlobalStats(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	kind := strings.ToLower(params["kind"])
 	group := strings.ToLower(params["group"])
-	if kind == "anime" {
-		stats := malusers.GetAnimeStats(h.DB, group)
-		json.NewEncoder(w).Encode(stats)
-	}
+	stats := malusers.GetGlobalStats(h.DB, kind, group)
+	json.NewEncoder(w).Encode(stats)
 }

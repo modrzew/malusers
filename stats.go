@@ -21,6 +21,18 @@ type StatsKind struct {
 
 type Stats map[string]StatsKind
 
+type StatsRow struct {
+	Users        int
+	BirthYear    int
+	Gender       string
+	CompletedSum int
+	CompletedAvg int
+	DroppedSum   int
+	DroppedAvg   int
+	DaysSum      int
+	DaysAvg      int
+}
+
 func GenerateStatsTable(db *gorm.DB) {
 	db.DropTableIfExists(&GlobalStats{})
 	db.CreateTable(&GlobalStats{})
@@ -63,9 +75,8 @@ func GenerateStatsTable(db *gorm.DB) {
 	`)
 }
 
-func GetAnimeStats(db *gorm.DB, filter string) Stats {
+func GetGlobalStats(db *gorm.DB, kind string, filter string) Stats {
 	stats := make(Stats)
-	db.LogMode(true)
 	var groupBy string
 	if filter == "year" {
 		groupBy = "birth_year"
@@ -73,29 +84,29 @@ func GetAnimeStats(db *gorm.DB, filter string) Stats {
 		groupBy = "gender"
 	}
 	query := db.Model(&GlobalStats{}).Select(groupBy).Select(fmt.Sprintf(`
-		%s, SUM(users) AS users,
-		SUM(anime_completed_sum) AS anime_completed_sum,
-		ROUND(AVG(anime_completed_avg)) AS anime_completed_avg,
-		SUM(anime_dropped_sum) AS anime_dropped_sum,
-		ROUND(AVG(anime_dropped_avg)) AS anime_dropped_avg,
-		SUM(anime_days_sum) AS anime_days_sum,
-		ROUND(AVG(anime_days_avg)) AS anime_days_avg
-	`, groupBy)).Group(groupBy)
-	var results []GlobalStats
-	query.Find(&results)
+		%[1]s, SUM(users) AS users,
+		SUM(%[2]s_completed_sum) AS completed_sum,
+		ROUND(AVG(%[2]s_completed_avg)) AS completed_avg,
+		SUM(%[2]s_dropped_sum) AS dropped_sum,
+		ROUND(AVG(%[2]s_dropped_avg)) AS dropped_avg,
+		SUM(%[2]s_days_sum) AS days_sum,
+		ROUND(AVG(%[2]s_days_avg)) AS days_avg
+	`, groupBy, kind)).Group(groupBy)
+	var results []StatsRow
+	query.Scan(&results)
 	for _, row := range results {
 		value := StatsKind{
 			Completed: StatsEntry{
-				Count: row.AnimeCompletedSum,
-				Mean:  row.AnimeCompletedAvg,
+				Count: row.CompletedSum,
+				Mean:  row.CompletedAvg,
 			},
 			Dropped: StatsEntry{
-				Count: row.AnimeDroppedSum,
-				Mean:  row.AnimeDroppedAvg,
+				Count: row.DroppedSum,
+				Mean:  row.DroppedAvg,
 			},
 			TotalDays: StatsEntry{
-				Count: row.AnimeDaysSum,
-				Mean:  row.AnimeDaysAvg,
+				Count: row.DaysSum,
+				Mean:  row.DaysAvg,
 			},
 		}
 		if filter == "year" {
