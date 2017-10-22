@@ -7,20 +7,24 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// StatsEntry holds data for single "cell" in stats response
 type StatsEntry struct {
 	Count  int `json:"count"`
 	Mean   int `json:"mean"`
 	Median int `json:"median"`
 }
 
+// StatsKind holds data for single group in stats response
 type StatsKind struct {
 	Completed StatsEntry `json:"completed"`
 	Dropped   StatsEntry `json:"dropped"`
 	TotalDays StatsEntry `json:"total_days"`
 }
 
+// Stats holds data for whole response
 type Stats map[string]StatsKind
 
+// StatsRow is used to map DB results to response
 type StatsRow struct {
 	Users        int
 	BirthYear    int
@@ -33,6 +37,7 @@ type StatsRow struct {
 	DaysAvg      int
 }
 
+// GenerateStatsTable recreates stats table in database
 func GenerateStatsTable(db *gorm.DB) {
 	db.DropTableIfExists(&GlobalStats{})
 	db.CreateTable(&GlobalStats{})
@@ -75,6 +80,7 @@ func GenerateStatsTable(db *gorm.DB) {
 	`)
 }
 
+// GetGlobalStats extracts appropriate stats from database
 func GetGlobalStats(db *gorm.DB, kind string, filter string) Stats {
 	stats := make(Stats)
 	var groupBy string
