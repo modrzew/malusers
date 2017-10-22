@@ -22,5 +22,7 @@ func main() {
 	} else if command == "stats" {
 		fmt.Println("Regenerating global stats")
 		malusers.GenerateStatsTable(db)
+	} else {
+		fmt.Println("Please use either `maldata ranking` or `maldata stats`.")
 	}
 }
