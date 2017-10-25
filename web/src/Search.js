@@ -16,9 +16,16 @@ export class Search extends Component {
     this.props.onSubmit(this.state.value);
   };
 
+  handleButtonOnClick = showComponent => {
+    this.props.onButtonSubmit();
+  };
+
   render() {
     return (
       <div className="App">
+        <button className="ChartButton" onClick={this.handleButtonOnClick}>
+          Charts
+        </button>
         <div className="AppTitle">
           Hi there, welcome to malusers, the ultimate MAL scrapper.
         </div>
