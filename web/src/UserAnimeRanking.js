@@ -21,27 +21,23 @@ export class UserAnimeRanking extends Component {
     );
     return (
       <div className="categoryRanking">
-        {this.props.userName} is&nbsp;
-        <span className="ranking rankingCompleted">#{animeCompleted}</span>
-        &nbsp;in&nbsp;
-        <span className="label labelCompleted">completed</span>
-        &nbsp;anime ranking and spent&nbsp;
-        <span className="tag tagDays">{animeTagDays}</span>
-        &nbsp;days of life to watch&nbsp;
-        <span className="tag tagTitles">{animeTagTitles}</span> titles&nbsp;
-        and&nbsp;
-        <span className="tag tagEpisodes">{animeTagEpisodes}</span>
-        &nbsp;episodes in total, making it&nbsp;
-        <span className="ranking rankingDays">#{animeDays}</span>
-        &nbsp;place ranked by total&nbsp;
-        <span className="label labelDays">lost days</span>.&nbsp;
-        {this.props.userName} decided that&nbsp;
-        <span className="tag tagTitlesDropped">{animeTitlesDropped}</span>
-        &nbsp;titles are not worth of watching and gave them&nbsp;
-        <span className="label labelDropped">dropped</span>
-        &nbsp;status, being&nbsp;
-        <span className="ranking rankingDropped">#{animeDropped}</span>
-        &nbsp;in this ranking.
+        {this.props.userName} is{' '}
+        <span className="ranking rankingCompleted">#{animeCompleted}</span> in{' '}
+        <span className="label labelCompleted">completed</span> anime ranking
+        and spent <span className="tag tagDays">{animeTagDays}</span> days of{' '}
+        life to watch <span className="tag tagTitles">
+          {animeTagTitles}
+        </span>{' '}
+        titles and <span className="tag tagEpisodes">{animeTagEpisodes}</span> {' '}
+        episodes in total, making it{' '}
+        <span className="ranking rankingDays">#{animeDays}</span> place ranked
+        by total <span className="label labelDays">lost days</span>.{' '}
+        {this.props.userName} decided that{' '}
+        <span className="tag tagTitlesDropped">{animeTitlesDropped}</span>{' '}
+        titles are not worth of watching and gave them{' '}
+        <span className="label labelDropped">dropped</span> status, being{' '}
+        <span className="ranking rankingDropped">#{animeDropped}</span> in this{' '}
+        ranking.
       </div>
     );
   }

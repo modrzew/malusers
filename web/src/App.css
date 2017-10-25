@@ -6,17 +6,40 @@ body {
   background-color: #F2F2F2;
  }
 
-.App {
-  padding: 100px 0px 50px 100px;
+ @media only screen and (max-width: 1000px) {
+  .App {
   background-image: url("https://i.imgur.com/MPcDf2v.jpg");
   background-repeat: repeat;
   box-shadow: 0px 1px 5px 1px gray;
+  padding: 10px 0px 10px 15px;}
 }
 
+@media only screen and (min-width: 1000px) {
+  .App {
+  background-image: url("https://i.imgur.com/MPcDf2v.jpg");
+  background-repeat: repeat;
+  box-shadow: 0px 1px 5px 1px gray;
+  padding: 80px 0px 20px 100px;}
+}
+
+@media only screen and (max-width: 1000px) {
 .AppTitle {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #fff;
-  width: 480px;
+  width: 70%;}
+}
+
+@media only screen and (min-width: 1000px) {
+  .AppTitle {
+    font-size: 2.5rem;
+    color: #fff;
+    width: 50%;}
+  }
+
+.ChartButton {
+  position: fixed;
+  top: 10px;
+  right: 10px; 
 }
 
 .AppInstructions {

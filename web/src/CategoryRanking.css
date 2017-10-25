@@ -1,13 +1,29 @@
+@media only screen and (max-width: 1000px) {
 .categoryRanking {
-  padding: 20px 50px 20px 50px;
-  font-size: 1.5rem;
+  padding: 10px 15px 0px 15px;;
+  font-size: 1.25rem;
   color: #fff;
   text-align: justify;
-  line-height: 3rem;
+  line-height: 2.25rem;}
 }
 
+@media only screen and (min-width: 1000px) {
+  .categoryRanking {
+    padding: 20px 50px 20px 50px;
+    font-size: 1.5rem;
+    color: #fff;
+    text-align: justify;
+    line-height: 3rem;}
+  }
+
+@media only screen and (max-width: 1000px) {
 .ranking {
-  font-size: 2.5rem;
+  font-size: 1.75rem;}
+}
+
+@media only screen and (min-width: 1000px) {
+  .ranking {
+    font-size: 2.5rem;}
 }
 
 .rankingCompleted {
@@ -21,11 +37,19 @@
 .rankingDays {
   color: #4FB5FF;
 }
-  
+
+@media only screen and (max-width: 1000px) {
 .label {
   color: #fff;
-  padding: 4px 4px 4px 4px;
-  border-radius: 5px;
+  padding: 2px 2px 2px 2px;
+  border-radius: 3px;}
+}
+
+@media only screen and (min-width: 1000px) {
+  .label {
+    color: #fff;
+    padding: 4px 4px 4px 4px;
+    border-radius: 5px;}
   }
 
 .labelCompleted {
@@ -39,10 +63,16 @@
 .labelDays {
   background-color: #4FB5FF;
 }
-  
+
+@media only screen and (max-width: 1000px) {
 .tag {
-  font-size: 2rem;
-} 
+  font-size: 1.75rem;} 
+}
+
+@media only screen and (min-width: 1000px) {
+  .tag {
+    font-size: 2rem;} 
+  }
 
 .tagTitles,
 .tagEpisodes,

@@ -3,17 +3,33 @@
   color: #fff;
 }
   
+@media only screen and (max-width: 1000px) {
 .userName {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
-  padding: 30px 0px 0px 50px;
+  padding: 10px 0px 0px 15px;}
 }
-  
-.userUpdate {
-  padding: 0px 0px 0px 50px;
-  font-size: 1.25rem;
+
+@media only screen and (min-width: 1000px) {
+  .userName {
+    font-size: 3rem;
+    font-weight: bold;
+    padding: 30px 0px 0px 50px;}
+  }
+
+@media only screen and (max-width: 1000px) {
+  .userUpdate {
+    padding: 0px 0px 10px 15px;
+    font-size: 1rem;
+  }
 }
-  
+
+@media only screen and (min-width: 1000px) {
+  .userUpdate {
+    padding: 0px 0px 0px 50px;
+    font-size: 1.25rem;}
+}
+
 .userInfo { 
   background-image: url("https://i.imgur.com/MPcDf2v.jpg");
   background-repeat: repeat;

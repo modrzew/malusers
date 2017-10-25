@@ -20,22 +20,20 @@ export class UserMangaRanking extends Component {
     );
     return (
       <div className="categoryRanking">
-        <span className="label labelCompleted">Completed</span> manga gave&nbsp;
-        {this.props.userName}&nbsp;
-        <span className="ranking rankingCompleted">#{mangaCompleted}</span>
-        &nbsp;place in this ranking. It means that {this.props.userName}
-        &nbsp;read&nbsp;
-        <span className="tag tagChapters">{mangaChapters}</span>
-        &nbsp;chapters and&nbsp;
-        <span className="tag tagVolumes">{mangaVolumes}</span>
-        &nbsp;manga volumes already, spending&nbsp;
-        <span className="tag tagDays">{mangaTagDays}</span>&nbsp;
-        <span className="label labelDays">days</span> to do it.&nbsp;
-        <span className="ranking rankingDropped">#{mangaDropped}</span>
-        &nbsp;place in <span className="label labelDropped">dropped</span>
-        &nbsp;category means that&nbsp;
-        <span className="tag tagTitlesDropped">{mangaTitlesDropped}</span>
-        &nbsp;unread manga is enough for this rank.
+        <span className="label labelCompleted">Completed</span> manga gave{' '}
+        {this.props.userName}{' '}
+        <span className="ranking rankingCompleted">#{mangaCompleted}</span>{' '}
+        place in this ranking. It means that {this.props.userName} read{' '}
+        <span className="tag tagChapters">{mangaChapters}</span> chapters and{' '}
+        <span className="tag tagVolumes">{mangaVolumes}</span> manga volumes
+        already, spending <span className="tag tagDays">
+          {mangaTagDays}
+        </span>{' '}
+        <span className="label labelDays">days</span> to do it.{' '}
+        <span className="ranking rankingDropped">#{mangaDropped}</span> place in{' '}
+        <span className="label labelDropped">dropped</span> category means that{' '}
+        <span className="tag tagTitlesDropped">{mangaTitlesDropped}</span>{' '}
+        unread manga is enough for this rank.
       </div>
     );
   }
