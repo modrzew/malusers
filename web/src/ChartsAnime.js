@@ -5,7 +5,7 @@ export class ChartsAnime extends Component {
   render() {
     const gender = {
       labels: ['completed', 'dropped', 'total days'],
-      series: [1, 2, 4]
+      series: [this.props.result.F.count, 2, 4]
     };
     return <ChartistGraph data={gender} />;
   }
