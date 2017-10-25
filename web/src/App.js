@@ -36,10 +36,15 @@ class App extends Component {
     const showComponent = this.state.showComponent;
     if (userName && !error) {
       return <GetUser userName={userName} onError={this.handleError} />;
-    } else if (showComponent === true)
-      return <Charts onButtonSubmit={this.handleButtonSubmit} />;
+    } else if (showComponent === true) return <Charts />;
     else {
-      return <Search onSubmit={this.handleSubmit} showError={error} />;
+      return (
+        <Search
+          onSubmit={this.handleSubmit}
+          showError={error}
+          onButtonSubmit={this.handleButtonSubmit}
+        />
+      );
     }
   }
 }
