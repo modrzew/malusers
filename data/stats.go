@@ -1,10 +1,11 @@
-package malusers
+package data
 
 import (
 	"fmt"
 	"strconv"
 
 	"github.com/jinzhu/gorm"
+	"github.com/modrzew/malusers/core"
 )
 
 // StatsEntry holds data for single "cell" in stats response
@@ -39,8 +40,8 @@ type StatsRow struct {
 
 // GenerateStatsTable recreates stats table in database
 func GenerateStatsTable(db *gorm.DB) {
-	db.DropTableIfExists(&GlobalStats{})
-	db.CreateTable(&GlobalStats{})
+	db.DropTableIfExists(&core.GlobalStats{})
+	db.CreateTable(&core.GlobalStats{})
 	db.Exec(`
 		INSERT INTO global_stats
 		(
@@ -89,7 +90,7 @@ func GetGlobalStats(db *gorm.DB, kind string, filter string) Stats {
 	} else {
 		groupBy = "gender"
 	}
-	query := db.Model(&GlobalStats{}).Select(groupBy).Select(fmt.Sprintf(`
+	query := db.Model(&core.GlobalStats{}).Select(groupBy).Select(fmt.Sprintf(`
 		%[1]s, SUM(users) AS users,
 		SUM(%[2]s_completed_sum) AS completed_sum,
 		ROUND(AVG(%[2]s_completed_avg)) AS completed_avg,

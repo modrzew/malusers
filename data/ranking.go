@@ -1,7 +1,8 @@
-package malusers
+package data
 
 import (
 	"github.com/jinzhu/gorm"
+	"github.com/modrzew/malusers/core"
 )
 
 type RankingManager struct {
@@ -9,8 +10,8 @@ type RankingManager struct {
 }
 
 func (m *RankingManager) RecreateTemporaryRankingTable() {
-	m.DB.DropTableIfExists(&TemporaryRanking{})
-	m.DB.CreateTable(&TemporaryRanking{})
+	m.DB.DropTableIfExists(&core.TemporaryRanking{})
+	m.DB.CreateTable(&core.TemporaryRanking{})
 }
 
 func (m *RankingManager) PopulateTemporaryRankingTable() {
@@ -42,7 +43,7 @@ func (m *RankingManager) PopulateTemporaryRankingTable() {
 }
 
 func (m *RankingManager) MigrateRankingResults() {
-	m.DB.DropTableIfExists(&Ranking{})
-	m.DB.CreateTable(&Ranking{})
+	m.DB.DropTableIfExists(&core.Ranking{})
+	m.DB.CreateTable(&core.Ranking{})
 	m.DB.Exec("INSERT INTO rankings SELECT * FROM temporary_rankings")
 }

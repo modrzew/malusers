@@ -1,4 +1,4 @@
-package malusers
+package scraper
 
 import (
 	"fmt"
@@ -8,6 +8,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/jinzhu/gorm"
+	"github.com/modrzew/malusers/core"
 )
 
 // Client is a wrapper over http.Client
@@ -42,7 +43,7 @@ func getClient() *Client {
 	}
 }
 
-func getStats(username string) (*BasicInfo, *AnimeStats, *MangaStats) {
+func getStats(username string) (*core.BasicInfo, *core.AnimeStats, *core.MangaStats) {
 	client := getClient()
 	url := fmt.Sprintf("https://myanimelist.net/profile/%s", username)
 	document := client.Get(url)
@@ -89,7 +90,7 @@ func GetUser(username string, db *gorm.DB, finished chan bool) {
 		for i := range friendsPage {
 			friendName := friendsPage[i]
 			friend := getOrCreateUser(friendName, db)
-			relation := NewRelation(user, friend)
+			relation := core.NewRelation(user, friend)
 			db.Where(relation).FirstOrCreate(relation)
 		}
 	}

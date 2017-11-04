@@ -1,4 +1,4 @@
-package malusers
+package scraper
 
 import (
 	"strconv"
@@ -6,13 +6,14 @@ import (
 	"time"
 
 	"github.com/lib/pq"
+	"github.com/modrzew/malusers/core"
 
 	"github.com/PuerkitoBio/goquery"
 )
 
 // ExtractAnimeStats gets anime stats from single user's profile page
-func ExtractAnimeStats(elem *goquery.Selection) *AnimeStats {
-	result := new(AnimeStats)
+func ExtractAnimeStats(elem *goquery.Selection) *core.AnimeStats {
+	result := new(core.AnimeStats)
 	// Days and mean time
 	baseStats := elem.Find("div.stat-score div.di-tc")
 	baseStats.Each(func(_ int, stat *goquery.Selection) {
@@ -71,8 +72,8 @@ func ExtractAnimeStats(elem *goquery.Selection) *AnimeStats {
 }
 
 // ExtractMangaStats gets manga stats from single user's profile page
-func ExtractMangaStats(elem *goquery.Selection) *MangaStats {
-	result := new(MangaStats)
+func ExtractMangaStats(elem *goquery.Selection) *core.MangaStats {
+	result := new(core.MangaStats)
 	// Days and mean time
 	baseStats := elem.Find("div.stat-score div.di-tc")
 	baseStats.Each(func(_ int, stat *goquery.Selection) {
@@ -144,8 +145,8 @@ func ExtractFriendNames(elem *goquery.Selection) []string {
 }
 
 // ExtractBasicInfo gets basic info about the user
-func ExtractBasicInfo(elem *goquery.Selection) *BasicInfo {
-	info := &BasicInfo{}
+func ExtractBasicInfo(elem *goquery.Selection) *core.BasicInfo {
+	info := &core.BasicInfo{}
 	elem.Find("li").Each(func(_ int, stat *goquery.Selection) {
 		label := strings.ToLower(strings.TrimSpace(stat.Find("span.user-status-title").Text()))
 		value := strings.TrimSpace(stat.Find("span.user-status-data").Text())

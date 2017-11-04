@@ -3,18 +3,18 @@ package api
 import (
 	"time"
 
-	"github.com/modrzew/malusers"
+	"github.com/modrzew/malusers/core"
 )
 
 // UserStats contains response structure for single user
 type UserStats struct {
-	Username        string              `json:"username"`
-	Age             int                 `json:"age"`
-	LastUpdate      time.Time           `json:"lastUpdate"`
-	AnimeStats      malusers.AnimeStats `json:"animeStats"`
-	MangaStats      malusers.MangaStats `json:"mangaStats"`
-	Ranking         Ranking             `json:"ranking"`
-	TotalUsersCount int                 `json:"totalUsers"`
+	Username        string          `json:"username"`
+	Age             int             `json:"age"`
+	LastUpdate      time.Time       `json:"lastUpdate"`
+	AnimeStats      core.AnimeStats `json:"animeStats"`
+	MangaStats      core.MangaStats `json:"mangaStats"`
+	Ranking         Ranking         `json:"ranking"`
+	TotalUsersCount int             `json:"totalUsers"`
 }
 
 type Ranking struct {
@@ -37,7 +37,7 @@ type MangaRanking struct {
 	Volumes   int     `json:"volumes"`
 }
 
-func DBRankingToSchema(fromDb malusers.Ranking) Ranking {
+func DBRankingToSchema(fromDb core.Ranking) Ranking {
 	return Ranking{
 		Anime: AnimeRanking{
 			Completed: fromDb.CompletedAnime,

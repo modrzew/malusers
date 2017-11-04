@@ -5,7 +5,8 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	"github.com/modrzew/malusers"
+	"github.com/modrzew/malusers/core"
+	"github.com/modrzew/malusers/scraper"
 )
 
 func overseer(mainDb *gorm.DB, active chan bool, maxConcurrent int) {
@@ -14,11 +15,11 @@ func overseer(mainDb *gorm.DB, active chan bool, maxConcurrent int) {
 	}
 	for {
 		if len(active) > 0 {
-			users := malusers.GetUsersToFetch(len(active))
+			users := scraper.GetUsersToFetch(len(active))
 			for i := range users {
 				<-active
 				user := users[i]
-				go malusers.GetUser(user.Username, mainDb, active)
+				go scraper.GetUser(user.Username, mainDb, active)
 			}
 		}
 		time.Sleep(time.Millisecond * 200)
@@ -27,7 +28,7 @@ func overseer(mainDb *gorm.DB, active chan bool, maxConcurrent int) {
 
 func monitor(db *gorm.DB, active chan bool, maxConcurrent int) {
 	for {
-		stats := malusers.GetStatsFromCache()
+		stats := scraper.GetStatsFromCache()
 		fetching := maxConcurrent - len(active)
 		fmt.Printf("\rTo fetch: %d, fetching: %d, fetched: %d", stats.ToFetch, fetching, stats.Fetched)
 		time.Sleep(time.Millisecond * 500)
@@ -35,15 +36,15 @@ func monitor(db *gorm.DB, active chan bool, maxConcurrent int) {
 }
 
 func main() {
-	config := malusers.ReadConfig()
-	db := malusers.OpenDb()
+	config := core.ReadConfig()
+	db := core.OpenDb()
 	defer db.Close()
-	db.AutoMigrate(&malusers.AnimeStats{}, &malusers.MangaStats{}, &malusers.Relation{}, &malusers.User{})
+	db.AutoMigrate(&core.AnimeStats{}, &core.MangaStats{}, &core.Relation{}, &core.User{})
 
 	// Reset all fetching statuses
-	db.Model(&malusers.User{}).UpdateColumn("fetching", false)
+	db.Model(&core.User{}).UpdateColumn("fetching", false)
 
-	malusers.PopulateCache(db)
+	scraper.PopulateCache(db)
 
 	active := make(chan bool, config.Scraper.MaxConcurrent)
 	go monitor(db, active, config.Scraper.MaxConcurrent)
@@ -51,8 +52,8 @@ func main() {
 
 	// Maybe trigger first user?
 	var inDb *int
-	if db.Model(&malusers.User{}).Count(&inDb); *inDb == 0 {
-		db.Create(&malusers.User{Username: "sweetmonia"})
+	if db.Model(&core.User{}).Count(&inDb); *inDb == 0 {
+		db.Create(&core.User{Username: "sweetmonia"})
 	}
 
 	// Don't quit
