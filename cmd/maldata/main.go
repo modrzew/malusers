@@ -4,14 +4,15 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/modrzew/malusers"
+	"github.com/modrzew/malusers/core"
+	"github.com/modrzew/malusers/data"
 )
 
 func main() {
 	command := os.Args[1]
-	db := malusers.OpenDb()
+	db := core.OpenDb()
 	if command == "ranking" {
-		manager := &malusers.RankingManager{DB: db}
+		manager := &data.RankingManager{DB: db}
 		fmt.Println("Recreating temporary table")
 		manager.RecreateTemporaryRankingTable()
 		fmt.Println("Populating temporary table")
@@ -21,7 +22,7 @@ func main() {
 		fmt.Println("Done")
 	} else if command == "stats" {
 		fmt.Println("Regenerating global stats")
-		malusers.GenerateStatsTable(db)
+		data.GenerateStatsTable(db)
 	} else {
 		fmt.Println("Please use either `maldata ranking` or `maldata stats`.")
 	}

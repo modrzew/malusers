@@ -1,4 +1,4 @@
-package malusers
+package core
 
 import (
 	"github.com/jinzhu/gorm"

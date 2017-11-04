@@ -8,8 +8,8 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
-	"github.com/modrzew/malusers"
 	"github.com/modrzew/malusers/api"
+	"github.com/modrzew/malusers/core"
 )
 
 func logger(inner http.HandlerFunc) http.HandlerFunc {
@@ -39,8 +39,8 @@ func addHandlers(router *mux.Router, db *gorm.DB, cache *api.Cache) {
 }
 
 func main() {
-	config := malusers.ReadConfig()
-	db := malusers.OpenDb()
+	config := core.ReadConfig()
+	db := core.OpenDb()
 	cache := api.GetCache(db)
 
 	router := mux.NewRouter()

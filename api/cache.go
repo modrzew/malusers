@@ -5,7 +5,8 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	"github.com/modrzew/malusers"
+	"github.com/modrzew/malusers/core"
+	"github.com/modrzew/malusers/data"
 )
 
 type statsKey struct {
@@ -17,7 +18,7 @@ type Cache struct {
 	db         *gorm.DB
 	totalCount int
 	users      map[string]*UserStats
-	stats      map[statsKey]*malusers.Stats
+	stats      map[statsKey]*data.Stats
 }
 
 func GetCache(db *gorm.DB) *Cache {
@@ -25,19 +26,19 @@ func GetCache(db *gorm.DB) *Cache {
 		db:         db,
 		totalCount: -1,
 		users:      make(map[string]*UserStats),
-		stats:      make(map[statsKey]*malusers.Stats),
+		stats:      make(map[statsKey]*data.Stats),
 	}
 }
 
 func (c *Cache) GetCount() int {
 	if c.totalCount == -1 {
-		c.db.Model(&malusers.User{}).Count(&c.totalCount)
+		c.db.Model(&core.User{}).Count(&c.totalCount)
 	}
 	return c.totalCount
 }
 
 func (c *Cache) GetUser(username string) (*UserStats, error) {
-	user := malusers.User{}
+	user := core.User{}
 	if user, ok := c.users[username]; ok {
 		return user, nil
 	}
@@ -62,12 +63,12 @@ func (c *Cache) GetUser(username string) (*UserStats, error) {
 	return stats, nil
 }
 
-func (c *Cache) GetStats(kind string, filter string) malusers.Stats {
+func (c *Cache) GetStats(kind string, filter string) data.Stats {
 	key := statsKey{kind: kind, filter: filter}
 	if stats, ok := c.stats[key]; ok {
 		return *stats
 	}
-	stats := malusers.GetGlobalStats(c.db, kind, filter)
+	stats := data.GetGlobalStats(c.db, kind, filter)
 	c.stats[key] = &stats
 	return stats
 }

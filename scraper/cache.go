@@ -1,4 +1,4 @@
-package malusers
+package scraper
 
 import (
 	"fmt"
@@ -6,18 +6,19 @@ import (
 	"sync"
 
 	"github.com/jinzhu/gorm"
+	"github.com/modrzew/malusers/core"
 )
 
-var usersCache = make(map[string]*User)
-var usersToFetch = make(map[string]*User)
+var usersCache = make(map[string]*core.User)
+var usersToFetch = make(map[string]*core.User)
 var mux sync.Mutex
 
 func PopulateCache(db *gorm.DB) {
 	fmt.Println("Populating cache...")
 	mux.Lock()
 	defer mux.Unlock()
-	var users []User
-	db.Model(&User{}).Find(&users)
+	var users []core.User
+	db.Model(&core.User{}).Find(&users)
 	for i := range users {
 		user := users[i]
 		usersCache[user.Username] = &user
@@ -28,7 +29,7 @@ func PopulateCache(db *gorm.DB) {
 	fmt.Printf("%d users in cache\n", len(users))
 }
 
-func getOrCreateUser(username string, db *gorm.DB) *User {
+func getOrCreateUser(username string, db *gorm.DB) *core.User {
 	mux.Lock()
 	defer mux.Unlock()
 	displayName := username
@@ -36,7 +37,7 @@ func getOrCreateUser(username string, db *gorm.DB) *User {
 	if user, ok := usersCache[username]; ok {
 		return user
 	}
-	user := &User{Username: username, DisplayName: displayName}
+	user := &core.User{Username: username, DisplayName: displayName}
 	db.Create(&user)
 	usersCache[username] = user
 	usersToFetch[username] = user
@@ -64,10 +65,10 @@ func GetStatsFromCache() *CacheStats {
 	}
 }
 
-func GetUsersToFetch(limit int) []*User {
+func GetUsersToFetch(limit int) []*core.User {
 	mux.Lock()
 	defer mux.Unlock()
-	var users []*User
+	var users []*core.User
 	for _, user := range usersToFetch {
 		if len(users) > limit {
 			return users
