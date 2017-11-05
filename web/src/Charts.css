@@ -1,0 +1,39 @@
+.ct-series {
+  stroke-width: 40px;
+}
+
+.ct-series-a {
+  stroke: #4FB5FF;
+}
+
+.ct-series-b {
+  stroke: #99C432;
+}
+
+.ct-series-c {
+  stroke: #FFA732;
+}
+
+.ct-series-d {
+  stroke: #BF4CBB;
+}
+  
+.ct-grid {
+    stroke: #cecece;
+}
+
+.ct-grids group {
+    background-color: #fff;
+}
+
+.ct-chart-bar, .ct-label.ct-horizontal {
+    text-align: center;
+  }
+
+.chart {
+    padding: 100px;
+}
+
+.chartTitle {
+    font-size: 40px;
+}
