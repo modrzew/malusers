@@ -13,6 +13,7 @@ var usersCache = make(map[string]*core.User)
 var usersToFetch = make(map[string]*core.User)
 var mux sync.Mutex
 
+// PopulateCache fetches all users from database into cache
 func PopulateCache(db *gorm.DB) {
 	fmt.Println("Populating cache...")
 	mux.Lock()
@@ -50,11 +51,13 @@ func removeFromToFetch(username string) {
 	mux.Unlock()
 }
 
+// CacheStats contains information about current scraping process, to be displayed in the command line
 type CacheStats struct {
 	Fetched int
 	ToFetch int
 }
 
+// GetStatsFromCache returns information about current scraping process
 func GetStatsFromCache() *CacheStats {
 	mux.Lock()
 	defer mux.Unlock()
@@ -65,6 +68,7 @@ func GetStatsFromCache() *CacheStats {
 	}
 }
 
+// GetUsersToFetch returns next batch of users to download
 func GetUsersToFetch(limit int) []*core.User {
 	mux.Lock()
 	defer mux.Unlock()

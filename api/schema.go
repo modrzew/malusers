@@ -17,11 +17,13 @@ type UserStats struct {
 	TotalUsersCount int             `json:"totalUsers"`
 }
 
+// Ranking contains ranking information for single user. To be used in API response.
 type Ranking struct {
 	Anime AnimeRanking `json:"anime"`
 	Manga MangaRanking `json:"manga"`
 }
 
+// AnimeRanking contains anime ranking information for single user. To be used in API response.
 type AnimeRanking struct {
 	Completed int     `json:"completed"`
 	Dropped   int     `json:"dropped"`
@@ -29,6 +31,7 @@ type AnimeRanking struct {
 	Episodes  int     `json:"episodes"`
 }
 
+// MangaRanking contains manga ranking information for single user. To be used in API response.
 type MangaRanking struct {
 	Completed int     `json:"completed"`
 	Dropped   int     `json:"dropped"`
@@ -37,6 +40,7 @@ type MangaRanking struct {
 	Volumes   int     `json:"volumes"`
 }
 
+// DBRankingToSchema maps DB structure into API, JSONable structure
 func DBRankingToSchema(fromDb core.Ranking) Ranking {
 	return Ranking{
 		Anime: AnimeRanking{

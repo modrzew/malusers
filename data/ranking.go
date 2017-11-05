@@ -5,15 +5,18 @@ import (
 	"github.com/modrzew/malusers/core"
 )
 
+// RankingManager is able to recreate ranking tables
 type RankingManager struct {
 	DB *gorm.DB
 }
 
+// RecreateTemporaryRankingTable recreates temporary ranking table
 func (m *RankingManager) RecreateTemporaryRankingTable() {
 	m.DB.DropTableIfExists(&core.TemporaryRanking{})
 	m.DB.CreateTable(&core.TemporaryRanking{})
 }
 
+// PopulateTemporaryRankingTable fills temporary ranking table based on raw anime/manga data
 func (m *RankingManager) PopulateTemporaryRankingTable() {
 	m.DB.Exec(`
 		INSERT INTO temporary_rankings
@@ -42,6 +45,7 @@ func (m *RankingManager) PopulateTemporaryRankingTable() {
 	`)
 }
 
+// MigrateRankingResults moves data from temporary to target table. Target table will be dropped.
 func (m *RankingManager) MigrateRankingResults() {
 	m.DB.DropTableIfExists(&core.Ranking{})
 	m.DB.CreateTable(&core.Ranking{})
