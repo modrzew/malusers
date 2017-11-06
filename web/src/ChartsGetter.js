@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Loader } from './Loader';
 import { ChartsAnime } from './ChartsAnime';
 
-const API_URL_ANIME = 'https://api.mal.modriv.net/stats/anime/gender';
-const API_URL_MANGA = 'https://api.mal.modriv.net/stats/manga';
-
 export class ChartsGetter extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +12,9 @@ export class ChartsGetter extends Component {
   }
   componentDidMount() {
     this.setState({ isLoading: true });
-    fetch(`${API_URL_ANIME}`)
+    fetch(
+      `https://api.mal.modriv.net/stats/${this.props.cat}/${this.props.subcat}`
+    )
       .then(resp => resp.json())
       .then(data => {
         this.setState({ result: data, isLoading: false });
@@ -26,8 +25,11 @@ export class ChartsGetter extends Component {
     const { result, isLoading } = this.state;
     if (isLoading) {
       return <Loader />;
-    } else if (result !== null) {
-      return <ChartsAnime result={this.state.result} />;
+    } else if (
+      result !== null &&
+      this.props.cat === 'anime'
+    ) {
+      return <ChartsAnime result={this.state.result} subcat={this.props.subcat} />;
     } else {
       return <Loader />;
     }

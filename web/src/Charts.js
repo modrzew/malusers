@@ -33,12 +33,16 @@ export class Charts extends Component {
     const { category, sortBy } = this.state;
 
     if (category === 'anime' && sortBy === 'gender') {
-      chart = <ChartsGetter />;
-    } else if (category === 'anime' && sortBy === 'age') {
-      chart = <Loader />;
+      chart = (
+        <ChartsGetter cat={this.state.category} subcat={this.state.sortBy} />
+      );
+    } else if (category === 'anime' && sortBy === 'year') {
+      chart = (
+        <ChartsGetter cat={this.state.category} subcat={this.state.sortBy} />
+      );
     } else if (category === 'manga' && sortBy === 'gender') {
       chart = <Loader />;
-    } else if (category === 'manga' && sortBy === 'age') {
+    } else if (category === 'manga' && sortBy === 'year') {
       chart = <Loader />;
     }
 
@@ -54,7 +58,7 @@ export class Charts extends Component {
           </div>
           <div className="ChartRow">
             <button className="subButton" onClick={this.handleGenderOnClick}>by Gender</button>
-            <button className="subButton" onClick={this.handleAgeOnClick}>by Age</button>
+            <button className="subButton" onClick={this.handleAgeOnClick}>by Year</button>
           </div>
         </div>
         <div className="ChartsContent">{chart}</div>

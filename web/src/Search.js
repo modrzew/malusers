@@ -22,10 +22,11 @@ export class Search extends Component {
 
   render() {
     return (
-      <div className="App">
+        <div className="App">
         <button className="ChartButton" onClick={this.handleButtonOnClick}>
           Charts
         </button>
+        <div className="SearchWrapped">
         <div className="AppTitle">
           Hi there, welcome to malusers, the ultimate MAL scrapper.
         </div>
@@ -38,6 +39,7 @@ export class Search extends Component {
         />
         <button onClick={this.handleOnClick}>Submit</button>
         {this.props.showError && <Error />}
+        </div>
       </div>
     );
   }

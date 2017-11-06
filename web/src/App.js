@@ -10,7 +10,7 @@ class App extends Component {
     this.state = {
       userName: null,
       error: null,
-      showComponent: true
+      showComponent: false
     };
   }
 
