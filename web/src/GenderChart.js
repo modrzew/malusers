@@ -7,7 +7,6 @@ export class GenderChart extends Component {
       labels: ['Male', 'Female', 'Not Specified', 'Non-Binary'],
       datasets: [
         {
-          label: this.props.label,
           data: [
             this.props.data.M,
             this.props.data.F,
@@ -21,17 +20,20 @@ export class GenderChart extends Component {
             'rgba(191, 76, 187, 1)'
           ],
           borderColor: ['rgba(255, 255, 255, 1)'],
-          borderWidth: 1
+          borderWidth: 2
         }
       ]
     };
-    return (
-      <Doughnut
-        data={data}
-        options={{
-          maintainAspectRatio: false
-        }}
-      />
-    );
+    const options = {
+      title: {
+        display: true,
+        text: this.props.title,
+        position: 'top',
+        fontSize: 20
+      },
+      responsive: true,
+      maintainAspectRatio: true
+    };
+    return <Doughnut data={data} options={options} />;
   }
 }

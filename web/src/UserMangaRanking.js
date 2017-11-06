@@ -20,7 +20,7 @@ export class UserMangaRanking extends Component {
     );
     return (
       <div className="categoryRanking">
-        <span className="label labelCompleted">Completed</span> manga gave&nbsp;
+        <span className="label labelCompleted">Completed</span> manga gave{''}
         {this.props.userName}&nbsp;
         <span className="ranking rankingCompleted">#{mangaCompleted}</span>
         &nbsp;place in this ranking. It means that {this.props.userName}
