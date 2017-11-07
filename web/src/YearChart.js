@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 export class YearChart extends Component {
   render() {
     const data = {
-      labels: ['Male', 'Female', 'Not Specified', 'Non-Binary'],
+      labels: this.props.data.labels,
       datasets: [
         {
-          data: [this.props.data['1975']],
-          backgroundColor: [
-            'rgba(79, 181, 255, 1)',
-            'rgba(153, 196, 50, 1)',
-            'rgba(255, 167, 50, 1)',
-            'rgba(191, 76, 187, 1)'
-          ],
-          borderColor: ['rgba(255, 255, 255, 1)'],
-          borderWidth: 2
+          label: 'completed',
+          data: this.props.data.completed
+        },
+        {
+          label: 'dropped',
+          data: this.props.data.dropped
         }
       ]
     };
@@ -27,8 +24,20 @@ export class YearChart extends Component {
         fontSize: 20
       },
       responsive: true,
-      maintainAspectRatio: true
+      maintainAspectRatio: true,
+      scales: {
+        xAxes: [
+          {
+            display: true
+          }
+        ],
+        yAxes: [
+          {
+            display: true
+          }
+        ]
+      }
     };
-    return <Bar data={data} options={options} />;
+    return <Line data={data} options={options} />;
   }
 }

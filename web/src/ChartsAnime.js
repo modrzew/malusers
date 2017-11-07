@@ -3,6 +3,18 @@ import { GenderChart } from './GenderChart';
 import { YearChart } from './YearChart';
 import './Charts.css';
 
+const getYearData = (result, type) => {
+  const list = [];
+  const completed = [];
+  const dropped = [];
+  Object.keys(result).forEach(function(key) {
+    list.push(key);
+    completed.push(result[key]['completed'][type]);
+    dropped.push(result[key]['dropped'][type]);
+  });
+  return { labels: list, completed: completed, dropped: dropped };
+};
+
 const getGenderData = (result, key, type) => {
   return {
     M: result.M[key][type],
@@ -12,45 +24,60 @@ const getGenderData = (result, key, type) => {
   };
 };
 
-const getYearData = (result, key, type) => {
-  return {    
-  }
-}
-
 export class ChartsAnime extends Component {
   render() {
-    const Chart = this.props.subcat === 'gender' ? GenderChart : YearChart;
-    return (
-      <div className="Charts">
-        <div className="ChartRow">
-          <div className="ChartCompleted">
-            <Chart
-              title="Completed Anime by Gender"
-              data={getGenderData(this.props.result, 'completed', 'count')}
-            />
+    if (this.props.subcat === 'gender') {
+      return (
+        <div className="Charts">
+          <div className="ChartRow">
+            <div className="ChartCompleted">
+              <GenderChart
+                title="Completed Anime by Gender"
+                data={getGenderData(this.props.result, 'completed', 'count')}
+              />
+            </div>
+            <div className="ChartCompleted">
+              <GenderChart
+                title="Completed Mean Score by Gender"
+                data={getGenderData(this.props.result, 'completed', 'mean')}
+              />
+            </div>
           </div>
-          <div className="ChartCompleted">
-            <Chart
-              title="Completed Mean Score by Gender"
-              data={getGenderData(this.props.result, 'completed', 'mean')}
-            />
+          <div className="ChartRow">
+            <div className="ChartDropped">
+              <GenderChart
+                title="Dropped Anime by Gender"
+                data={getGenderData(this.props.result, 'dropped', 'count')}
+              />
+            </div>
+            <div className="ChartDropped">
+              <GenderChart
+                title="Dropped Mean Score by Gender"
+                data={getGenderData(this.props.result, 'dropped', 'mean')}
+              />
+            </div>
           </div>
         </div>
-        <div className="ChartRow">
-          <div className="ChartDropped">
-            <Chart
-              title="Dropped Anime by Gender"
-              data={getGenderData(this.props.result, 'dropped', 'count')}
-            />
-          </div>
-          <div className="ChartDropped">
-            <Chart
-              title="Dropped Mean Score by Gender"
-              data={getGenderData(this.props.result, 'dropped', 'mean')}
-            />
+      );
+    } else {
+      return (
+        <div className="Charts">
+          <div className="ChartRow">
+            <div className="ChartCompleted">
+              <YearChart
+                title="Completed and Dropped Anime by Year"
+                data={getYearData(this.props.result, 'count')}
+              />
+            </div>
+            <div className="ChartCompleted">
+              <YearChart
+                title="Completed and Droppd Mean Score by Year"
+                data={getYearData(this.props.result, 'mean')}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }

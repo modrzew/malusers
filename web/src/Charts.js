@@ -25,7 +25,7 @@ export class Charts extends Component {
   };
 
   handleAgeOnClick = sortBy => {
-    this.setState({ sortBy: 'age' });
+    this.setState({ sortBy: 'year' });
   };
 
   render() {
@@ -47,7 +47,7 @@ export class Charts extends Component {
     }
 
     return (
-      <div clasName="Charts">
+      <div className="Charts">
         <div className="ChartsTitle">
           <span>
             Please select category and sorting method for chart display

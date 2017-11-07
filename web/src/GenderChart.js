@@ -7,12 +7,7 @@ export class GenderChart extends Component {
       labels: ['Male', 'Female', 'Not Specified', 'Non-Binary'],
       datasets: [
         {
-          data: [
-            this.props.data.M,
-            this.props.data.F,
-            this.props.data[''],
-            this.props.data.X
-          ],
+          data: [this.props.data],
           backgroundColor: [
             'rgba(79, 181, 255, 1)',
             'rgba(153, 196, 50, 1)',
