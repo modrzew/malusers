@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Loader } from './Loader';
 import { ChartsAnime } from './ChartsAnime';
+import { ChartsManga } from './ChartsManga';
 
 export class ChartsGetter extends Component {
   constructor(props) {
@@ -25,11 +26,14 @@ export class ChartsGetter extends Component {
     const { result, isLoading } = this.state;
     if (isLoading) {
       return <Loader />;
-    } else if (
-      result !== null &&
-      this.props.cat === 'anime'
-    ) {
-      return <ChartsAnime result={this.state.result} subcat={this.props.subcat} />;
+    } else if (result !== null && this.props.cat === 'anime') {
+      return (
+        <ChartsAnime result={this.state.result} subcat={this.props.subcat} />
+      );
+    } else if (result !== null && this.props.cat === 'manga') {
+      return (
+        <ChartsManga result={this.state.result} subcat={this.props.subcat} />
+      );
     } else {
       return <Loader />;
     }

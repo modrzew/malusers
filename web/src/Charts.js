@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Charts.css';
 import { ChartsGetter } from './ChartsGetter';
-import { Loader } from './Loader';
 
 export class Charts extends Component {
   constructor(props) {
@@ -24,7 +23,7 @@ export class Charts extends Component {
     this.setState({ sortBy: 'gender' });
   };
 
-  handleAgeOnClick = sortBy => {
+  handleYearOnClick = sortBy => {
     this.setState({ sortBy: 'year' });
   };
 
@@ -41,9 +40,13 @@ export class Charts extends Component {
         <ChartsGetter cat={this.state.category} subcat={this.state.sortBy} />
       );
     } else if (category === 'manga' && sortBy === 'gender') {
-      chart = <Loader />;
+      chart = (
+        <ChartsGetter cat={this.state.category} subcat={this.state.sortBy} />
+      );
     } else if (category === 'manga' && sortBy === 'year') {
-      chart = <Loader />;
+      chart = (
+        <ChartsGetter cat={this.state.category} subcat={this.state.sortBy} />
+      );
     }
 
     return (
@@ -53,12 +56,20 @@ export class Charts extends Component {
             Please select category and sorting method for chart display
           </span>
           <div className="ChartRow">
-            <button className="AnimeButton" onClick={this.handleAnimeOnClick}>Anime</button>
-            <button className="MangaButton" onClick={this.handleMangaOnClick}>Manga</button>
+            <button className="AnimeButton" onClick={this.handleAnimeOnClick}>
+              Anime
+            </button>
+            <button className="MangaButton" onClick={this.handleMangaOnClick}>
+              Manga
+            </button>
           </div>
           <div className="ChartRow">
-            <button className="subButton" onClick={this.handleGenderOnClick}>by Gender</button>
-            <button className="subButton" onClick={this.handleAgeOnClick}>by Year</button>
+            <button className="subButton" onClick={this.handleGenderOnClick}>
+              by Gender
+            </button>
+            <button className="subButton" onClick={this.handleYearOnClick}>
+              by Year
+            </button>
           </div>
         </div>
         <div className="ChartsContent">{chart}</div>

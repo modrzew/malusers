@@ -24,7 +24,7 @@ const getGenderData = (result, value, type) => {
   };
 };
 
-export class ChartsAnime extends Component {
+export class ChartsManga extends Component {
   render() {
     if (this.props.subcat === 'gender') {
       return (
@@ -32,13 +32,13 @@ export class ChartsAnime extends Component {
           <div className="ChartRow">
             <div className="ChartCompleted">
               <GenderChart
-                title="Completed Anime by Gender"
+                title="Completed Manga by Gender"
                 data={getGenderData(this.props.result, 'completed', 'count')}
               />
             </div>
             <div className="ChartCompleted">
               <GenderChart
-                title="Completed Anime Mean Score by Gender"
+                title="Completed Manga Mean Score by Gender"
                 data={getGenderData(this.props.result, 'completed', 'mean')}
               />
             </div>
@@ -46,13 +46,13 @@ export class ChartsAnime extends Component {
           <div className="ChartRow">
             <div className="ChartDropped">
               <GenderChart
-                title="Dropped Anime by Gender"
+                title="Dropped Manga by Gender"
                 data={getGenderData(this.props.result, 'dropped', 'count')}
               />
             </div>
             <div className="ChartDropped">
               <GenderChart
-                title="Dropped Anime Mean Score by Gender"
+                title="Dropped Manga Mean Score by Gender"
                 data={getGenderData(this.props.result, 'dropped', 'mean')}
               />
             </div>
@@ -65,13 +65,13 @@ export class ChartsAnime extends Component {
           <div className="ChartRow">
             <div className="ChartCompleted">
               <YearChart
-                title="Completed and Dropped Anime by Year of Birth"
+                title="Completed and Dropped Manga by Year of Birth"
                 data={getYearData(this.props.result, 'count')}
               />
             </div>
             <div className="ChartCompleted">
               <YearChart
-                title="Completed and Dropped Mean Score by Year of Birth"
+                title="Completed and Dropped Manga Score by Year of Birth"
                 data={getYearData(this.props.result, 'mean')}
               />
             </div>

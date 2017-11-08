@@ -8,11 +8,19 @@ export class YearChart extends Component {
       datasets: [
         {
           label: 'completed',
-          data: this.props.data.completed
+          data: this.props.data.completed,
+          borderColor: ['rgba(153, 196, 50, 1)'],
+          backgroundColor: ['rgba(153, 196, 50, 1)'],
+          fill: false,
+          borderWidth: 2
         },
         {
           label: 'dropped',
-          data: this.props.data.dropped
+          data: this.props.data.dropped,
+          borderColor: ['rgba(255, 167, 50, 1)'],
+          backgroundColor: ['rgba(255, 167, 50, 1)'],
+          fill: false,
+          borderWidth: 2
         }
       ]
     };
@@ -21,10 +29,11 @@ export class YearChart extends Component {
         display: true,
         text: this.props.title,
         position: 'top',
-        fontSize: 20
+        fontSize: 20,
       },
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
+      elements: { point: { radius: 2 } },
       scales: {
         xAxes: [
           {
