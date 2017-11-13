@@ -62,6 +62,7 @@ func NewRelation(user1 *User, user2 *User) *Relation {
 type BasicInfo struct {
 	Birthday pq.NullTime
 	Gender   string
+	Location string
 }
 
 // User holds info about user and whether they were fetched
@@ -71,6 +72,7 @@ type User struct {
 	DisplayName string
 	Birthday    pq.NullTime `gorm:"type:date"`
 	Gender      string
+	Location    string
 	Fetched     bool `gorm:"index"`
 	Fetching    bool `gorm:"index"`
 	AnimeStats  AnimeStats
