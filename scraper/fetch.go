@@ -79,6 +79,7 @@ func GetUser(username string, db *gorm.DB, finished chan bool) {
 	basicInfo, animeStats, mangaStats := getStats(username)
 	user.Birthday = basicInfo.Birthday
 	user.Gender = basicInfo.Gender
+	user.Location = basicInfo.Location
 	animeStats.Username = username
 	db.Create(animeStats)
 	mangaStats.Username = username

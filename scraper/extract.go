@@ -163,6 +163,8 @@ func ExtractBasicInfo(elem *goquery.Selection) *core.BasicInfo {
 			}
 		case "gender":
 			info.Gender = getGender(value)
+		case "location":
+			info.Location = value
 		}
 	})
 	return info
@@ -177,6 +179,6 @@ func getGender(value string) string {
 	case "non-binary":
 		return "X"
 	default:
-		return ""
+		return "N"
 	}
 }
