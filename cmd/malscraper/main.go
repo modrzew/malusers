@@ -15,14 +15,20 @@ func overseer(mainDb *gorm.DB, active chan bool, maxConcurrent int) {
 	}
 	for {
 		if len(active) > 0 {
-			users := scraper.GetUsersToFetch(len(active))
-			for i := range users {
-				<-active
-				user := users[i]
-				go scraper.GetUser(user.Username, mainDb, active)
+			users := scraper.GetUsersToFetchFromCache(len(active))
+			if len(users) > 0 {
+				for i := range users {
+					<-active
+					user := users[i]
+					go scraper.GetUser(user.Username, mainDb, active)
+				}
+				time.Sleep(time.Millisecond * 500)
+			} else {
+				// Wait for a bit, and query database
+				time.Sleep(time.Second * 60)
+				scraper.AddUsersToFetchFromDatabase(mainDb)
 			}
 		}
-		time.Sleep(time.Millisecond * 200)
 	}
 }
 
