@@ -9,7 +9,6 @@ import (
 // AnimeStats is structure for holding anime statistics
 type AnimeStats struct {
 	UserID     uint      `gorm:"primary_key"`
-	CreatedAt  time.Time `json:"-"`
 	UpdatedAt  time.Time `json:"-"`
 	InProgress int       `json:"inProgress"`
 	Completed  int       `json:"completed"`
@@ -25,7 +24,6 @@ type AnimeStats struct {
 // MangaStats is structure for holding manga statistics
 type MangaStats struct {
 	UserID     uint      `gorm:"primary_key"`
-	CreatedAt  time.Time `json:"-"`
 	UpdatedAt  time.Time `json:"-"`
 	InProgress int       `json:"inProgress"`
 	Completed  int       `json:"completed"`
@@ -88,7 +86,7 @@ type User struct {
 // TemporaryRanking holds info about user's ranking temporarily when table is recreated
 type TemporaryRanking struct {
 	UserID         uint      `gorm:"primary_key"`
-	CreatedAt      time.Time `json:"-"`
+	UpdatedAt      time.Time `json:"-"`
 	CompletedAnime int
 	CompletedManga int
 	DroppedAnime   int
@@ -107,7 +105,8 @@ type Ranking struct {
 
 // GlobalStats holds info about ranking for all users grouped by birth year and gender
 type GlobalStats struct {
-	ID                uint `gorm:"primary_key"`
+	ID                uint      `gorm:"primary_key"`
+	UpdatedAt         time.Time `json:"-"`
 	Users             int
 	BirthYear         int
 	Gender            string

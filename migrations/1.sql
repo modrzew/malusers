@@ -2,6 +2,7 @@ ALTER TABLE users DROP deleted_at;
 
 /* Change id to user_id as primary key */
 ALTER TABLE anime_stats DROP deleted_at;
+ALTER TABLE anime_stats DROP created_at;
 ALTER TABLE anime_stats DROP CONSTRAINT anime_stats_pkey;
 ALTER TABLE anime_stats ADD COLUMN user_id INTEGER;
 UPDATE anime_stats a SET user_id=u.id FROM users u WHERE a.username=u.username;
@@ -16,6 +17,7 @@ ALTER TABLE anime_stats DROP username;
 
 /* Change id to user_id as primary key */
 ALTER TABLE manga_stats DROP deleted_at;
+ALTER TABLE manga_stats DROP created_at;
 ALTER TABLE manga_stats DROP CONSTRAINT manga_stats_pkey;
 ALTER TABLE manga_stats ADD COLUMN user_id INTEGER;
 UPDATE manga_stats a SET user_id=u.id FROM users u WHERE a.username=u.username;

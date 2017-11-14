@@ -21,7 +21,7 @@ func (m *RankingManager) PopulateTemporaryRankingTable() {
 	m.DB.Exec(`
 		INSERT INTO temporary_rankings
 		(
-			created_at, user_id,
+			updated_at, user_id,
 			completed_anime, dropped_anime, total_days_anime, episodes_anime,
 			completed_manga, dropped_manga, total_days_manga, chapters_manga, volumes_manga
 		)
