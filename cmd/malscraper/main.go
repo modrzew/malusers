@@ -22,13 +22,13 @@ func overseer(mainDb *gorm.DB, active chan bool, maxConcurrent int) {
 					user := users[i]
 					go scraper.GetUser(user.Username, mainDb, active)
 				}
-				time.Sleep(time.Millisecond * 500)
 			} else {
 				// Wait for a bit, and query database
 				time.Sleep(time.Second * 60)
 				scraper.AddUsersToFetchFromDatabase(mainDb)
 			}
 		}
+		time.Sleep(time.Millisecond * 500)
 	}
 }
 
