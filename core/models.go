@@ -87,7 +87,8 @@ type User struct {
 
 // TemporaryRanking holds info about user's ranking temporarily when table is recreated
 type TemporaryRanking struct {
-	UserID         uint `gorm:"primary_key"`
+	UserID         uint      `gorm:"primary_key"`
+	CreatedAt      time.Time `json:"-"`
 	CompletedAnime int
 	CompletedManga int
 	DroppedAnime   int
