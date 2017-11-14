@@ -59,7 +59,7 @@ func main() {
 	// Maybe trigger first user?
 	var inDb *int
 	if db.Model(&core.User{}).Count(&inDb); *inDb == 0 {
-		db.Create(&core.User{Username: "sweetmonia"})
+		scraper.GetOrCreateUser("sweetmonia", db)
 	}
 
 	// Don't quit

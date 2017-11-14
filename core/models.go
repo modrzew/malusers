@@ -1,39 +1,40 @@
 package core
 
 import (
-	"github.com/jinzhu/gorm"
+	"time"
+
 	"github.com/lib/pq"
 )
 
 // AnimeStats is structure for holding anime statistics
 type AnimeStats struct {
-	gorm.Model `json:"-"`
-	Username   string  `json:"-"`
-	InProgress int     `json:"inProgress"`
-	Completed  int     `json:"completed"`
-	OnHold     int     `json:"onHold"`
-	Dropped    int     `json:"dropped"`
-	Planned    int     `json:"planned"`
-	Rewatched  int     `json:"rewatched"`
-	Days       float64 `json:"totalDays"`
-	MeanScore  float64 `json:"meanScore"`
-	Episodes   int     `json:"totalEpisodes"`
+	UserID     uint      `gorm:"primary_key"`
+	UpdatedAt  time.Time `json:"-"`
+	InProgress int       `json:"inProgress"`
+	Completed  int       `json:"completed"`
+	OnHold     int       `json:"onHold"`
+	Dropped    int       `json:"dropped"`
+	Planned    int       `json:"planned"`
+	Rewatched  int       `json:"rewatched"`
+	Days       float64   `json:"totalDays"`
+	MeanScore  float64   `json:"meanScore"`
+	Episodes   int       `json:"totalEpisodes"`
 }
 
 // MangaStats is structure for holding manga statistics
 type MangaStats struct {
-	gorm.Model `json:"-"`
-	Username   string  `json:"-"`
-	InProgress int     `json:"inProgress"`
-	Completed  int     `json:"completed"`
-	OnHold     int     `json:"onHold"`
-	Dropped    int     `json:"dropped"`
-	Planned    int     `json:"planned"`
-	Rewatched  int     `json:"rewatched"`
-	Days       float64 `json:"totalDays"`
-	MeanScore  float64 `json:"meanScore"`
-	Chapters   int     `json:"totalChapters"`
-	Volumes    int     `json:"totalVolumes"`
+	UserID     uint      `gorm:"primary_key"`
+	UpdatedAt  time.Time `json:"-"`
+	InProgress int       `json:"inProgress"`
+	Completed  int       `json:"completed"`
+	OnHold     int       `json:"onHold"`
+	Dropped    int       `json:"dropped"`
+	Planned    int       `json:"planned"`
+	Rewatched  int       `json:"rewatched"`
+	Days       float64   `json:"totalDays"`
+	MeanScore  float64   `json:"meanScore"`
+	Chapters   int       `json:"totalChapters"`
+	Volumes    int       `json:"totalVolumes"`
 }
 
 // Relation - `from` user having `to` as friend
@@ -67,7 +68,9 @@ type BasicInfo struct {
 
 // User holds info about user and whether they were fetched
 type User struct {
-	gorm.Model
+	ID          uint      `gorm:"primary_key"`
+	CreatedAt   time.Time `json:"-"`
+	UpdatedAt   time.Time `json:"-"`
 	Username    string
 	DisplayName string
 	Birthday    pq.NullTime `gorm:"type:date"`
@@ -82,8 +85,8 @@ type User struct {
 
 // TemporaryRanking holds info about user's ranking temporarily when table is recreated
 type TemporaryRanking struct {
-	gorm.Model
-	Username       string
+	UserID         uint      `gorm:"primary_key"`
+	UpdatedAt      time.Time `json:"-"`
 	CompletedAnime int
 	CompletedManga int
 	DroppedAnime   int
@@ -102,7 +105,8 @@ type Ranking struct {
 
 // GlobalStats holds info about ranking for all users grouped by birth year and gender
 type GlobalStats struct {
-	gorm.Model
+	ID                uint      `gorm:"primary_key"`
+	UpdatedAt         time.Time `json:"-"`
 	Users             int
 	BirthYear         int
 	Gender            string
