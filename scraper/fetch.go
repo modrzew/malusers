@@ -68,7 +68,9 @@ func getFriends(channel chan []string, username string, offset int) {
 
 // GetUser obtains stats for single user and their friends
 func GetUser(username string, db *gorm.DB, finished chan bool) {
-	user := getOrCreateUser(username, db)
+	username = "sweetmonia"
+	fmt.Println("Getting", username)
+	user := GetOrCreateUser(username, db)
 	if user.Fetched {
 		return
 	}
@@ -80,17 +82,17 @@ func GetUser(username string, db *gorm.DB, finished chan bool) {
 	user.Birthday = basicInfo.Birthday
 	user.Gender = basicInfo.Gender
 	user.Location = basicInfo.Location
-	animeStats.Username = username
-	db.Create(animeStats)
-	mangaStats.Username = username
-	db.Create(mangaStats)
+	animeStats.UserID = user.ID
+	db.Save(animeStats)
+	mangaStats.UserID = user.ID
+	db.Save(mangaStats)
 
 	friendsChannel := make(chan []string, 1)
 	go getFriends(friendsChannel, username, 0)
 	for friendsPage := range friendsChannel {
 		for i := range friendsPage {
 			friendName := friendsPage[i]
-			friend := getOrCreateUser(friendName, db)
+			friend := GetOrCreateUser(friendName, db)
 			relation := core.NewRelation(user, friend)
 			db.Where(relation).FirstOrCreate(relation)
 		}

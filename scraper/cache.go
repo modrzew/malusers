@@ -30,7 +30,8 @@ func PopulateCache(db *gorm.DB) {
 	fmt.Printf("%d users in cache\n", len(users))
 }
 
-func getOrCreateUser(username string, db *gorm.DB) *core.User {
+// GetOrCreateUser returns User object - if it's a new user, saves it to database and cache first
+func GetOrCreateUser(username string, db *gorm.DB) *core.User {
 	mux.Lock()
 	defer mux.Unlock()
 	displayName := username

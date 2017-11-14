@@ -50,9 +50,9 @@ func (c *Cache) GetUser(username string) (*UserStats, error) {
 	if c.db.NewRecord(user) {
 		return nil, errors.New("not found")
 	}
-	c.db.Where("username = ?", username).Find(&user.AnimeStats)
-	c.db.Where("username = ?", username).Find(&user.MangaStats)
-	c.db.Where("username = ?", username).Find(&user.Ranking)
+	c.db.Where("user_id = ?", user.ID).Find(&user.AnimeStats)
+	c.db.Where("user_id = ?", user.ID).Find(&user.MangaStats)
+	c.db.Where("user_id = ?", user.ID).Find(&user.Ranking)
 	age := time.Since(user.Birthday.Time).Hours() / 24 / 365
 	stats := &UserStats{
 		Username:        user.DisplayName,
