@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Error } from './Error';
-import AppStyles from './App.css';
+import SearchStyles from './Search.css';
 
 export class Search extends Component {
   constructor(props) {
@@ -22,28 +22,27 @@ export class Search extends Component {
 
   render() {
     return (
-      <div className={AppStyles.App}>
+      <div className={SearchStyles.Search}>
         <button
-          className={AppStyles.ChartButton}
+          className={SearchStyles.chartButton}
           onClick={this.handleButtonOnClick}
         >
           Charts
         </button>
-        <div className={AppStyles.SearchWrapped}>
-          <div className={AppStyles.AppTitle}>
+        <div className={SearchStyles.SearchWrapped}>
+          <div className={SearchStyles.SearchTitle}>
             Hi there, welcome to malusers, the ultimate MAL scrapper.
           </div>
-          <div className={AppStyles.AppInstructions}>
-            Please enter user name
-          </div>
+          <div className={SearchStyles.SearchHint}>Please enter user name</div>
           <input
+            className={SearchStyles.input}
             type="text"
             placeholder="User name"
             value={this.state.value}
             onChange={this.handleChange}
           />
           <button
-            className={AppStyles.SearchButton}
+            className={SearchStyles.searchButton}
             onClick={this.handleOnClick}
           >
             Submit
