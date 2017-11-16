@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Search } from './Search';
 import { GetUser } from './GetUser';
 

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
-import './User.css';
 import { UserAnimeRanking } from './UserAnimeRanking';
 import { UserMangaRanking } from './UserMangaRanking';
 import { UserAnimeStats } from './UserAnimeStats';
 import { UserMangaStats } from './UserMangaStats';
 import moment from 'moment';
+import UserStyles from './User.css';
+import * as classnames from 'classnames';
 
 export class User extends Component {
   render() {
@@ -13,10 +13,18 @@ export class User extends Component {
       'dddd, MMMM Do YYYY, h:mm a'
     );
     return (
-      <div className="userBody">
-        <div className="userInfo">
-          <div className="userName userStand">{this.props.name.username}</div>
-          <div className="userUpdate userStand">last update: {date}</div>
+      <div className={UserStyles.userBody}>
+        <div className={UserStyles.userInfo}>
+          <div
+            className={classnames(UserStyles.userName, UserStyles.userStand)}
+          >
+            {this.props.name.username}
+          </div>
+          <div
+            className={classnames(UserStyles.userUpdate, UserStyles.userStand)}
+          >
+            last update: {date}
+          </div>
           <UserAnimeRanking
             userName={this.props.name.username}
             animeRanking={this.props.name.ranking.anime}
