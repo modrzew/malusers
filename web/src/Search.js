@@ -35,7 +35,7 @@ export class Search extends Component {
           </div>
           <div className={SearchStyles.SearchHint}>Please enter user name</div>
           <input
-            className={SearchStyles.input}
+            className={SearchStyles.textInput}
             type="text"
             placeholder="User name"
             value={this.state.value}
