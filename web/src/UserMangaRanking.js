@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './CategoryRanking.css';
+import CategoryRankingStyles from './CategoryRanking.css';
 import numeral from 'numeral';
+import * as classnames from 'classnames';
 
 export class UserMangaRanking extends Component {
   render() {
@@ -19,23 +20,87 @@ export class UserMangaRanking extends Component {
       '0,0'
     );
     return (
-      <div className="categoryRanking">
-        <span className="label labelCompleted">Completed</span> manga gave&nbsp;
-        {this.props.userName}&nbsp;
-        <span className="ranking rankingCompleted">#{mangaCompleted}</span>
-        &nbsp;place in this ranking. It means that {this.props.userName}
-        &nbsp;read&nbsp;
-        <span className="tag tagChapters">{mangaChapters}</span>
-        &nbsp;chapters and&nbsp;
-        <span className="tag tagVolumes">{mangaVolumes}</span>
-        &nbsp;manga volumes already, spending&nbsp;
-        <span className="tag tagDays">{mangaTagDays}</span>&nbsp;
-        <span className="label labelDays">days</span> to do it.&nbsp;
-        <span className="ranking rankingDropped">#{mangaDropped}</span>
-        &nbsp;place in <span className="label labelDropped">dropped</span>
-        &nbsp;category means that&nbsp;
-        <span className="tag tagTitlesDropped">{mangaTitlesDropped}</span>
-        &nbsp;unread manga is enough for this rank.
+      <div className={CategoryRankingStyles.categoryRanking}>
+        <span
+          className={classnames(
+            CategoryRankingStyles.label,
+            CategoryRankingStyles.labelCompleted
+          )}
+        >
+          Completed
+        </span>{' '}
+        manga gave {this.props.userName}{' '}
+        <span
+          className={classnames(
+            CategoryRankingStyles.ranking,
+            CategoryRankingStyles.rankingCompleted
+          )}
+        >
+          #{mangaCompleted}
+        </span>{' '}
+        place in this ranking. It means that {this.props.userName} read{' '}
+        <span
+          className={classnames(
+            CategoryRankingStyles.tag,
+            CategoryRankingStyles.tagChapters
+          )}
+        >
+          {mangaChapters}
+        </span>{' '}
+        chapters and{' '}
+        <span
+          className={classnames(
+            CategoryRankingStyles.tag,
+            CategoryRankingStyles.tagVolumes
+          )}
+        >
+          {mangaVolumes}
+        </span>{' '}
+        manga volumes already, spending{' '}
+        <span
+          className={classnames(
+            CategoryRankingStyles.tag,
+            CategoryRankingStyles.tagDays
+          )}
+        >
+          {mangaTagDays}
+        </span>{' '}
+        <span
+          className={classnames(
+            CategoryRankingStyles.label,
+            CategoryRankingStyles.labelDays
+          )}
+        >
+          days
+        </span>{' '}
+        to do it.{' '}
+        <span
+          className={classnames(
+            CategoryRankingStyles.ranking,
+            CategoryRankingStyles.rankingDropped
+          )}
+        >
+          #{mangaDropped}
+        </span>{' '}
+        place in{' '}
+        <span
+          className={classnames(
+            CategoryRankingStyles.label,
+            CategoryRankingStyles.labelDropped
+          )}
+        >
+          dropped
+        </span>{' '}
+        category means that{' '}
+        <span
+          className={classnames(
+            CategoryRankingStyles.tag,
+            CategoryRankingStyles.tagTitlesDropped
+          )}
+        >
+          {mangaTitlesDropped}
+        </span>{' '}
+        unread manga is enough for this rank.
       </div>
     );
   }
