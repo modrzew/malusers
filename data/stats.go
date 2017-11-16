@@ -45,7 +45,7 @@ func GenerateStatsTable(db *gorm.DB) {
 	db.Exec(`
 		INSERT INTO global_stats
 		(
-			created_at, updated_at,
+			updated_at,
 			users, birth_year, gender,
 			anime_completed_sum, anime_completed_avg,
 			anime_dropped_sum, anime_dropped_avg,
@@ -55,7 +55,7 @@ func GenerateStatsTable(db *gorm.DB) {
 			manga_days_sum, manga_days_avg
 		)
 		SELECT
-			NOW(), NOW(),
+			NOW(),
 			COUNT(*) users, EXTRACT(YEAR FROM birthday) AS birth_year, gender,
 			SUM(anime_stats.completed) AS anime_completed_sum,
 			ROUND(AVG(anime_stats.completed)) AS anime_completed_avg,

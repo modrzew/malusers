@@ -13,6 +13,7 @@ var usersCache = make(map[string]*core.User)
 var usersToFetch = make(map[string]*core.User)
 var mux sync.Mutex
 
+// PopulateCache fetches all users from database into cache
 func PopulateCache(db *gorm.DB) {
 	fmt.Println("Populating cache...")
 	mux.Lock()
@@ -29,7 +30,8 @@ func PopulateCache(db *gorm.DB) {
 	fmt.Printf("%d users in cache\n", len(users))
 }
 
-func getOrCreateUser(username string, db *gorm.DB) *core.User {
+// GetOrCreateUser returns User object - if it's a new user, saves it to database and cache first
+func GetOrCreateUser(username string, db *gorm.DB) *core.User {
 	mux.Lock()
 	defer mux.Unlock()
 	displayName := username
@@ -50,11 +52,13 @@ func removeFromToFetch(username string) {
 	mux.Unlock()
 }
 
+// CacheStats contains information about current scraping process, to be displayed in the command line
 type CacheStats struct {
 	Fetched int
 	ToFetch int
 }
 
+// GetStatsFromCache returns information about current scraping process
 func GetStatsFromCache() *CacheStats {
 	mux.Lock()
 	defer mux.Unlock()
@@ -65,7 +69,8 @@ func GetStatsFromCache() *CacheStats {
 	}
 }
 
-func GetUsersToFetch(limit int) []*core.User {
+// GetUsersToFetchFromCache returns next batch of users to download
+func GetUsersToFetchFromCache(limit int) []*core.User {
 	mux.Lock()
 	defer mux.Unlock()
 	var users []*core.User
@@ -76,4 +81,21 @@ func GetUsersToFetch(limit int) []*core.User {
 		users = append(users, user)
 	}
 	return users
+}
+
+// AddUsersToFetchFromDatabase adds to cache all users from database that are not yet fetched
+func AddUsersToFetchFromDatabase(db *gorm.DB) {
+	mux.Lock()
+	defer mux.Unlock()
+	var users []core.User
+	db.Model(&core.User{}).Where("fetched = ?", false).Find(&users)
+	for i := range users {
+		user := users[i]
+		if _, ok := usersCache[user.Username]; !ok {
+			usersCache[user.Username] = &user
+		}
+		if !user.Fetched && !user.Fetching {
+			usersToFetch[user.Username] = &user
+		}
+	}
 }

@@ -14,6 +14,7 @@ type statsKey struct {
 	filter string
 }
 
+// Cache is a main cache container
 type Cache struct {
 	db         *gorm.DB
 	totalCount int
@@ -21,6 +22,7 @@ type Cache struct {
 	stats      map[statsKey]*data.Stats
 }
 
+// GetCache creates new Cache instance with initial values
 func GetCache(db *gorm.DB) *Cache {
 	return &Cache{
 		db:         db,
@@ -30,6 +32,7 @@ func GetCache(db *gorm.DB) *Cache {
 	}
 }
 
+// GetCount returns number of all users in the database
 func (c *Cache) GetCount() int {
 	if c.totalCount == -1 {
 		c.db.Model(&core.User{}).Count(&c.totalCount)
@@ -37,6 +40,7 @@ func (c *Cache) GetCount() int {
 	return c.totalCount
 }
 
+// GetUser returns data about single user. It will reuse cached data if possible.
 func (c *Cache) GetUser(username string) (*UserStats, error) {
 	user := core.User{}
 	if user, ok := c.users[username]; ok {
@@ -46,9 +50,9 @@ func (c *Cache) GetUser(username string) (*UserStats, error) {
 	if c.db.NewRecord(user) {
 		return nil, errors.New("not found")
 	}
-	c.db.Where("username = ?", username).Find(&user.AnimeStats)
-	c.db.Where("username = ?", username).Find(&user.MangaStats)
-	c.db.Where("username = ?", username).Find(&user.Ranking)
+	c.db.Where("user_id = ?", user.ID).Find(&user.AnimeStats)
+	c.db.Where("user_id = ?", user.ID).Find(&user.MangaStats)
+	c.db.Where("user_id = ?", user.ID).Find(&user.Ranking)
 	age := time.Since(user.Birthday.Time).Hours() / 24 / 365
 	stats := &UserStats{
 		Username:        user.DisplayName,
@@ -63,6 +67,7 @@ func (c *Cache) GetUser(username string) (*UserStats, error) {
 	return stats, nil
 }
 
+// GetStats returns data about global statustics. It will reuse cached data if possible.
 func (c *Cache) GetStats(kind string, filter string) data.Stats {
 	key := statsKey{kind: kind, filter: filter}
 	if stats, ok := c.stats[key]; ok {

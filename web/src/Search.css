@@ -1,44 +1,42 @@
-html {
-  font-size: 12px;
-}
-
-body {
-  background-color: #F2F2F2;
- }
-
-.App {
+.Search {
   padding: 10px;
   background-image: url("https://i.imgur.com/MPcDf2v.jpg");
   background-repeat: repeat;
   box-shadow: 0px 1px 5px 1px gray;
-}
+  }
 
 .SearchWrapped {
   padding: 100px 0px 50px 100px;
 }
-
-.AppTitle {
+  
+.SearchTitle {
   font-size: 2.5rem;
   color: #fff;
   width: 480px;
 }
-
-.AppInstructions {
+  
+.SearchHint {
   padding: 5px 0px 5px 0px;
   color: #fff;
   width: 500px;
 }
-
-input[type=text] {
+  
+.textInput {
   padding:3px 3px 3px 5px;
   border:1px solid #ccc; 
   border-radius: 4px;
 }
-ChartButton {
+  
+.chartButton {
   margin: 10px;
+  background: #99C432;
+  color: #fff;
+  padding: 3px 5px 3px 5px;
+  border: 1px solid #99C432; 
+  border-radius: 4px;
 }
-
-button {
+  
+.searchButton {
   background: #99C432;
   color: #fff;
   margin-left: 5px;

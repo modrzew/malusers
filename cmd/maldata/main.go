@@ -23,7 +23,11 @@ func main() {
 	} else if command == "stats" {
 		fmt.Println("Regenerating global stats")
 		data.GenerateStatsTable(db)
+	} else if command == "fetched" {
+		fmt.Println("Marking users to refresh")
+		data.MarkUsersToFetch(db)
+		fmt.Println("Done")
 	} else {
-		fmt.Println("Please use either `maldata ranking` or `maldata stats`.")
+		fmt.Println("Please use either `maldata ranking`, `maldata fetched` or `maldata stats`.")
 	}
 }
