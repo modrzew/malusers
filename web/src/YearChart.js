@@ -29,7 +29,7 @@ export class YearChart extends Component {
         display: true,
         text: this.props.title,
         position: 'top',
-        fontSize: 20,
+        fontSize: 20
       },
       responsive: true,
       maintainAspectRatio: false,

@@ -37,24 +37,17 @@
   text-align: center;
 }
 
-.AnimeButton {
+.CategoryButton {
   margin-right: 5px;
   width: 80px;
+  background: #99C432;
+  color: #fff;
+  padding: 3px 5px 3px 5px;
+  border: 1px solid #99C432; 
+  border-radius: 4px;
 }
 
-.AnimeButton:active {
-  margin-right: 5px;
-  width: 80px;
-  background-color: #FFA732;
-  border-color: #FFA732;
-}
-
-.MangaButton {
-  margin-right: 5px;
-  width: 80px;
-}
-
-.MangaButton:active {
+.CategoryButton:active {
   margin-right: 5px;
   width: 80px;
   background-color: #FFA732;
@@ -65,7 +58,10 @@
   margin-right: 5px;
   width: 80px;
   background-color: #4FB5FF;
-  border-color: #4FB5FF;
+  color: #fff;
+  padding: 3px 5px 3px 5px;
+  border: 1px solid #4FB5FF;
+  border-radius: 4px;
 }
 
 .subButton:active {
