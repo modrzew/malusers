@@ -34,11 +34,17 @@ input[type=text] {
   border:1px solid #ccc; 
   border-radius: 4px;
 }
-ChartButton {
+.ChartButton {
   margin: 10px;
+  background: #99C432;
+  color: #fff;
+  margin-left: 5px;
+  padding: 3px 5px 3px 5px;
+  border: 1px solid #99C432; 
+  border-radius: 4px;
 }
 
-button {
+.SearchButton {
   background: #99C432;
   color: #fff;
   margin-left: 5px;

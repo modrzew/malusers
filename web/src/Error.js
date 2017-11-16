@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './Error.css';
+import ErrorStyles from './Error.css';
 
 export class Error extends Component {
   render() {
-    return <div className="Error">Invalid user name</div>;
+    return <div className={ErrorStyles.Error}>Invalid user name</div>;
   }
 }
