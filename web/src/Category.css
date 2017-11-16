@@ -1,11 +1,11 @@
-.CategoryRow {
+.Category-row {
     display:flex;
     flex-direction:row;
     flex-wrap: wrap;
     padding: 25px 0px 0px 20px;
   }
   
-.CategoryCol {
+.Category-col {
   display:flex;
   flex-direction:column;
   text-align: right;
@@ -13,7 +13,7 @@
   width: 120px;
 }
 
-.CategoryCol:first-child {
+.Category-col:first-child {
   margin-left: 20px;
 }
 

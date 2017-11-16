@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import CategoryRankingStyles from './CategoryRanking.css';
+import './CategoryRanking.css';
 import numeral from 'numeral';
-import * as classnames from 'classnames';
 
 export class UserAnimeRanking extends Component {
   render() {
@@ -21,97 +20,28 @@ export class UserAnimeRanking extends Component {
       '0,0'
     );
     return (
-      <div className={CategoryRankingStyles.categoryRanking}>
-        {this.props.userName} is{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.ranking,
-            CategoryRankingStyles.rankingCompleted
-          )}
-        >
-          #{animeCompleted}
-        </span>{' '}
-        in{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.label,
-            CategoryRankingStyles.labelCompleted
-          )}
-        >
-          completed
-        </span>{' '}
-        anime ranking and spent{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.tag,
-            CategoryRankingStyles.tagDays
-          )}
-        >
-          {animeTagDays}
-        </span>{' '}
-        days of life to watch{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.tag,
-            CategoryRankingStyles.tagTitles
-          )}
-        >
-          {animeTagTitles}
-        </span>{' '}
-        titles and{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.tag,
-            CategoryRankingStyles.tagEpisodes
-          )}
-        >
-          {animeTagEpisodes}
-        </span>{' '}
-        episodes in total, making it{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.ranking,
-            CategoryRankingStyles.rankingDays
-          )}
-        >
-          #{animeDays}
-        </span>{' '}
-        place ranked by total{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.label,
-            CategoryRankingStyles.labelDays
-          )}
-        >
-          lost days
-        </span>. {this.props.userName} decided that{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.tag,
-            CategoryRankingStyles.tagTitlesDropped
-          )}
-        >
-          {animeTitlesDropped}
-        </span>{' '}
-        titles are not worth of watching and gave them{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.label,
-            CategoryRankingStyles.labelDropped
-          )}
-        >
-          dropped
-        </span>{' '}
-        status, being{' '}
-        <span
-          className={classnames(
-            CategoryRankingStyles.ranking,
-            CategoryRankingStyles.rankingDropped
-          )}
-        >
-          #{animeDropped}
-        </span>{' '}
-        in this ranking.
+      <div className="categoryRanking">
+        {this.props.userName} is&nbsp;
+        <span className="ranking rankingCompleted">#{animeCompleted}</span>
+        &nbsp;in&nbsp;
+        <span className="label labelCompleted">completed</span>
+        &nbsp;anime ranking and spent&nbsp;
+        <span className="tag tagDays">{animeTagDays}</span>
+        &nbsp;days of life to watch&nbsp;
+        <span className="tag tagTitles">{animeTagTitles}</span> titles&nbsp;
+        and&nbsp;
+        <span className="tag tagEpisodes">{animeTagEpisodes}</span>
+        &nbsp;episodes in total, making it&nbsp;
+        <span className="ranking rankingDays">#{animeDays}</span>
+        &nbsp;place ranked by total&nbsp;
+        <span className="label labelDays">lost days</span>.&nbsp;
+        {this.props.userName} decided that&nbsp;
+        <span className="tag tagTitlesDropped">{animeTitlesDropped}</span>
+        &nbsp;titles are not worth of watching and gave them&nbsp;
+        <span className="label labelDropped">dropped</span>
+        &nbsp;status, being&nbsp;
+        <span className="ranking rankingDropped">#{animeDropped}</span>
+        &nbsp;in this ranking.
       </div>
     );
   }

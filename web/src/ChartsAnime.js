@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { GenderChart } from './GenderChart';
 import { YearChart } from './YearChart';
-import ChartStyles from './Charts.css';
+import './Charts.css';
 
 const getYearData = (result, type) => {
   const list = [];
@@ -28,29 +28,29 @@ export class ChartsAnime extends Component {
   render() {
     if (this.props.subcat === 'gender') {
       return (
-        <div className={ChartStyles.Charts}>
-          <div className={ChartStyles.ChartRow}>
-            <div className={ChartStyles.ChartCompleted}>
+        <div className="Charts">
+          <div className="ChartRow">
+            <div className="ChartCompleted">
               <GenderChart
                 title="Completed Anime by Gender"
                 data={getGenderData(this.props.result, 'completed', 'count')}
               />
             </div>
-            <div className={ChartStyles.ChartCompleted}>
+            <div className="ChartCompleted">
               <GenderChart
                 title="Completed Anime Mean Score by Gender"
                 data={getGenderData(this.props.result, 'completed', 'mean')}
               />
             </div>
           </div>
-          <div className={ChartStyles.ChartRow}>
-            <div className={ChartStyles.ChartDropped}>
+          <div className="ChartRow">
+            <div className="ChartDropped">
               <GenderChart
                 title="Dropped Anime by Gender"
                 data={getGenderData(this.props.result, 'dropped', 'count')}
               />
             </div>
-            <div className={ChartStyles.ChartDropped}>
+            <div className="ChartDropped">
               <GenderChart
                 title="Dropped Anime Mean Score by Gender"
                 data={getGenderData(this.props.result, 'dropped', 'mean')}
@@ -61,15 +61,15 @@ export class ChartsAnime extends Component {
       );
     } else {
       return (
-        <div className={ChartStyles.Charts}>
-          <div className={ChartStyles.ChartRow}>
-            <div className={ChartStyles.ChartCompleted}>
+        <div className="Charts">
+          <div className="ChartRow">
+            <div className="ChartCompleted">
               <YearChart
                 title="Completed and Dropped Anime by Year of Birth"
                 data={getYearData(this.props.result, 'count')}
               />
             </div>
-            <div className={ChartStyles.ChartCompleted}>
+            <div className="ChartCompleted">
               <YearChart
                 title="Completed and Dropped Mean Score by Year of Birth"
                 data={getYearData(this.props.result, 'mean')}

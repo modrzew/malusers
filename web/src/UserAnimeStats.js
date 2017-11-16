@@ -1,96 +1,45 @@
 import React, { Component } from 'react';
-import CategoryStyles from './Category.css';
-import CategoryAnimeStyles from './CategoryAnime.css';
-import * as classnames from 'classnames';
+import './Category.css';
+import './CategoryAnime.css';
 
 export class UserAnimeStats extends Component {
   render() {
     return (
-      <div className={CategoryStyles.CategoryRow}>
-        <div className={CategoryStyles.CategoryCol}>
-          <div
-            className={classnames(
-              CategoryStyles.category,
-              CategoryStyles.animeBox
-            )}
-          >
-            anime stats
-          </div>
+      <div className="Category-row">
+        <div className="Category-col">
+          <div className="category animeBox">anime stats</div>
         </div>
-        <div className={CategoryStyles.CategoryCol}>
-          <div className={CategoryStyles.subcategory}>in progress</div>
-          <div
-            className={classnames(
-              CategoryAnimeStyles.anime,
-              CategoryAnimeStyles.inProgress
-            )}
-          >
+        <div className="Category-col">
+          <div className="subcategory">in progress</div>
+          <div className="anime inProgress">
             {this.props.animeStats.inProgress}
           </div>
         </div>
-        <div className={CategoryStyles.CategoryCol}>
-          <div className={CategoryStyles.subcategory}>completed</div>
-          <div
-            className={classnames(
-              CategoryAnimeStyles.anime,
-              CategoryAnimeStyles.completed
-            )}
-          >
+        <div className="Category-col">
+          <div className="subcategory">completed</div>
+          <div className="anime completed">
             {this.props.animeStats.completed}
           </div>
         </div>
-        <div className={CategoryStyles.CategoryCol}>
-          <div className={CategoryStyles.subcategory}>on hold</div>
-          <div
-            className={classnames(
-              CategoryAnimeStyles.anime,
-              CategoryAnimeStyles.onHold
-            )}
-          >
-            {this.props.animeStats.onHold}
-          </div>
+        <div className="Category-col">
+          <div className="subcategory">on hold</div>
+          <div className="anime onHold">{this.props.animeStats.onHold}</div>
         </div>
-        <div className={CategoryStyles.CategoryCol}>
-          <div className={CategoryStyles.subcategory}>dropped</div>
-          <div
-            className={classnames(
-              CategoryAnimeStyles.anime,
-              CategoryAnimeStyles.dropped
-            )}
-          >
-            {this.props.animeStats.dropped}
-          </div>
+        <div className="Category-col">
+          <div className="subcategory">dropped</div>
+          <div className="anime dropped">{this.props.animeStats.dropped}</div>
         </div>
-        <div className={CategoryStyles.CategoryCol}>
-          <div className={CategoryStyles.subcategory}>planned</div>
-          <div
-            className={classnames(
-              CategoryAnimeStyles.anime,
-              CategoryAnimeStyles.planned
-            )}
-          >
-            {this.props.animeStats.planned}
-          </div>
+        <div className="Category-col">
+          <div className="subcategory">planned</div>
+          <div className="anime planned">{this.props.animeStats.planned}</div>
         </div>
-        <div className={CategoryStyles.CategoryCol}>
-          <div className={CategoryStyles.subcategory}>rewatched</div>
-          <div
-            className={classnames(
-              CategoryAnimeStyles.anime,
-              CategoryAnimeStyles.rewatch
-            )}
-          >
-            {this.props.animeStats.rewatched}
-          </div>
+        <div className="Category-col">
+          <div className="subcategory">rewatched</div>
+          <div className="anime rewatch">{this.props.animeStats.rewatched}</div>
         </div>
-        <div className={CategoryStyles.CategoryCol}>
-          <div className={CategoryStyles.subcategory}>mean score</div>
-          <div
-            className={classnames(
-              CategoryAnimeStyles.anime,
-              CategoryAnimeStyles.meanScore
-            )}
-          >
+        <div className="Category-col">
+          <div className="subcategory">mean score</div>
+          <div className="anime meanScore">
             {this.props.animeStats.meanScore}
           </div>
         </div>

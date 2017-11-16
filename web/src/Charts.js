@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ChartStyles from './Charts.css';
+import './Charts.css';
 import { ChartsGetter } from './ChartsGetter';
 
 export class Charts extends Component {
@@ -50,41 +50,29 @@ export class Charts extends Component {
     }
 
     return (
-      <div className={ChartStyles.Charts}>
-        <div className={ChartStyles.ChartsTitle}>
+      <div className="Charts">
+        <div className="ChartsTitle">
           <span>
             Please select category and sorting method for chart display
           </span>
-          <div className={ChartStyles.ChartRow}>
-            <button
-              className={ChartStyles.AnimeButton}
-              onClick={this.handleAnimeOnClick}
-            >
+          <div className="ChartRow">
+            <button className="AnimeButton" onClick={this.handleAnimeOnClick}>
               Anime
             </button>
-            <button
-              className={ChartStyles.MangaButton}
-              onClick={this.handleMangaOnClick}
-            >
+            <button className="MangaButton" onClick={this.handleMangaOnClick}>
               Manga
             </button>
           </div>
-          <div className={ChartStyles.ChartRow}>
-            <button
-              className={ChartStyles.subButton}
-              onClick={this.handleGenderOnClick}
-            >
+          <div className="ChartRow">
+            <button className="subButton" onClick={this.handleGenderOnClick}>
               by Gender
             </button>
-            <button
-              className={ChartStyles.subButton}
-              onClick={this.handleYearOnClick}
-            >
+            <button className="subButton" onClick={this.handleYearOnClick}>
               by Year
             </button>
           </div>
         </div>
-        <div className={ChartStyles.ChartsContent}>{chart}</div>
+        <div className="ChartsContent">{chart}</div>
       </div>
     );
   }
