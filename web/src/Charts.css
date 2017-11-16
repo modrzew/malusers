@@ -1,0 +1,81 @@
+.Charts {
+}
+
+.ChartsTitle {
+  padding: 10px;
+  background-image: url("https://i.imgur.com/MPcDf2v.jpg");
+  background-repeat: repeat;
+  box-shadow: 0px 1px 5px 1px gray;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.ChartRow {
+  margin: 10px;
+  display:flex;
+  flex-direction:row;
+}
+
+.ChartsCol {
+  display:flex;
+  flex-direction:column;
+}
+  
+.ChartsContent {
+    display:flex;
+    flex-direction:column;
+    padding: 20px 0px 0px 0px;
+ }
+
+.ChartCompleted {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.ChartDropped {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.CategoryButton {
+  margin-right: 5px;
+  width: 80px;
+  background: #99C432;
+  color: #fff;
+  padding: 3px 5px 3px 5px;
+  border: 1px solid #99C432; 
+  border-radius: 4px;
+}
+
+.CategoryButton:active {
+  margin-right: 5px;
+  width: 80px;
+  background-color: #FFA732;
+  border-color: #FFA732;
+}
+
+.subButton {
+  margin-right: 5px;
+  width: 80px;
+  background-color: #4FB5FF;
+  color: #fff;
+  padding: 3px 5px 3px 5px;
+  border: 1px solid #4FB5FF;
+  border-radius: 4px;
+}
+
+.subButton:active {
+  margin-right: 5px;
+  width: 80px;
+  background-color: #FFA732;
+  border-color: #FFA732;
+}
+
+canvas {
+  min-width: 600px;
+  min-height: 400px;
+}
+
+.chartjs-render-monitor {
+    width: 100%;
+}
