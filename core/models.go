@@ -1,7 +1,11 @@
 package core
 
 import (
+	"fmt"
+	"strings"
 	"time"
+
+	"github.com/jinzhu/gorm"
 
 	"github.com/lib/pq"
 )
@@ -39,24 +43,37 @@ type MangaStats struct {
 
 // Relation - `from` user having `to` as friend
 type Relation struct {
-	User1   User
 	User1ID uint
-	User2   User
 	User2ID uint
 }
 
 // NewRelation returns Relation where users are alphabetized
-func NewRelation(user1 *User, user2 *User) *Relation {
+func NewRelation(user1 *User, user2 *User) Relation {
 	if user1.Username <= user2.Username {
-		return &Relation{
+		return Relation{
 			User1ID: user1.ID,
 			User2ID: user2.ID,
 		}
 	}
-	return &Relation{
+	return Relation{
 		User1ID: user2.ID,
 		User2ID: user1.ID,
 	}
+}
+
+// SaveRelations stores multiple relation in the database
+func SaveRelations(db *gorm.DB, relations []Relation) {
+	var values []string
+	for i := range relations {
+		relation := relations[i]
+		values = append(values, fmt.Sprintf(`(%d, %d)`, relation.User1ID, relation.User2ID))
+	}
+	joined := strings.Join(values, ",")
+	db.Exec(fmt.Sprintf(`
+		INSERT INTO relations (user1_id, user2_id)
+		VALUES %s
+		ON CONFLICT DO NOTHING
+	`, joined))
 }
 
 // BasicInfo holds info about user without any database info

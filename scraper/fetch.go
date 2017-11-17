@@ -87,14 +87,15 @@ func GetUser(username string, db *gorm.DB, finished chan bool) {
 
 	friendsChannel := make(chan []string, 1)
 	go getFriends(friendsChannel, username, 0)
+	var relations []core.Relation
 	for friendsPage := range friendsChannel {
 		for i := range friendsPage {
 			friendName := friendsPage[i]
 			friend := GetOrCreateUser(friendName, db)
-			relation := core.NewRelation(user, friend)
-			db.Where(relation).FirstOrCreate(relation)
+			relations = append(relations, core.NewRelation(user, friend))
 		}
 	}
+	core.SaveRelations(db, relations)
 	user.Fetched = true
 	user.Fetching = false
 	db.Save(&user)
