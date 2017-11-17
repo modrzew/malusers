@@ -11,80 +11,91 @@ export class Charts extends Component {
     };
   }
 
-  handleAnimeOnClick = category => {
-    this.setState({ category: 'anime' });
+  handleCategoryChange = event => {
+    this.setState({ category: event.target.value });
   };
 
-  handleMangaOnClick = category => {
-    this.setState({ category: 'manga' });
-  };
-
-  handleGenderOnClick = sortBy => {
-    this.setState({ sortBy: 'gender' });
-  };
-
-  handleYearOnClick = sortBy => {
-    this.setState({ sortBy: 'year' });
+  handleSortbyChange = event => {
+    this.setState({ sortBy: event.target.value });
   };
 
   render() {
-    let chart;
     const { category, sortBy } = this.state;
-
-    if (category === 'anime' && sortBy === 'gender') {
-      chart = (
-        <ChartsGetter cat={this.state.category} subcat={this.state.sortBy} />
-      );
-    } else if (category === 'anime' && sortBy === 'year') {
-      chart = (
-        <ChartsGetter cat={this.state.category} subcat={this.state.sortBy} />
-      );
-    } else if (category === 'manga' && sortBy === 'gender') {
-      chart = (
-        <ChartsGetter cat={this.state.category} subcat={this.state.sortBy} />
-      );
-    } else if (category === 'manga' && sortBy === 'year') {
-      chart = (
-        <ChartsGetter cat={this.state.category} subcat={this.state.sortBy} />
-      );
-    }
 
     return (
       <div className={ChartStyles.Charts}>
-        <div className={ChartStyles.ChartsTitle}>
-          <span>
-            Please select category and sorting method for chart display
-          </span>
-          <div className={ChartStyles.ChartRow}>
-            <button
-              className={ChartStyles.CategoryButton}
-              onClick={this.handleAnimeOnClick}
-            >
-              Anime
-            </button>
-            <button
-              className={ChartStyles.CategoryButton}
-              onClick={this.handleMangaOnClick}
-            >
-              Manga
-            </button>
+        <div className={ChartStyles.ChartsItems}>
+          <div className={ChartStyles.ChartsTitle}>malUsers</div>
+          <div className={ChartStyles.ChartsHint}>
+            Please select category and sorting method
           </div>
-          <div className={ChartStyles.ChartRow}>
-            <button
-              className={ChartStyles.subButton}
-              onClick={this.handleGenderOnClick}
-            >
-              by Gender
-            </button>
-            <button
-              className={ChartStyles.subButton}
-              onClick={this.handleYearOnClick}
-            >
-              by Year
-            </button>
+          <div className={ChartStyles.ChartSelector}>
+            <div className={ChartStyles.ChartCategory}>Category</div>
+            <div className={ChartStyles.ChartRow}>
+              <label class="container">
+                <input
+                  type="radio"
+                  name="category"
+                  value="anime"
+                  checked={category === 'anime'}
+                  onChange={this.handleCategoryChange}
+                />
+                <span className="checkmark" />
+                Anime
+              </label>
+              <label className="container">
+                <input
+                  type="radio"
+                  name="category"
+                  value="manga"
+                  checked={category === 'manga'}
+                  onChange={this.handleCategoryChange}
+                />
+                <span className="checkmark" />
+                Manga
+              </label>
+            </div>
+            <div className={ChartStyles.ChartCategory}>Sorted by</div>
+            <div className={ChartStyles.ChartRow}>
+              <label className="container">
+                <input
+                  type="radio"
+                  name="sortedBy"
+                  value="gender"
+                  checked={sortBy === 'gender'}
+                  onChange={this.handleSortbyChange}
+                />
+                <span className="checkmark" />
+                Gender
+              </label>
+              <label className="container">
+                <input
+                  type="radio"
+                  name="sortedBy"
+                  value="year"
+                  checked={sortBy === 'year'}
+                  onChange={this.handleSortbyChange}
+                />
+                <span className="checkmark" />
+                Year
+              </label>
+            </div>
           </div>
         </div>
-        <div className={ChartStyles.ChartsContent}>{chart}</div>
+        <div className={ChartStyles.ChartsItems}>
+          <div
+            className={ChartStyles.ChartsContent}
+            onSubmit={this.handleSubmit}
+          >
+            {category &&
+              sortBy && (
+                <ChartsGetter
+                  cat={this.state.category}
+                  subcat={this.state.sortBy}
+                />
+              )}
+          </div>
+        </div>
       </div>
     );
   }

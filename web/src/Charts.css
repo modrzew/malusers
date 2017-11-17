@@ -1,24 +1,49 @@
 .Charts {
+  display: flex;
+  flex-direction: row;
+}
+
+.ChartsItems {
+  flex: 0 1 auto;
+  padding: 20px 0px 0px 20px;
 }
 
 .ChartsTitle {
-  padding: 10px;
-  background-image: url("https://i.imgur.com/MPcDf2v.jpg");
-  background-repeat: repeat;
-  box-shadow: 0px 1px 5px 1px gray;
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #4FB5FF;
+}
+
+.ChartsHint {
   font-size: 1rem;
-  color: #fff;
+  color: #000;
+  margin: 3px;
+}
+
+.ChartSelector {
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.ChartCategory {
+  color: #99C432;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .ChartRow {
-  margin: 10px;
-  display:flex;
-  flex-direction:row;
+  margin-bottom: 15px;
 }
 
-.ChartsCol {
-  display:flex;
-  flex-direction:column;
+.ChartButton {
+  background: #99C432;
+  color: #fff;
+  padding: 3px 5px 3px 5px;
+  border: 1px solid #99C432; 
+  border-radius: 4px;
 }
   
 .ChartsContent {
@@ -79,3 +104,5 @@ canvas {
 .chartjs-render-monitor {
     width: 100%;
 }
+
+

@@ -11,11 +11,23 @@ export class ChartsGetter extends Component {
       isLoading: false
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.cat !== nextProps.cat ||
+      this.props.subcat !== nextProps.subcat
+    ) {
+      this.load(nextProps.cat, nextProps.subcat);
+    }
+  }
+
   componentDidMount() {
+    this.load(this.props.cat, this.props.subcat);
+  }
+
+  load(cat, subcat) {
     this.setState({ isLoading: true });
-    fetch(
-      `https://api.mal.modriv.net/stats/${this.props.cat}/${this.props.subcat}`
-    )
+    fetch(`https://api.mal.modriv.net/stats/${cat}/${subcat}`)
       .then(resp => resp.json())
       .then(data => {
         this.setState({ result: data, isLoading: false });
