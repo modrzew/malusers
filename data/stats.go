@@ -70,8 +70,8 @@ func GenerateStatsTable(db *gorm.DB) {
 			SUM(manga_stats.days) AS manga_days_sum,
 			ROUND(AVG(manga_stats.days)) AS manga_days_avg
 		FROM users
-		JOIN anime_stats ON users.username=anime_stats.username
-		JOIN manga_stats ON users.username=manga_stats.username
+		JOIN anime_stats ON users.id=anime_stats.user_id
+		JOIN manga_stats ON users.id=manga_stats.user_id
 		WHERE
 			birthday IS NOT NULL
 			AND EXTRACT(YEAR FROM birthday)>1900
