@@ -54,13 +54,14 @@ func main() {
 
 	active := make(chan bool, config.Scraper.MaxConcurrent)
 	go monitor(db, active, config.Scraper.MaxConcurrent)
-	go overseer(db, active, config.Scraper.MaxConcurrent)
 
 	// Maybe trigger first user?
 	var inDb *int
 	if db.Model(&core.User{}).Count(&inDb); *inDb == 0 {
 		scraper.GetOrCreateUser("sweetmonia", db)
 	}
+
+	go overseer(db, active, config.Scraper.MaxConcurrent)
 
 	// Don't quit
 	finished := make(chan bool)
