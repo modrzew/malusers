@@ -63,6 +63,9 @@ func NewRelation(user1 *User, user2 *User) Relation {
 
 // SaveRelations stores multiple relation in the database
 func SaveRelations(db *gorm.DB, relations []Relation) {
+	if len(relations) == 0 {
+		return
+	}
 	var selectValues []string
 	for i := range relations {
 		relation := relations[i]

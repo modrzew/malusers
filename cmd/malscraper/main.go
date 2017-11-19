@@ -35,7 +35,9 @@ func overseer(mainDb *gorm.DB, active chan bool, relations chan []core.Relation,
 func friendsOverseer(mainDb *gorm.DB, channel chan []core.Relation) {
 	for {
 		relations := <-channel
-		core.SaveRelations(mainDb, relations)
+		if len(relations) > 0 {
+			core.SaveRelations(mainDb, relations)
+		}
 		time.Sleep(time.Millisecond * 10)
 	}
 }
