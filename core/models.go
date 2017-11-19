@@ -72,10 +72,10 @@ func SaveRelations(db *gorm.DB, relations []Relation) {
 		SELECT user1_id, user2_id FROM relations
 		WHERE %s
 	`, strings.Join(selectValues, " OR "))
-	rows, _ := db.Raw(query).Rows()
-	if db.Error != nil {
+	rows, err := db.Raw(query).Rows()
+	if err != nil {
 		fmt.Println(query)
-		panic(db.Error)
+		panic(err)
 	}
 	defer rows.Close()
 	found := make(map[Relation]bool)
