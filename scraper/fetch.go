@@ -95,8 +95,16 @@ func GetUser(username string, db *gorm.DB, finished chan bool, relationsChannel 
 			relations = append(relations, core.NewRelation(user, friend))
 		}
 	}
-	if len(relations) > 0 {
-		relationsChannel <- relations
+	relationsLen := len(relations)
+	if relationsLen > 0 {
+		chunkSize := 100
+		for i := 0; i < relationsLen; i += chunkSize {
+			end := i + chunkSize
+			if end > relationsLen {
+				end = relationsLen
+			}
+			relationsChannel <- relations[i:end]
+		}
 	}
 	user.Fetched = true
 	user.Fetching = false
