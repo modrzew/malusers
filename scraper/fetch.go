@@ -67,7 +67,7 @@ func getFriends(channel chan []string, username string, offset int) {
 }
 
 // GetUser obtains stats for single user and their friends
-func GetUser(username string, db *gorm.DB, finished chan bool) {
+func GetUser(username string, db *gorm.DB, finished chan bool, relationsChannel chan []core.Relation) {
 	user := GetOrCreateUser(username, db)
 	if user.Fetched {
 		return
@@ -95,7 +95,17 @@ func GetUser(username string, db *gorm.DB, finished chan bool) {
 			relations = append(relations, core.NewRelation(user, friend))
 		}
 	}
-	core.SaveRelations(db, relations)
+	relationsLen := len(relations)
+	if relationsLen > 0 {
+		chunkSize := 100
+		for i := 0; i < relationsLen; i += chunkSize {
+			end := i + chunkSize
+			if end > relationsLen {
+				end = relationsLen
+			}
+			relationsChannel <- relations[i:end]
+		}
+	}
 	user.Fetched = true
 	user.Fetching = false
 	db.Save(&user)

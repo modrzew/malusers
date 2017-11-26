@@ -63,17 +63,49 @@ func NewRelation(user1 *User, user2 *User) Relation {
 
 // SaveRelations stores multiple relation in the database
 func SaveRelations(db *gorm.DB, relations []Relation) {
-	var values []string
+	if len(relations) == 0 {
+		return
+	}
+	var selectValues []string
 	for i := range relations {
 		relation := relations[i]
-		values = append(values, fmt.Sprintf(`(%d, %d)`, relation.User1ID, relation.User2ID))
+		selectValues = append(selectValues, fmt.Sprintf(`(user1_id=%d AND user2_id=%d)`, relation.User1ID, relation.User2ID))
 	}
-	joined := strings.Join(values, ",")
-	db.Exec(fmt.Sprintf(`
+	query := fmt.Sprintf(`
+		SELECT user1_id, user2_id FROM relations
+		WHERE %s
+	`, strings.Join(selectValues, " OR "))
+	rows, err := db.Raw(query).Rows()
+	if err != nil {
+		fmt.Println(query)
+		panic(err)
+	}
+	defer rows.Close()
+	found := make(map[Relation]bool)
+	for rows.Next() {
+		var user1, user2 uint
+		rows.Scan(&user1, &user2)
+		found[Relation{User1ID: user1, User2ID: user2}] = true
+	}
+	var insertValues []string
+	for i := range relations {
+		relation := relations[i]
+		if _, ok := found[relation]; !ok {
+			insertValues = append(insertValues, fmt.Sprintf(`(%d, %d)`, relation.User1ID, relation.User2ID))
+		}
+	}
+	if len(insertValues) == 0 {
+		return
+	}
+	query = fmt.Sprintf(`
 		INSERT INTO relations (user1_id, user2_id)
 		VALUES %s
-		ON CONFLICT DO NOTHING
-	`, joined))
+	`, strings.Join(insertValues, ","))
+	db.Exec(query)
+	if db.Error != nil {
+		fmt.Println(query)
+		panic(db.Error)
+	}
 }
 
 // BasicInfo holds info about user without any database info
