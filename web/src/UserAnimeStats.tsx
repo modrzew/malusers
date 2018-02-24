@@ -4,7 +4,7 @@ const CategoryAnimeStyles = require('./CategoryAnime.css');
 import * as classnames from 'classnames';
 
 type Props = {
-  animeStats: any,
+  animeStats: any;
 };
 
 export class UserAnimeStats extends React.Component<Props> {

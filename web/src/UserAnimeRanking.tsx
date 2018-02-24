@@ -4,9 +4,9 @@ import * as classnames from 'classnames';
 import * as numeral from 'numeral';
 
 type Props = {
-  animeRanking: any,
-  animeStats: any,
-  userName: string,
+  animeRanking: any;
+  animeStats: any;
+  userName: string;
 };
 
 export class UserAnimeRanking extends React.Component<Props> {

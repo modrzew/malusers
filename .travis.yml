@@ -9,4 +9,5 @@ before_install:
 script:
   - go vet -v ./...
   - go build -v ./...
-  - cd web && yarn eslint-ci
+  - cd web && yarn tslint-ci
+  - yarn eslint-ci

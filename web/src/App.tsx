@@ -3,17 +3,17 @@ import { GetUser } from './GetUser';
 import { Search } from './Search';
 
 type State = {
-  userName: string | null,
-  error: string | null,
-  value?: string,
+  userName: string | null;
+  error: string | null;
+  value?: string;
 };
 
 class App extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
-    this.state = {
-      error: null,
-      userName: null,
+    this.state =         {
+            error: null,
+  userName: null
     };
   }
 

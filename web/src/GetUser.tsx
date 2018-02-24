@@ -5,12 +5,12 @@ import { User } from './User';
 const API_URL = 'https://api.mal.modriv.net';
 
 type Props = {
-  userName: string | null,
-  onError(error: string): void,
+  userName: string | null;
+  onError(error: string): void;
 };
 type State = {
-  name: string | null,
-  isLoading: boolean,
+  name: string | null;
+  isLoading: boolean;
 };
 
 export class GetUser extends React.Component<Props, State> {
@@ -18,7 +18,7 @@ export class GetUser extends React.Component<Props, State> {
     super(props);
     this.state = {
       isLoading: false,
-      name: null,
+      name: null
     };
   }
 

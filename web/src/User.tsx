@@ -8,7 +8,7 @@ const UserStyles = require('./User.css');
 import * as classnames from 'classnames';
 
 type Props = {
-  name: any,
+  name: any;
 };
 
 export class User extends React.Component<Props> {

@@ -63,8 +63,8 @@
     "serve": "serve -s build",
     "eslint": "./node_modules/.bin/eslint .",
     "eslint-ci": "./node_modules/.bin/eslint -c .eslintrc-ci .",
-    "tslint": "./node_modules/.bin/tslint --project tsconfig.json src",
-    "tslint-ci": "./node_modules/.bin/eslint --project tsconfig.json .eslintrc-ci ."
+    "tslint": "./node_modules/.bin/tslint --project tsconfig.json src/**/*",
+    "tslint-ci": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.ci.json -- src/**/*"
   },
   "devDependencies": {
     "eslint-plugin-prettier": "^2.3.1",

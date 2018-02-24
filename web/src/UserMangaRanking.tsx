@@ -4,10 +4,10 @@ import * as classnames from 'classnames';
 import * as numeral from 'numeral';
 
 type Props = {
-  mangaRanking: any,
-  mangaStats: any,
-  userName: string,
-}
+  mangaRanking: any;
+  mangaStats: any;
+  userName: string;
+};
 
 export class UserMangaRanking extends React.Component<Props> {
   render() {

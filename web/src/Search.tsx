@@ -3,11 +3,11 @@ import { Error } from './Error';
 const SearchStyles = require('./Search.css');
 
 type Props = {
-  onSubmit(value: string): void,
-  showError: string,
+  onSubmit(value: string): void;
+  showError: string;
 };
 type State = {
-  value: string,
+  value: string;
 };
 
 export class Search extends React.Component<Props, State> {
