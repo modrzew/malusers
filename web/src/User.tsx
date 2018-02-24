@@ -1,9 +1,9 @@
+import * as moment from 'moment';
 import * as React from 'react';
 import { UserAnimeRanking } from './UserAnimeRanking';
-import { UserMangaRanking } from './UserMangaRanking';
 import { UserAnimeStats } from './UserAnimeStats';
+import { UserMangaRanking } from './UserMangaRanking';
 import { UserMangaStats } from './UserMangaStats';
-import * as moment from 'moment';
 const UserStyles = require('./User.css');
 import * as classnames from 'classnames';
 

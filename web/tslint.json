@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "prettier": "warn",
+    "interface-name": false,
+    "interface-over-type-literal": false,
+    "member-ordering": false,
+    "no-var-requires": false,
+    "member-access": [true, "no-public"]
+  }
+}

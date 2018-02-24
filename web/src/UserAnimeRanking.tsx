@@ -1,7 +1,7 @@
 import * as React from 'react';
 const CategoryRankingStyles = require('./CategoryRanking.css');
-import * as numeral from 'numeral';
 import * as classnames from 'classnames';
+import * as numeral from 'numeral';
 
 type Props = {
   animeRanking: any,

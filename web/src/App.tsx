@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Search } from './Search';
 import { GetUser } from './GetUser';
+import { Search } from './Search';
 
 type State = {
   userName: string | null,
@@ -12,8 +12,8 @@ class App extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      userName: null,
       error: null,
+      userName: null,
     };
   }
 
@@ -22,11 +22,11 @@ class App extends React.Component<{}, State> {
   };
 
   handleSubmit = (userName: string) => {
-    this.setState({ userName: userName, error: null });
+    this.setState({ userName, error: null });
   };
 
   handleError = (error: string) => {
-    this.setState({ error: error });
+    this.setState({ error });
   };
 
   render() {

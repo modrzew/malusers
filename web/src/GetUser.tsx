@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { User } from './User';
 import { Loader } from './Loader';
+import { User } from './User';
 
 const API_URL = 'https://api.mal.modriv.net';
 
@@ -17,8 +17,8 @@ export class GetUser extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      isLoading: false,
       name: null,
-      isLoading: false
     };
   }
 
