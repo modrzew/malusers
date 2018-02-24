@@ -1,9 +1,15 @@
-import React, { Component } from 'react';
-import CategoryRankingStyles from './CategoryRanking.css';
-import numeral from 'numeral';
+import * as React from 'react';
+const CategoryRankingStyles = require('./CategoryRanking.css');
 import * as classnames from 'classnames';
+import * as numeral from 'numeral';
 
-export class UserAnimeRanking extends Component {
+type Props = {
+  animeRanking: any;
+  animeStats: any;
+  userName: string;
+};
+
+export class UserAnimeRanking extends React.Component<Props> {
   render() {
     const animeCompleted = numeral(this.props.animeRanking.completed).format(
       '0,0'

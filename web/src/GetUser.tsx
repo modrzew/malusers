@@ -1,15 +1,24 @@
-import React, { Component } from 'react';
-import { User } from './User';
+import * as React from 'react';
 import { Loader } from './Loader';
+import { User } from './User';
 
 const API_URL = 'https://api.mal.modriv.net';
 
-export class GetUser extends Component {
-  constructor(props) {
+type Props = {
+  userName: string | null;
+  onError(error: string): void;
+};
+type State = {
+  name: string | null;
+  isLoading: boolean;
+};
+
+export class GetUser extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      name: null,
-      isLoading: false
+      isLoading: false,
+      name: null
     };
   }
 
