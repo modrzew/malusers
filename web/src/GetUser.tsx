@@ -1,3 +1,5 @@
+import * as mobx from 'mobx';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Loader } from './Loader';
 import { User } from './User';
@@ -8,27 +10,21 @@ type Props = {
   userName: string | null;
   onError(error: string): void;
 };
-type State = {
-  name: string | null;
-  isLoading: boolean;
-};
 
-export class GetUser extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      name: null
-    };
-  }
+@observer
+export class GetUser extends React.Component<Props> {
+  @mobx.observable isLoading: boolean = false;
+  @mobx.observable name: any = null;
 
   componentDidMount() {
-    this.setState({ isLoading: true });
-
+    mobx.runInAction(() => (this.isLoading = true));
     fetch(`${API_URL}/user/${this.props.userName}`)
       .then(resp => resp.json())
       .then(data => {
-        this.setState({ name: data, isLoading: false });
+        mobx.runInAction(() => {
+          this.name = data;
+          this.isLoading = false;
+        });
       })
       .catch(error => {
         this.props.onError(error);
@@ -36,11 +32,10 @@ export class GetUser extends React.Component<Props, State> {
   }
 
   render() {
-    const { name, isLoading } = this.state;
-    if (isLoading) {
+    if (this.isLoading) {
       return <Loader />;
-    } else if (name !== null) {
-      return <User name={this.state.name} />;
+    } else if (this.name !== null) {
+      return <User name={this.name} />;
     } else {
       return <Loader />;
     }
