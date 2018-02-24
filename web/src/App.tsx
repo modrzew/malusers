@@ -1,25 +1,31 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Search } from './Search';
 import { GetUser } from './GetUser';
 
-class App extends Component {
-  constructor(props) {
+type State = {
+  userName: string | null,
+  error: string | null,
+  value?: string,
+};
+
+class App extends React.Component<{}, State> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       userName: null,
-      error: null
+      error: null,
     };
   }
 
-  handleChange = event => {
+  handleChange = (event: any) => {
     this.setState({ value: event.target.value });
   };
 
-  handleSubmit = userName => {
+  handleSubmit = (userName: string) => {
     this.setState({ userName: userName, error: null });
   };
 
-  handleError = error => {
+  handleError = (error: string) => {
     this.setState({ error: error });
   };
 

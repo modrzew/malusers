@@ -1,34 +1,32 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Error } from './Error';
-import SearchStyles from './Search.css';
+const SearchStyles = require('./Search.css');
 
-export class Search extends Component {
-  constructor(props) {
+type Props = {
+  onSubmit(value: string): void,
+  showError: string,
+};
+type State = {
+  value: string,
+};
+
+export class Search extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = { value: '' };
   }
 
-  handleChange = event => {
+  handleChange = (event: any) => {
     this.setState({ value: event.target.value });
   };
 
-  handleOnClick = event => {
+  handleOnClick = (event: any) => {
     this.props.onSubmit(this.state.value);
-  };
-
-  handleButtonOnClick = showComponent => {
-    this.props.onButtonSubmit();
   };
 
   render() {
     return (
       <div className={SearchStyles.Search}>
-        <button
-          className={SearchStyles.chartButton}
-          onClick={this.handleButtonOnClick}
-        >
-          Charts
-        </button>
         <div className={SearchStyles.SearchWrapped}>
           <div className={SearchStyles.SearchTitle}>
             Hi there, welcome to malusers, the ultimate MAL scrapper.

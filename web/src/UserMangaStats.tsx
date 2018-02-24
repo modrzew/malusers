@@ -1,9 +1,13 @@
-import React, { Component } from 'react';
-import CategoryStyles from './Category.css';
-import CategoryMangaStyles from './CategoryManga.css';
+import * as React from 'react';
+const CategoryStyles = require('./Category.css');
+const CategoryMangaStyles = require('./CategoryManga.css');
 import * as classnames from 'classnames';
 
-export class UserMangaStats extends Component {
+type Props = {
+  mangaStats: any,
+};
+
+export class UserMangaStats extends React.Component<Props> {
   render() {
     return (
       <div className={CategoryStyles.CategoryRow}>

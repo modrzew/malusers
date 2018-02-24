@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { UserAnimeRanking } from './UserAnimeRanking';
 import { UserMangaRanking } from './UserMangaRanking';
 import { UserAnimeStats } from './UserAnimeStats';
 import { UserMangaStats } from './UserMangaStats';
-import moment from 'moment';
-import UserStyles from './User.css';
+import * as moment from 'moment';
+const UserStyles = require('./User.css');
 import * as classnames from 'classnames';
 
-export class User extends Component {
+type Props = {
+  name: any,
+};
+
+export class User extends React.Component<Props> {
   render() {
     const date = moment(this.props.name.lastUpdate).format(
       'dddd, MMMM Do YYYY, h:mm a'

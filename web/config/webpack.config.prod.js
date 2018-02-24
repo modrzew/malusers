@@ -138,13 +138,22 @@ module.exports = {
             }
           },
           // Process JS with Babel.
+          // {
+          //   test: /\.(js|jsx)$/,
+          //   include: paths.appSrc,
+          //   loader: require.resolve('babel-loader'),
+          //   options: {
+          //     compact: true
+          //   }
+          // },
           {
-            test: /\.(js|jsx)$/,
-            include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
-              compact: true
-            }
+            test: /\.(t|j)sx?$/,
+            loader: 'awesome-typescript-loader'
+          },
+          {
+            enforce: 'pre',
+            test: /\.js$/,
+            loader: 'source-map-loader'
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
@@ -324,5 +333,5 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
 };
