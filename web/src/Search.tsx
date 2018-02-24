@@ -1,3 +1,5 @@
+import * as mobx from 'mobx';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Error } from './Error';
 const SearchStyles = require('./Search.css');
@@ -6,22 +8,17 @@ type Props = {
   onSubmit(value: string): void;
   showError: string;
 };
-type State = {
-  value: string;
-};
 
-export class Search extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { value: '' };
-  }
+@observer
+export class Search extends React.Component<Props> {
+  @mobx.observable value: string = '';
 
   handleChange = (event: any) => {
-    this.setState({ value: event.target.value });
+    this.value = event.target.value;
   };
 
   handleOnClick = (event: any) => {
-    this.props.onSubmit(this.state.value);
+    this.props.onSubmit(this.value);
   };
 
   render() {
@@ -36,7 +33,7 @@ export class Search extends React.Component<Props, State> {
             className={SearchStyles.textInput}
             type="text"
             placeholder="User name"
-            value={this.state.value}
+            value={this.value}
             onChange={this.handleChange}
           />
           <button

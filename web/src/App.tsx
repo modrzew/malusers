@@ -1,43 +1,36 @@
+import * as mobx from 'mobx';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { GetUser } from './GetUser';
 import { Search } from './Search';
 
-type State = {
-  userName: string | null;
-  error: string | null;
-  value?: string;
-};
+@observer
+export class App extends React.Component {
+  @mobx.observable error: string | null = null;
+  @mobx.observable userName: string | null = null;
+  @mobx.observable value?: string;
 
-class App extends React.Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      error: null,
-      userName: null
-    };
-  }
-
+  @mobx.action
   handleChange = (event: any) => {
-    this.setState({ value: event.target.value });
+    this.value = event.target.value;
   };
 
+  @mobx.action
   handleSubmit = (userName: string) => {
-    this.setState({ userName, error: null });
+    this.userName = userName;
+    this.error = null;
   };
 
+  @mobx.action
   handleError = (error: string) => {
-    this.setState({ error });
+    this.error = error;
   };
 
   render() {
-    const userName = this.state.userName;
-    const error = this.state.error;
-    if (userName && !error) {
-      return <GetUser userName={userName} onError={this.handleError} />;
+    if (this.userName && !this.error) {
+      return <GetUser userName={this.userName} onError={this.handleError} />;
     } else {
-      return <Search onSubmit={this.handleSubmit} showError={error} />;
+      return <Search onSubmit={this.handleSubmit} showError={this.error} />;
     }
   }
 }
-
-export default App;
