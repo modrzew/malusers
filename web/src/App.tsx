@@ -11,9 +11,9 @@ type State = {
 class App extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
-    this.state =         {
-            error: null,
-  userName: null
+    this.state = {
+      error: null,
+      userName: null
     };
   }
 
