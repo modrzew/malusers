@@ -13,11 +13,11 @@ type Props = {
 export class Search extends React.Component<Props> {
   @mobx.observable value: string = '';
 
-  handleChange = (event: any) => {
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.value = event.target.value;
   };
 
-  handleOnClick = (event: any) => {
+  handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     this.props.onSubmit(this.value);
   };
 

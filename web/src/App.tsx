@@ -11,11 +11,6 @@ export class App extends React.Component {
   @mobx.observable value?: string;
 
   @mobx.action
-  handleChange = (event: any) => {
-    this.value = event.target.value;
-  };
-
-  @mobx.action
   handleSubmit = (userName: string) => {
     this.userName = userName;
     this.error = null;
